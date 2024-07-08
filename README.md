@@ -1,0 +1,1 @@
+This repository contains the Vector Rally project, developed as part of the Object-Oriented Programming module in the Programming Methodologies course. The project simulates the classic paper game Vector Rally, implementing key object-oriented principles and techniques.
