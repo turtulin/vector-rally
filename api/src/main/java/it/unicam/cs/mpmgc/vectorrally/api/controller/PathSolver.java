@@ -1,7 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller;
-import it.unicam.cs.mpmgc.vectorrally.api.model.Coordinates;
-import it.unicam.cs.mpmgc.vectorrally.api.model.Shift;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Vector;
 
 public interface PathSolver {
-    Coordinates solvePath(Coordinates currentPos, Shift shift);
+    Vector calculateNextMove(Vector currentPosition);
 }

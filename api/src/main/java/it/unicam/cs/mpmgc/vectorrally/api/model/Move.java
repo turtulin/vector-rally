@@ -1,18 +1,29 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model;
 
-public class Move implements Shift{
-    private final int deltaX;
-    private final int deltaY;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Vector;
 
-    public Move(int deltaX, int deltaY) {
-        this.deltaX = deltaX;
-        this.deltaY = deltaY;
+public class Move implements Vector {
+    private final int x;
+    private final int y;
+
+    public Move(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     @Override
-    public int getDeltaX() { return deltaX; }
+    public int getX() {
+        return x;
+    }
 
     @Override
-    public int getDeltaY() { return deltaY; }
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public Vector add(Vector other) {
+        return new Move(this.x + other.getX(), this.y + other.getY());
+    }
 
 }
