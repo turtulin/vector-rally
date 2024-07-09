@@ -1,4 +1,6 @@
-package it.unicam.cs.mpmgc.vectorrally.api.model;
+package it.unicam.cs.mpmgc.vectorrally.api.model.racetrack;
+
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 
 import java.util.List;
 

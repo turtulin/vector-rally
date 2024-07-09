@@ -1,11 +1,11 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.movements;
 
-public class ShiftVector implements Vector{
+public class Acceleration implements Vector{
     private int x;
 
     private int y;
 
-    public ShiftVector(int x, int y) {
+    public Acceleration(int x, int y) {
         this.x = x;
         this.y = y;
     }

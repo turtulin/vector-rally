@@ -1,6 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.movements;
 
-public class Position implements Coordinates {
+public class Position implements Coordinates{
     private int x;
     private int y;
 

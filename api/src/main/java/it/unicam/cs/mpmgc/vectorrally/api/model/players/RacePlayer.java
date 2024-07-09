@@ -1,9 +1,9 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.players;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Vector;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 
 public class RacePlayer implements Player {
     private final Car playerCar;
@@ -24,12 +24,12 @@ public class RacePlayer implements Player {
     }
 
     @Override
-    public Vector getSpeed() {
+    public Acceleration getSpeed() {
         return this.playerCar.getSpeed();
     }
 
     @Override
-    public void setSpeed(Vector newSpeed) {
+    public void setSpeed(Acceleration newSpeed) {
         if (newSpeed == null)
             throw new NullPointerException("Cannot update a player's speed to null");
         this.playerCar.setSpeed(newSpeed);

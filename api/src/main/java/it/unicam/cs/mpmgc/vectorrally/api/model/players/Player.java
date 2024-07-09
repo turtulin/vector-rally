@@ -1,8 +1,8 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.players;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Vector;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 
 public interface Player {
     /**
@@ -10,14 +10,14 @@ public interface Player {
      *
      * @return the player's speed
      */
-    Vector getSpeed();
+    Acceleration getSpeed();
 
     /**
      * Updates the player's speed
      *
      * @param newSpeed the new speed
      */
-    void setSpeed(Vector newSpeed);
+    void setSpeed(Acceleration newSpeed);
 
     /**
      * Returns the player's car color
@@ -59,7 +59,7 @@ public interface Player {
     /**
      * Returns the type of this player
      *
-     * @return PLAYER or BOT
+     * @return HUMAN or BOT
      */
     PlayerType getPlayerType();
 
