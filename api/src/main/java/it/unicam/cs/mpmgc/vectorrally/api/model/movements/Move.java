@@ -1,20 +1,11 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.movements;
 
-public class Move implements Shift {
-    private Acceleration speed;
-    private Coordinates position;
-
-    public Move(Acceleration speed, Coordinates position) {
-        this.speed = speed;
-        this.position = position;
-    }
-
-    public Acceleration speed() {
-        return this.speed;
-    }
-
-    public Coordinates position() {
-        return this.position;
-    }
-
+/**
+ * This record represents the shift from one position to another with a certain acceleration.
+ * It is immutable.
+ *
+ * @version 1.0
+ * @since 2024-07-10
+ */
+public record Move(Acceleration acceleration, Coordinates position) implements Shift {
 }

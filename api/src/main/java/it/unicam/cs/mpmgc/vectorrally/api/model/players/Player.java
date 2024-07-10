@@ -4,62 +4,76 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 
+/**
+ * This interface represents a player in the vector rally game.
+ * It provides methods to get and set the player's acceleration, position, and racing status.
+ * It also includes methods to get the type of player (BOT or HUMAN) and the colour of
+ * the player's car.
+ *
+ * @version 1.0
+ * @since 2024-07-10
+ *
+ * @author Marta Musso
+ * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
+ */
+
 public interface Player {
-    /**
-     * Returns the player's speed
-     *
-     * @return the player's speed
-     */
-    Acceleration getSpeed();
 
     /**
-     * Updates the player's speed
+     * Gets the current acceleration of the player.
      *
-     * @param newSpeed the new speed
+     * @return the current acceleration.
      */
-    void setSpeed(Acceleration newSpeed);
+    Acceleration getPlayerAcceleration();
 
     /**
-     * Returns the player's car color
+     * Sets the acceleration of the player.
      *
-     * @return the player's car color
+     * @param acceleration the new acceleration.
+     * @throws NullPointerException if the new acceleration is null.
      */
-    CarColour getPlayerCarColor();
+    void setPlayerAcceleration(Acceleration acceleration);
 
     /**
-     * Returns the player's current position
+     * Gets the colour of the player's car.
      *
-     * @return the player's current position
+     * @return the car colour.
+     */
+    CarColour getPlayerCarColour();
+
+    /**
+     * Gets the current position of the player.
+     *
+     * @return the current position.
      */
     Position getPosition();
 
     /**
-     * Updates the player's position
+     * Sets the position of the player.
      *
-     * @param position the player's position
+     * @param position the new position.
+     * @throws NullPointerException if the position is null.
      */
     void setPosition(Position position);
 
     /**
-     * Returns true if the player has crossed the starting line
-     * (or in case of a closed racetrack, if the player has passed
-     * the finishing line once)
-     * Note: Only players that are racing can win a formula 1 game
+     * Checks if the player is currently racing.
      *
-     * @return true if the player is racing
-     *         otherwise false
+     * @return true if the player is racing, false otherwise.
      */
     boolean isRacing();
 
     /**
-     * Updates the player's status to IS_RACING
+     * Sets the racing status of the player.
+     *
+     * @param isRacing the new racing status of the player.
      */
-    void setIsRacing();
+    void setRacing(boolean isRacing);
 
     /**
-     * Returns the type of this player
+     * Gets the type of the player (BOT or HUMAN).
      *
-     * @return HUMAN or BOT
+     * @return the player type.
      */
     PlayerType getPlayerType();
 

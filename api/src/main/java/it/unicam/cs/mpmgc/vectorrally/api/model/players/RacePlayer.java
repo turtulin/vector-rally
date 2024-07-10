@@ -5,62 +5,74 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 
+/**
+ * This class represents a player in the vector rally game.
+ * It implements the {@link Player} interface.
+ *
+ * @version 1.0
+ * @since 2024-07-10
+ */
 public class RacePlayer implements Player {
     private final Car playerCar;
 
-    private final Position currentPosition;
+    private final Position position;
 
-    private boolean racing;
+    private boolean isRacing;
 
     private final PlayerType playerType;
 
+    /**
+     * Constructs a RacePlayer with the specified car and player type.
+     *
+     * @param playerCar the car associated with the player.
+     * @param playerType the type of the player (HUMAN or BOT).
+     * @throws NullPointerException if the playerCar or playerType is null.
+     */
     public RacePlayer(Car playerCar, PlayerType playerType) {
-        if (playerCar == null)
-            throw new NullPointerException("Cannot assign null to a human player's race car");
+        if (playerCar == null) throw new NullPointerException("Cannot create a player without a car");
+        if (playerType == null) throw new NullPointerException("Cannot create a player without a player type.");
         this.playerCar = playerCar;
-        this.currentPosition = new Position(0,0);
-        this.racing = false;
+        this.position = new Position(0,0);
+        this.isRacing = false;
         this.playerType = playerType;
     }
 
     @Override
-    public Acceleration getSpeed() {
-        return this.playerCar.getSpeed();
+    public Acceleration getPlayerAcceleration() {
+        return this.playerCar.getAcceleration();
     }
 
     @Override
-    public void setSpeed(Acceleration newSpeed) {
-        if (newSpeed == null)
-            throw new NullPointerException("Cannot update a player's speed to null");
-        this.playerCar.setSpeed(newSpeed);
+    public void setPlayerAcceleration(Acceleration acceleration) {
+        if (acceleration == null) throw new NullPointerException("Player speed cannot be null");
+        this.playerCar.setAcceleration(acceleration);
     }
 
     @Override
-    public CarColour getPlayerCarColor() {
+    public CarColour getPlayerCarColour() {
         return this.playerCar.getCarColour();
     }
 
     @Override
     public Position getPosition() {
-        return this.currentPosition;
+        return this.position;
     }
 
     @Override
     public void setPosition(Position position) {
-        if (position == null)
-            throw new NullPointerException("Cannot update a player's position to null");
-        this.currentPosition.setX(position.getX());
-        this.currentPosition.setY(position.getY());
+        if (position == null) throw new NullPointerException("Player position cannot be null");
+        this.position.setX(position.getX());
+        this.position.setY(position.getY());
     }
 
     @Override
     public boolean isRacing() {
-        return this.racing;
+        return this.isRacing;
     }
 
     @Override
-    public void setIsRacing() {
-        this.racing = true;
+    public void setRacing(boolean IsRacing) {
+        this.isRacing = IsRacing;
     }
 
     @Override
