@@ -9,7 +9,6 @@ package it.unicam.cs.mpmgc.vectorrally.api.model.movements;
  */
 public class Position implements Coordinates {
     private int x;
-
     private int y;
 
     /**
@@ -49,7 +48,5 @@ public class Position implements Coordinates {
     // public boolean equals(Position other) {
     //     return this.x == other.getX() && this.y == other.getY();
     // }
-
-
 
 }
