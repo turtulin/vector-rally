@@ -2,6 +2,7 @@ package it.unicam.cs.mpmgc.vectorrally.api.model.movements;
 
 public class Position implements Coordinates{
     private int x;
+
     private int y;
 
     public Position(int x, int y) {
@@ -9,17 +10,12 @@ public class Position implements Coordinates{
         this.y = y;
     }
 
-    public Position(Position position) {
-        this.x = position.getX();
-        this.y = position.getY();
-    }
-
     public int getX() {
-        return x;
+        return this.x;
     }
 
     public int getY() {
-        return y;
+        return this.y;
     }
 
     public void setX(int x) {
@@ -29,4 +25,11 @@ public class Position implements Coordinates{
     public void setY(int y) {
         this.y = y;
     }
+
+    public int compareTo(Position other) {
+        if (this.x != other.x)
+            return Integer.compare(this.x, other.x);
+        return Integer.compare(this.y, other.y);
+    }
+
 }

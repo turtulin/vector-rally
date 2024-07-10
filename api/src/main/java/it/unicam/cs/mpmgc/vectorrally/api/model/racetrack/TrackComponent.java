@@ -6,5 +6,5 @@ public enum TrackComponent {
     OIL_SPOT,
     START_LINE,
     END_LINE,
-    START_POSITION;
+    POSITION_START;
 }

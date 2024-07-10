@@ -1,28 +1,29 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.movements;
 
 public class Acceleration implements Vector{
-    private int x;
+    private int dx;
 
-    private int y;
+    private int dy;
 
-    public Acceleration(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Acceleration(int dx, int dy) {
+        this.dx = dx;
+        this.dy = dy;
     }
 
-    public int getX() {
-        return this.x;
+    public int getDx() {
+        return this.dx;
     }
 
-    public int getY() {
-        return this.y;
+    public int getDy() {
+        return this.dy;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setDx(int x) {
+        this.dx = dx;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setDy(int y) {
+        this.dy = dy;
     }
+
 }
