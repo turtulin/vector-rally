@@ -5,50 +5,55 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 
 import java.util.List;
 
+
+/**
+ * This interface represents a track in the vector rally game.
+ * It provides methods to interact with the track components and positions.
+ *
+ * @version 1.0
+ * @since 2024-07-10
+ *
+ * @author Marta Musso
+ * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
+ */
 public interface Track {
     /**
-     * Checks if a certain position is part of the racetrack
+     * Gets the component at the specified position on the track.
      *
-     * @param position the position to check
-     * @return true if the position is in bounds
-     *         false otherwise
-     * @throws NullPointerException if the position is null
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     * @return the track component at the specified position.
      */
-    boolean isInBounds(Position position);
+    TrackComponent getComponentAt(int x, int y);
 
     /**
-     * Returns the racetrack component at the specified position
+     * Checks if the specified position is within the bounds of the track.
      *
-     * @param position the specified position
-     * @return the racetrack component at the specified position
-     *         or null if the position is out of bounds
-     * @throws NullPointerException if the position is null
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     * @return true if the position is within bounds, false otherwise.
      */
-    TrackComponent getRaceTrackComponentAt(Position position);
+    boolean isInBounds(int x, int y);
 
     /**
-     * Returns a list containing all the positions that are associated
-     * to a specific racetrack feature
+     * Gets all positions that have the specified component.
      *
-     * @param raceTrackComponent the racetrack feature from which
-     *                           to derive the list of positions
-     * @return a list containing positions
-     * @throws NullPointerException if raceTrackComponent is null
+     * @param component the track component.
+     * @return a list of positions that have the specified component.
      */
-    List<Position> getPositionsAssociatedTo(TrackComponent raceTrackComponent);
+    List<Position> getPositionsOfComponent(TrackComponent component);
 
     /**
-     * Returns the racetrack length
+     * Gets the width of the track.
      *
-     * @return the racetrack length
+     * @return the width of the track.
+     */
+    int getWidth();
+
+    /**
+     * Gets the length of the track.
+     *
+     * @return the length of the track.
      */
     int getLength();
-
-    /**
-     * Returns the racetrack height
-     *
-     * @return the racetrack height
-     */
-    int getHeight();
-
 }

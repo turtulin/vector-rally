@@ -38,4 +38,26 @@ public interface Coordinates {
      * @param y the new y coordinate.
      */
     void setY(int y);
+
+    /**
+     * Compares this object to the specified object.
+     *
+     * @param o the object to compare.
+     * @return true if the objects are equal, false otherwise.
+     */
+    boolean equals(Object o);
+
+    /**
+     * Returns a hash code value for the object.
+     *
+     * @return a hash code value for the object.
+     */
+    int hashCode();
+
+    /**
+     * Returns a string representation of the object.
+     *
+     * @return a string representation of the object.
+     */
+    String toString();
 }
