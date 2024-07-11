@@ -1,8 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.rules;
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Direction;
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.*;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
@@ -13,7 +11,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
  * @version 1.0
  * @since 2024-07-11
  */
-public class FinishLineWinCondition implements WinCondition {
+public class FinishLineWinCondition implements GameRule {
     private final RaceTrack raceTrack;
     private final ComponentPassChecker componentPassChecker;
 
@@ -39,8 +37,7 @@ public class FinishLineWinCondition implements WinCondition {
         }
         return true;
     }
-
-    @Override
+    
     public boolean isValidDirection(Direction direction) {
         Position startLinePosition = raceTrack.getPositionsOfComponent(TrackComponent.START_LINE).get(0);
         Position endLinePosition = raceTrack.getPositionsOfComponent(TrackComponent.END_LINE).get(0);

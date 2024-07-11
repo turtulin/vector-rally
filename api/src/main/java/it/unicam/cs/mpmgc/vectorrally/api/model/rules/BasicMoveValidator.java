@@ -1,6 +1,8 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.rules;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.BasicComponentPassChecker;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.ComponentPassChecker;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
@@ -12,7 +14,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
  * @version 1.0
  * @since 2024-07-11
  */
-public class BasicMoveValidator implements MoveValidator {
+public class BasicMoveValidator implements GameRule {
     private final RaceTrack raceTrack;
     private final ComponentPassChecker componentPassChecker;
 
@@ -28,7 +30,7 @@ public class BasicMoveValidator implements MoveValidator {
         this.componentPassChecker = new BasicComponentPassChecker(raceTrack);
     }
 
-    @Override
+
     public boolean isRespected(Player player, Position newPosition) {
         Position currentPosition = player.getPosition();
         if (!raceTrack.isInBounds(newPosition.getX(), newPosition.getY())) {

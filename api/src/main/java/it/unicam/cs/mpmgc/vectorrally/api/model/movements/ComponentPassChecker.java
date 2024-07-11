@@ -1,4 +1,4 @@
-package it.unicam.cs.mpmgc.vectorrally.api.model.rules;
+package it.unicam.cs.mpmgc.vectorrally.api.model.movements;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
