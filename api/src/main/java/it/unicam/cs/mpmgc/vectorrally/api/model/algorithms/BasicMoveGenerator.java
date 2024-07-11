@@ -1,6 +1,7 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.algorithms;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
@@ -19,62 +20,26 @@ import java.util.List;
  * @since 2024-07-11
  */
 public class BasicMoveGenerator<T extends NeighborsGenerator> implements MoveGenerator {
-    private final BasicMoveValidator moveValidator;
-    private final RaceTrack raceTrack;
-    private final T shiftGenerator;
-    /**
-     * Constructs a BasicMoveGenerator with the specified move validator, race track, and shift generator.
-     *
-     * @param moveValidator the move validator to use for validating moves.
-     * @param raceTrack the racetrack to use for generating moves.
-     * @param shiftGenerator the shift generator to use for generating possible shifts.
-     */
-    public BasicMoveGenerator(BasicMoveValidator moveValidator, RaceTrack raceTrack, T shiftGenerator) {
-        this.moveValidator = moveValidator;
-        this.raceTrack = raceTrack;
-        this.shiftGenerator = shiftGenerator;
+    private final T neighborsGenerator;
+
+    public BasicMoveGenerator(T neighborsGenerator) {
+        this.neighborsGenerator = neighborsGenerator;
     }
 
     @Override
-    public List<Position> generateMoves(Player player, Position position) {
-        List<Position> possibleMoves = new ArrayList<>();
-        Acceleration playerAcceleration = player.getPlayerAcceleration();
-        List<Position> shifts = shiftGenerator.generateShifts(position);
+    public List<Position> generatePossibleDestinations(Move move) {
+        List<Position> possibleDestinations = new ArrayList<>();
+        Position start = (Position) move.position();
+        int dx = move.acceleration().getDx();
+        int dy = move.acceleration().getDy();
+
+        List<Position> shifts = neighborsGenerator.generateShifts(start);
         for (Position shift : shifts) {
-            Position newPosition = calculateNewPosition(position, playerAcceleration, shift);
-            if (isMoveValid(player, newPosition)) {
-                possibleMoves.add(newPosition);
-            }
+            int newX = shift.getX() + dx;
+            int newY = shift.getY() + dy;
+            possibleDestinations.add(new Position(newX, newY));
         }
-        return possibleMoves;
-    }
 
-    /**
-     * Calculates the new position based on the current position, player acceleration, and shift.
-     *
-     * @param position the current position.
-     * @param acceleration the player acceleration.
-     * @param shift the shift to apply.
-     * @return the new position.
-     */
-    private Position calculateNewPosition(Position position, Acceleration acceleration, Position shift) {
-        return new Position(
-                position.getX() + acceleration.getDx() + shift.getX(),
-                position.getY() + acceleration.getDy() + shift.getY()
-        );
-    }
-
-    /**
-     * Checks if the move to the new position is valid.
-     *
-     * @param player the player making the move.
-     * @param newPosition the new position.
-     * @return true if the move is valid, false otherwise.
-     */
-    private boolean isMoveValid(Player player, Position newPosition) {
-        return raceTrack.isInBounds(newPosition.getX(), newPosition.getY())
-                && (raceTrack.getComponentAt(newPosition.getX(), newPosition.getY()) == TrackComponent.ROAD
-                || raceTrack.getComponentAt(newPosition.getX(), newPosition.getY()) == TrackComponent.OIL_SPOT)
-                && moveValidator.isRespected(player, newPosition);
+        return possibleDestinations;
     }
 }

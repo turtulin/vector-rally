@@ -36,7 +36,7 @@ public class HardDecisionStrategy implements DecisionStrategy {
     @Override
     public Position decideMove(Player player, List<Position> possibleMoves) {
         if (possibleMoves.isEmpty()) throw new IllegalArgumentException("No possible moves available for the player.");
-        Position bestMove = possibleMoves.get(0);
+        Position bestMove = possibleMoves.getFirst();
         double minCost = Double.MAX_VALUE;
         for (Position move : possibleMoves) {
             double cost = aStarAlgorithm.calculateCost(player.getPosition(), move);

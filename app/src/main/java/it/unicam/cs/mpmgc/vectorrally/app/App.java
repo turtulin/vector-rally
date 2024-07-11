@@ -3,8 +3,16 @@
  */
 package it.unicam.cs.mpmgc.vectorrally.app;
 
+import it.unicam.cs.mpmgc.vectorrally.api.controller.match.GameEngine;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.match.VectorRallyEngine;
+
 public class App {
     public static void main(String[] args) {
-        System.out.println("Ciao mondo!");
+        try {
+            GameEngine gameController = new VectorRallyEngine();
+            gameController.startGame();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

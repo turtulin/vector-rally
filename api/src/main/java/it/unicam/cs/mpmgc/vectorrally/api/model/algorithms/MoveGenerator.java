@@ -1,18 +1,17 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.algorithms;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
-import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 
 import java.util.List;
 
 public interface MoveGenerator {
 
     /**
-     * Generates all possible moves for the given player from the given position.
+     * Generates a list of possible destination positions from the given move.
      *
-     * @param player the player for whom to generate the moves.
-     * @param position the position from which to generate the moves.
-     * @return a list of possible new positions the player can move to.
+     * @param move the move containing the start position and acceleration.
+     * @return a list of possible destination positions.
      */
-    List<Position> generateMoves(Player player, Position position);
+    List<Position> generatePossibleDestinations(Move move);
 }
