@@ -56,12 +56,12 @@ public class RaceTrack implements Track {
 
     @Override
     public int getWidth() {
-        return width;
+        return this.width;
     }
 
     @Override
     public int getLength() {
-        return length;
+        return this.length;
     }
 
 }
