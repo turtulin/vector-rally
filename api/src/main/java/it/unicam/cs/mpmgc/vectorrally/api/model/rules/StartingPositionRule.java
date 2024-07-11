@@ -11,7 +11,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-public interface StartingPositionRule extends Rule {
+public interface StartingPositionRule extends GameRule {
 
     /**
      * Validates the starting position of a player.

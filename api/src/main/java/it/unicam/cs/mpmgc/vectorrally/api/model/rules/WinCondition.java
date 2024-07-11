@@ -1,6 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.rules;
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Direction;
 
 /**
  * This interface defines the contract for checking winning conditions in the vector rally game.
@@ -11,12 +11,12 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-public interface WinCondition extends Rule {
+public interface WinCondition extends GameRule {
     /**
-     * Checks if a player has won the game.
+     * Checks if the direction of movement is valid.
      *
-     * @param player the player to be checked.
-     * @return true if the player has won, false otherwise.
+     * @param direction the direction to check.
+     * @return true if the direction is valid, false otherwise.
      */
-    boolean checkWin(Player player);
+    boolean isValidDirection(Direction direction);
 }

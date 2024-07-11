@@ -1,11 +1,8 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.rules;
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Coordinates;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
-import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.Track;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Direction;
 
 /**
  * This class implements the ComponentPassChecker interface to check if a player passes through a specified component.

@@ -11,7 +11,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-public interface TurnBasedRule extends Rule {
+public interface TurnBasedRule extends GameRule {
 
     /**
      * Ensures that players take turns in the correct order.

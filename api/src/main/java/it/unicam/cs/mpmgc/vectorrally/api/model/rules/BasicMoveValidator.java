@@ -1,7 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.rules;
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Coordinates;
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
@@ -15,27 +14,37 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
  */
 public class BasicMoveValidator implements MoveValidator {
     private final RaceTrack raceTrack;
+    private final ComponentPassChecker componentPassChecker;
 
+    /**
+     * Constructs a BasicMoveValidator with the specified racetrack.
+     *
+     * @param raceTrack the racetrack to be used for validation.
+     * @throws NullPointerException if raceTrack is null.
+     */
     public BasicMoveValidator(RaceTrack raceTrack) {
+        if (raceTrack == null) throw new NullPointerException("RaceTrack cannot be null");
         this.raceTrack = raceTrack;
+        this.componentPassChecker = new BasicComponentPassChecker(raceTrack);
     }
 
     @Override
-    public boolean validateMove(Move move) {
-        Coordinates startPosition = move.position();
-        Coordinates endPosition = new Position(
-                startPosition.getX() + move.acceleration().getDx(),
-                startPosition.getY() + move.acceleration().getDy()
-        );
-        if (!raceTrack.isInBounds(endPosition.getX(), endPosition.getY())) {
+    public boolean isRespected(Player player, Position newPosition) {
+        Position currentPosition = player.getPosition();
+        if (!raceTrack.isInBounds(newPosition.getX(), newPosition.getY())) {
             return false;
         }
-        return raceTrack.getComponentAt(endPosition.getX(), endPosition.getY()) != TrackComponent.WALL;
+        return !componentPassChecker.passesThroughComponent(currentPosition, newPosition, TrackComponent.WALL);
     }
 
     @Override
     public boolean isRespected(Player player) {
-        Move move = new Move(player.getPlayerAcceleration(), player.getPosition());
-        return validateMove(move);
+        Position currentPosition = player.getPosition();
+        Acceleration acceleration = player.getPlayerAcceleration();
+        Position newPosition = new Position(
+                currentPosition.getX() + acceleration.getDx(),
+                currentPosition.getY() + acceleration.getDy()
+        );
+        return isRespected(player, newPosition);
     }
 }

@@ -1,6 +1,5 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.rules;
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Coordinates;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 
