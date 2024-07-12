@@ -60,6 +60,10 @@ public interface Utils {
             case GREEN -> "\033[32m";
             case BLUE -> "\033[34m";
             case PURPLE -> "\033[35m";
+            case WHITE -> "\033[37m";
+            case PINK -> "\033[38;5;205m";
+            case GREY -> "\033[38;5;240m";
+            case BROWN -> "\033[38;5;94m";
         };
     }
 
