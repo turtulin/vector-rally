@@ -98,8 +98,8 @@ public class TerminalIOController implements IOController {
     }
 
     @Override
-    public BotStrategyDifficulty chooseBotStrategyDifficulty() {
-        System.out.println("Choose the bot strategy difficulty:");
+    public BotStrategyDifficulty chooseBotStrategyDifficulty(CarColour carColour) {
+        System.out.println("Choose the bot [" + carColour + "] strategy difficulty:");
         System.out.println("1. Easy");
         System.out.println("2. Medium");
         System.out.println("3. Hard");
@@ -160,14 +160,14 @@ public class TerminalIOController implements IOController {
     }
 
     @Override
-    public Position chooseStartingPosition(List<Position> availablePositions, int playerIndex) {
-        System.out.println("Player " + (playerIndex + 1) + ", choose your starting position:");
+    public Position chooseStartingPosition(Player player, List<Position> availablePositions) {
+        System.out.println(player.getPlayerCarColour() + ", choose your starting position:");
         for (int i = 0; i < availablePositions.size(); i++) {
             Position pos = availablePositions.get(i);
             System.out.println((i + 1) + ". (" + pos.getX() + ", " + pos.getY() + ")");
         }
-        int choice = scanner.nextInt() - 1;
+        int choice = scanner.nextInt();
         scanner.nextLine();
-        return availablePositions.get(choice);
+        return availablePositions.get(choice - 1);
     }
 }

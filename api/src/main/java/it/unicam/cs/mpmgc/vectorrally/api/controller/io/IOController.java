@@ -65,7 +65,7 @@ public interface IOController {
      * Asks the player to choose a bot strategy difficulty.
      * @return the chosen bot strategy difficulty.
      */
-    BotStrategyDifficulty chooseBotStrategyDifficulty();
+    BotStrategyDifficulty chooseBotStrategyDifficulty(CarColour carColour);
 
     /**
      * Asks if the player is satisfied with the current configuration.
@@ -102,5 +102,5 @@ public interface IOController {
     void displayErrorMessage(String message);
     void printRaceTrack(RaceTrack raceTrack, List<Player> players);
 
-    Position chooseStartingPosition(List<Position> availablePositions, int playerIndex);
+    Position chooseStartingPosition(Player player, List<Position> availablePositions);
 }

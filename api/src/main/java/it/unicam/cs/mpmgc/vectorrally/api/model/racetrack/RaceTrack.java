@@ -44,10 +44,10 @@ public class RaceTrack implements Track {
     @Override
     public List<Position> getPositionsOfComponent(TrackComponent component) {
         List<Position> positions = new ArrayList<>();
-        for (int i = 0; i < track.length; i++) {
-            for (int j = 0; j < track[i].length; j++) {
-                if (track[i][j] == component) {
-                    positions.add(new Position(i, j));
+        for (int y = 0; y < track.length; y++) {
+            for (int x = 0; x < track[y].length; x++) {
+                if (track[y][x] == component) {
+                    positions.add(new Position(x, y));
                 }
             }
         }

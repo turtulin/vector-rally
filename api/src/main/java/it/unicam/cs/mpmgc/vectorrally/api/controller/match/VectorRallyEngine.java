@@ -102,7 +102,7 @@ public class VectorRallyEngine implements GameEngine {
 
     private void chooseStartingPositions(int numHumanPlayers, List<Player> players, List<Position> availablePositions) {
         for (int i = 0; i < numHumanPlayers; i++) {
-            Position chosenPosition = ioController.chooseStartingPosition(availablePositions, i);
+            Position chosenPosition = ioController.chooseStartingPosition(players.get(i), availablePositions);
             availablePositions.remove(chosenPosition);
             players.get(i).setPosition(chosenPosition);
         }
@@ -111,8 +111,8 @@ public class VectorRallyEngine implements GameEngine {
     private void setupBotPlayers(int remainingPositions, List<Player> players, List<CarColour> availableColors, List<Position> availablePositions) {
         int numBots = Math.min(remainingPositions, availableColors.size());
         for (int i = 0; i < numBots; i++) {
-            BotStrategyDifficulty difficulty = ioController.chooseBotStrategyDifficulty();
             CarColour chosenColor = availableColors.get(i);
+            BotStrategyDifficulty difficulty = ioController.chooseBotStrategyDifficulty(chosenColor);
             Car car = new RaceCar(chosenColor);
             Player botPlayer = new BotPlayer(car, difficulty);
             Position botPosition = availablePositions.get(i);
