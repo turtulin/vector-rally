@@ -14,5 +14,5 @@ public interface GameEngine {
     /**
      * Starts the game application.
      */
-    void startGame();
+    void startGame() throws Exception;
 }

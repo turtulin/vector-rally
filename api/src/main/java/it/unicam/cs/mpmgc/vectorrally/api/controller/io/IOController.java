@@ -100,4 +100,7 @@ public interface IOController {
      * Displays an error message.
      */
     void displayErrorMessage(String message);
+    void printRaceTrack(RaceTrack raceTrack, List<Player> players);
+
+    Position chooseStartingPosition(List<Position> availablePositions, int playerIndex);
 }

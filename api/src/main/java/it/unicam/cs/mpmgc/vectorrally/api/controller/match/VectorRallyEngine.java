@@ -4,10 +4,14 @@ import it.unicam.cs.mpmgc.vectorrally.api.controller.io.IOController;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.EightNeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.FourNeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.io.TerminalIOController;
-import it.unicam.cs.mpmgc.vectorrally.api.controller.io.IOUtils;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
+import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
+import it.unicam.cs.mpmgc.vectorrally.api.model.cars.RaceCar;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.BasicComponentPassChecker;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
+import it.unicam.cs.mpmgc.vectorrally.api.model.players.BotPlayer;
+import it.unicam.cs.mpmgc.vectorrally.api.model.players.HumanPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrackBuilder;
@@ -19,6 +23,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategyDifficulty
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -32,51 +37,33 @@ import java.util.List;
  */
 public class VectorRallyEngine implements GameEngine {
     private final IOController ioController;
-    private final GameSetup gameSetup;
+    private final RaceTrackBuilder raceTrackBuilder;
+
 
     public VectorRallyEngine() {
         this.ioController = new TerminalIOController();
-        RaceTrackBuilder trackBuilder = new RaceTrackBuilder();
-        this.gameSetup = new VectorRallySetup(ioController, trackBuilder);
+        this.raceTrackBuilder = new RaceTrackBuilder();
     }
 
     @Override
-    public void startGame() {
-        ioController.displayWelcomeMessage();
-        if (!ioController.askIfPlayerKnowsRules()) {
-            ioController.displayGameRules();
+    public void startGame() throws Exception {
+        displayWelcomeAndRules();
+        NeighborsGenerator neighborsGenerator = chooseRuleType();
+        RaceTrack raceTrack = chooseTrack();
+        int numHumanPlayers = ioController.askNumberOfHumanPlayers(raceTrack.getPositionsOfComponent(TrackComponent.START_POSITION).size());
+        List<Player> players = new ArrayList<>();
+        List<CarColour> availableColors = new ArrayList<>(Arrays.asList(CarColour.values()));
+        setupHumanPlayers(numHumanPlayers, players, availableColors);
+        List<Position> availablePositions = raceTrack.getPositionsOfComponent(TrackComponent.START_POSITION);
+        chooseStartingPositions(numHumanPlayers, players, availablePositions);
+        setupBotPlayers(availablePositions.size(), players, availableColors, availablePositions);
+        if (!confirmConfiguration(raceTrack, players)) {
+            startGame();
+            return;
         }
-        int ruleType = ioController.chooseRuleType();
-        NeighborsGenerator neighborsGenerator = createNeighborsGenerator(ruleType);
-        MoveValidator moveValidator;
-        BasicMovesGenerator moveGenerator;
-
-        boolean playAgain;
-        do {
-            RaceTrack raceTrack = null;
-            try {
-                raceTrack = gameSetup.selectTrack();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            moveValidator = new BasicMoveValidator(new BasicComponentPassChecker(raceTrack)); // Update with the selected track
-            moveGenerator = new BasicMovesGenerator(neighborsGenerator, moveValidator);
-
-            int maxPlayers = raceTrack.getPositionsOfComponent(TrackComponent.START_POSITION).size();
-            List<Player> players = gameSetup.configurePlayers(maxPlayers, new ArrayList<>());
-
-            MatchController matchController = new VectorRallyMatchController(ioController, moveGenerator);
-            matchController.initializeMatch(players, raceTrack);
-            matchController.startMatch();
-
-            playAgain = ioController.askToPlayAnotherMatch();
-            if (playAgain && !ioController.sameConfiguration()) {
-                gameSetup.configurePlayers(maxPlayers, players);
-            }
-        } while (playAgain);
-
-        ioController.displayEndMatchMessage();
+        startMatch(players, raceTrack, neighborsGenerator);
     }
+
 
     private NeighborsGenerator createNeighborsGenerator(int ruleType) {
         return switch (ruleType) {
@@ -85,4 +72,64 @@ public class VectorRallyEngine implements GameEngine {
             default -> throw new IllegalArgumentException("Invalid rule type");
         };
     }
+
+    private void displayWelcomeAndRules() {
+        ioController.displayWelcomeMessage();
+        if (!ioController.askIfPlayerKnowsRules()) {
+            ioController.displayGameRules();
+        }
+    }
+
+    private NeighborsGenerator chooseRuleType() {
+        int ruleType = ioController.chooseRuleType();
+        return ruleType == 1 ? new FourNeighborsGenerator() : new EightNeighborsGenerator();
+    }
+
+    private RaceTrack chooseTrack() throws Exception {
+        String trackFile = ioController.chooseTrack();
+        return raceTrackBuilder.buildTrack(trackFile);
+    }
+
+    private void setupHumanPlayers(int numHumanPlayers, List<Player> players, List<CarColour> availableColors) {
+        for (int i = 0; i < numHumanPlayers; i++) {
+            CarColour chosenColor = ioController.chooseCarColor(availableColors);
+            availableColors.remove(chosenColor);
+            Car car = new RaceCar(chosenColor);
+            Player humanPlayer = new HumanPlayer(car);
+            players.add(humanPlayer);
+        }
+    }
+
+    private void chooseStartingPositions(int numHumanPlayers, List<Player> players, List<Position> availablePositions) {
+        for (int i = 0; i < numHumanPlayers; i++) {
+            Position chosenPosition = ioController.chooseStartingPosition(availablePositions, i);
+            availablePositions.remove(chosenPosition);
+            players.get(i).setPosition(chosenPosition);
+        }
+    }
+
+    private void setupBotPlayers(int remainingPositions, List<Player> players, List<CarColour> availableColors, List<Position> availablePositions) {
+        int numBots = Math.min(remainingPositions, availableColors.size());
+        for (int i = 0; i < numBots; i++) {
+            BotStrategyDifficulty difficulty = ioController.chooseBotStrategyDifficulty();
+            CarColour chosenColor = availableColors.get(i);
+            Car car = new RaceCar(chosenColor);
+            Player botPlayer = new BotPlayer(car, difficulty);
+            Position botPosition = availablePositions.get(i);
+            botPlayer.setPosition(botPosition);
+            players.add(botPlayer);
+        }
+    }
+
+    private boolean confirmConfiguration(RaceTrack raceTrack, List<Player> players) {
+        ioController.printRaceTrack(raceTrack, players);
+        return ioController.askIfSatisfiedWithConfiguration();
+    }
+
+    private void startMatch(List<Player> players, RaceTrack raceTrack, NeighborsGenerator neighborsGenerator) {
+        MatchController matchController = new VectorRallyMatchController(ioController, new BasicMovesGenerator(neighborsGenerator, new BasicMoveValidator(new BasicComponentPassChecker(raceTrack))));
+        matchController.initializeMatch(players, raceTrack);
+        matchController.startMatch();
+    }
+
 }

@@ -154,4 +154,20 @@ public class TerminalIOController implements IOController {
     public void displayErrorMessage(String message) {
         System.out.println("Error: " + message);
     }
+    @Override
+    public void printRaceTrack(RaceTrack raceTrack, List<Player> players) {
+        Utils.printRaceTrack(raceTrack, players);
+    }
+
+    @Override
+    public Position chooseStartingPosition(List<Position> availablePositions, int playerIndex) {
+        System.out.println("Player " + (playerIndex + 1) + ", choose your starting position:");
+        for (int i = 0; i < availablePositions.size(); i++) {
+            Position pos = availablePositions.get(i);
+            System.out.println((i + 1) + ". (" + pos.getX() + ", " + pos.getY() + ")");
+        }
+        int choice = scanner.nextInt() - 1;
+        scanner.nextLine();
+        return availablePositions.get(choice);
+    }
 }

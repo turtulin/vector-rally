@@ -80,4 +80,16 @@ public interface Utils {
     static void printErrorMessage(String message) {
         System.out.println("ERROR: " + message);
     }
+
+    static void printRaceTrack(RaceTrack raceTrack, List<Player> players) {
+        for (int y = 0; y < raceTrack.getLength(); y++) {
+            for (int x = 0; x < raceTrack.getWidth(); x++) {
+                Position position = new Position(x, y);
+                if (!printPlayer(position, players)) {
+                    System.out.print(raceTrack.getComponentAt(y, x).getSymbol());
+                }
+            }
+            System.out.println();
+        }
+    }
 }
