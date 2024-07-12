@@ -12,5 +12,9 @@ public enum CarColour {
     YELLOW,
     GREEN,
     BLUE,
-    PURPLE;
+    PURPLE,
+    WHITE,
+    PINK,
+    GREY,
+    BROWN;
 }

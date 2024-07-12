@@ -2,6 +2,7 @@ package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
+import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategyDifficulty;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public interface GameSetup {
-    RaceTrack getRaceTrack();
-    List<Player> getPlayers();
-    void initializeGameSetupSequence() throws IOException;
+    RaceTrack selectTrack() throws Exception;
+    List<Player> configurePlayers(int maxPlayers, List<Player> existingPlayers);
+    BotStrategyDifficulty chooseBotStrategy();
 }

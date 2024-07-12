@@ -7,5 +7,5 @@ package it.unicam.cs.mpmgc.vectorrally.api.model.movements;
  * @version 1.0
  * @since 2024-07-10
  */
-public record Move(Acceleration acceleration, Coordinates position) implements Shift {
+public record Move(Acceleration acceleration, Position position) implements Shift {
 }

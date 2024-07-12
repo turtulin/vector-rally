@@ -1,78 +1,105 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
-import it.unicam.cs.mpmgc.vectorrally.api.controller.handlers.*;
-import it.unicam.cs.mpmgc.vectorrally.api.controller.io.TerminalIOController;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.io.IOController;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.io.Utils;
-import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.BasicMoveGenerator;
-import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.MoveGenerator;
-import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.BasicComponentPassChecker;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.ComponentPassChecker;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
-import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMoveValidator;
-import it.unicam.cs.mpmgc.vectorrally.api.model.rules.FinishLineWinCondition;
-import it.unicam.cs.mpmgc.vectorrally.api.model.rules.StartingPositionValidator;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
+import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicDestinationsGenerator;
+import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class VectorRallyMatchController implements MatchController {
-    private final GameSetup gameSetup;
-    private final TerminalIOController ioController;
-    private final BasicMoveGenerator moveGenerator;
+    private List<Player> players;
+    private RaceTrack raceTrack;
+    private final IOController ioController;
+    private final BasicMovesGenerator moveGenerator;
+    private Queue<Player> turnQueue;
+    private boolean gameOver;
 
-    public VectorRallyMatchController(GameSetup gameSetup, TerminalIOController ioController, NeighborsGenerator neighborsGenerator) {
-        this.gameSetup = gameSetup;
+
+    public VectorRallyMatchController(IOController ioController, BasicMovesGenerator moveGenerator) {
         this.ioController = ioController;
-        this.moveGenerator = new BasicMoveGenerator<>(neighborsGenerator);
+        this.moveGenerator = moveGenerator;
     }
 
     @Override
-    public void startSimulation() {
-        RaceTrack raceTrack = gameSetup.getRaceTrack();
-        List<Player> players = gameSetup.getPlayers();
-        boolean gameRunning = true;
-
-        while (gameRunning) {
-            for (Player player : players) {
-                if (!player.isRacing()) continue;
-                List<Move> possibleMoves = moveGenerator.generateMoves(player, raceTrack);
-                ioController.printRaceTrack(raceTrack, players);
-                int chosenMoveIndex = ioController.chooseMoveToPerform(possibleMoves);
-                Move chosenMove = possibleMoves.get(chosenMoveIndex);
-
-                MoveHandler handlerChain = createHandlersChain(raceTrack);
-
-                if (!handlerChain.handleMove(player, (Position) chosenMove.position())) {
-                    ioController.printInvalidMoveMessage(player);
-                    player.setRacing(false);
-                } else {
-                    player.setPosition((Position) chosenMove.position());
-                    player.setPlayerAcceleration(chosenMove.acceleration());
-                }
-
-                if (new FinishLineWinCondition(raceTrack).isRespected(player)) {
-                    ioController.printWinMessage(player);
-                    gameRunning = false;
-                    break;
-                }
-            }
-        }
-        ioController.printGameOver();
+    public void initializeMatch(List<Player> players, RaceTrack raceTrack) {
+        this.players = players;
+        this.raceTrack = raceTrack;
+        this.turnQueue = new LinkedList<>(players);
+        this.gameOver = false;
     }
 
-    private MoveHandler createHandlersChain(RaceTrack raceTrack) {
-        MoveHandler illegalDirectionHandler = new IllegalDirectionHandler(new FinishLineWinCondition(raceTrack));
-        MoveHandler oilSpotHandler = new OilSpotHandler(new BasicComponentPassChecker(raceTrack));
-        MoveHandler wallHandler = new WallHandler(new BasicComponentPassChecker(raceTrack));
-        MoveHandler startPositionHandler = new StartingPositionHandler(new StartingPositionValidator(raceTrack));
+    @Override
+    public void startMatch() {
+        while (!gameOver) {
+            handleTurn(turnQueue.poll());
+        }
+        endMatch();
+    }
 
-        ((IllegalDirectionHandler) illegalDirectionHandler).setNextHandler(oilSpotHandler);
-        ((OilSpotHandler) oilSpotHandler).setNextHandler(wallHandler);
-        ((WallHandler) wallHandler).setNextHandler(startPositionHandler);
+    @Override
+    public void handleTurn(Player player) {
+        Utils.printTurnMessage(turnQueue.size(), player);
+        List<Move> possibleMoves = moveGenerator.generatePossibleMoves(player, raceTrack, players);
+        if (possibleMoves.isEmpty()) {
+            handleElimination(player);
+        } else {
+            int chosenMoveIndex = ioController.chooseMove(possibleMoves);
+            Move chosenMove = possibleMoves.get(chosenMoveIndex);
+            handleMove(player, chosenMove);
+        }
+    }
 
-        return illegalDirectionHandler;
+    @Override
+    public void handleMove(Player player, Move move) {
+        if (checkIfPlayerWins(move)) {
+            Utils.printWinMessage(player);
+            gameOver = true;
+            return;
+        }
+        player.setPosition(move.position());
+        player.setPlayerAcceleration(move.acceleration());
+
+        if (!moveGenerator.generatePossibleMoves(player, raceTrack, players).isEmpty()) {
+            turnQueue.add(player);
+        } else {
+            handleElimination(player);
+        }
+    }
+
+    @Override
+    public void handleElimination(Player player) {
+        Utils.printEliminationMessage(player);
+        players.remove(player);
+        if (players.isEmpty()) {
+            gameOver = true;
+        }
+    }
+
+    @Override
+    public void endMatch() {
+        ioController.displayEndMatchMessage();
+    }
+
+    private boolean checkIfPlayerWins(Move move) {
+        Position start = move.position();
+        Position end = new Position(start.getX() + move.acceleration().getDx(), start.getY() + move.acceleration().getDy());
+        ComponentPassChecker checker = new BasicComponentPassChecker(raceTrack);
+        return raceTrack.getComponentAt(end.getX(), end.getY()) == TrackComponent.END_LINE || checker.passesThroughComponent(start, end, TrackComponent.END_LINE);
+    }
+
+    @Override
+    public boolean checkGameOver() {
+        return gameOver;
     }
 }
+

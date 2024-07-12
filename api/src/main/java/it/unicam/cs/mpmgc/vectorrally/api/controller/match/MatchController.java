@@ -1,5 +1,12 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
+import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
+
+import java.util.List;
+
 /**
  * This interface defines methods for controlling the game match.
  *
@@ -11,8 +18,17 @@ package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
  */
 public interface MatchController {
 
-    /**
-     * Starts the game match.
-     */
-    void startSimulation();
+    void initializeMatch(List<Player> players, RaceTrack raceTrack);
+
+    void startMatch();
+
+    void handleTurn(Player player);
+
+    void handleMove(Player player, Move move);
+
+    void handleElimination(Player player);
+
+    boolean checkGameOver();
+
+    void endMatch();
 }
