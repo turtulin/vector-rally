@@ -2,6 +2,8 @@ package it.unicam.cs.mpmgc.vectorrally.api.model.algorithms;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
+import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 
 import java.util.List;
 

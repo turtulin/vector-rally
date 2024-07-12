@@ -15,7 +15,6 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
  * @since 2024-07-11
  */
 public class BasicMoveValidator implements GameRule {
-    private final RaceTrack raceTrack;
     private final ComponentPassChecker componentPassChecker;
 
     /**
@@ -26,27 +25,15 @@ public class BasicMoveValidator implements GameRule {
      */
     public BasicMoveValidator(RaceTrack raceTrack) {
         if (raceTrack == null) throw new NullPointerException("RaceTrack cannot be null");
-        this.raceTrack = raceTrack;
         this.componentPassChecker = new BasicComponentPassChecker(raceTrack);
-    }
-
-
-    public boolean isRespected(Player player, Position newPosition) {
-        Position currentPosition = player.getPosition();
-        if (!raceTrack.isInBounds(newPosition.getX(), newPosition.getY())) {
-            return false;
-        }
-        return !componentPassChecker.passesThroughComponent(currentPosition, newPosition, TrackComponent.WALL);
     }
 
     @Override
     public boolean isRespected(Player player) {
         Position currentPosition = player.getPosition();
-        Acceleration acceleration = player.getPlayerAcceleration();
-        Position newPosition = new Position(
-                currentPosition.getX() + acceleration.getDx(),
-                currentPosition.getY() + acceleration.getDy()
-        );
-        return isRespected(player, newPosition);
+        Position newPosition = new Position(currentPosition.getX() + player.getPlayerAcceleration().getDx(),
+                currentPosition.getY() + player.getPlayerAcceleration().getDy());
+        return componentPassChecker.passesThroughComponent(currentPosition, newPosition, TrackComponent.ROAD)
+                || componentPassChecker.passesThroughComponent(currentPosition, newPosition, TrackComponent.OIL_SPOT);
     }
 }

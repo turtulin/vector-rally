@@ -1,40 +1,26 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.players;
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 
-/**
- * This class represents a player in the vector rally game.
- * It implements the {@link Player} interface.
- *
- * @version 1.0
- * @since 2024-07-10
- */
-public class RacePlayer implements Player {
-    private final Car playerCar;
-
-    private final Position position;
-
-    private boolean isRacing;
-
-    private final PlayerType playerType;
+public abstract class DefaultPlayer implements Player {
+    protected final Car playerCar;
+    protected Position position;
+    protected boolean isRacing;
 
     /**
-     * Constructs a RacePlayer with the specified car and player type.
+     * Constructs a DefaultPlayer with the specified car.
      *
      * @param playerCar the car associated with the player.
-     * @param playerType the type of the player (HUMAN or BOT).
-     * @throws NullPointerException if the playerCar or playerType is null.
+     * @throws NullPointerException if the playerCar is null.
      */
-    public RacePlayer(Car playerCar, PlayerType playerType) {
+    public DefaultPlayer(Car playerCar) {
         if (playerCar == null) throw new NullPointerException("Cannot create a player without a car");
-        if (playerType == null) throw new NullPointerException("Cannot create a player without a player type.");
         this.playerCar = playerCar;
-        this.position = new Position(0,0);
+        this.position = new Position(0, 0);
         this.isRacing = false;
-        this.playerType = playerType;
     }
 
     @Override
@@ -44,7 +30,7 @@ public class RacePlayer implements Player {
 
     @Override
     public void setPlayerAcceleration(Acceleration acceleration) {
-        if (acceleration == null) throw new NullPointerException("Player speed cannot be null");
+        if (acceleration == null) throw new NullPointerException("Player acceleration cannot be null");
         this.playerCar.setAcceleration(acceleration);
     }
 
@@ -61,8 +47,7 @@ public class RacePlayer implements Player {
     @Override
     public void setPosition(Position position) {
         if (position == null) throw new NullPointerException("Player position cannot be null");
-        this.position.setX(position.getX());
-        this.position.setY(position.getY());
+        this.position = position;
     }
 
     @Override
@@ -71,13 +56,7 @@ public class RacePlayer implements Player {
     }
 
     @Override
-    public void setRacing(boolean IsRacing) {
-        this.isRacing = IsRacing;
+    public void setRacing(boolean isRacing) {
+        this.isRacing = isRacing;
     }
-
-    @Override
-    public PlayerType getPlayerType() {
-        return playerType;
-    }
-
 }

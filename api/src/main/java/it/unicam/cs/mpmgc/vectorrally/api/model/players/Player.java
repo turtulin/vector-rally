@@ -69,12 +69,4 @@ public interface Player {
      * @param isRacing the new racing status of the player.
      */
     void setRacing(boolean isRacing);
-
-    /**
-     * Gets the type of the player (BOT or HUMAN).
-     *
-     * @return the player type.
-     */
-    PlayerType getPlayerType();
-
 }

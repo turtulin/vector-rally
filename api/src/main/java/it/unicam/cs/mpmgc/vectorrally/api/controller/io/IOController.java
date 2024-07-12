@@ -1,5 +1,12 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.io;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
+import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
+
+import java.util.List;
+
 /**
  * This interface defines methods for input and output operations in the game.
  *
@@ -10,19 +17,15 @@ package it.unicam.cs.mpmgc.vectorrally.api.controller.io;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public interface IOController {
-
-    /**
-     * Asks the user if they want to start a new game.
-     *
-     * @return 1 if the user wants to start a new game, 0 otherwise.
-     */
-    int askForNewGame();
-
-    /**
-     * Displays a message to the user.
-     *
-     * @param message the message to display.
-     */
-    void displayMessage(String message);
+    void printRaceTrack(RaceTrack raceTrack, List<Player> players);
+    int chooseMoveToPerform(List<Move> moves);
+    void printWinMessage(Player player);
+    void printInvalidMoveMessage(Player player);
+    void printGameOver();
+    void printMessage(String message);
+    String chooseTrack();
+    int getNumberOfHumanPlayers();
+    int getNumberOfBotPlayers();
+    List<Player> setupPlayers(RaceTrack raceTrack, int numHumanPlayers, int numBotPlayers);
 
 }

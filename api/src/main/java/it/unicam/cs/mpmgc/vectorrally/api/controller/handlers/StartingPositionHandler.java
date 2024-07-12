@@ -1,22 +1,14 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.handlers;
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Direction;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
-import it.unicam.cs.mpmgc.vectorrally.api.model.rules.FinishLineWinCondition;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.GameRule;
 
-/**
- * This class handles the validation for illegal direction moves.
- *
- * @version 1.0
- * @since 2024-07-11
- */
-public class IllegalDirectionHandler implements MoveHandler {
+public class StartingPositionHandler implements MoveHandler {
     private final GameRule rule;
     private MoveHandler nextHandler;
 
-    public IllegalDirectionHandler(GameRule rule) {
+    public StartingPositionHandler(GameRule rule) {
         this.rule = rule;
     }
 
@@ -26,6 +18,7 @@ public class IllegalDirectionHandler implements MoveHandler {
 
     @Override
     public boolean handleMove(Player player, Position newPosition) {
+        player.setPosition(newPosition);
         if (!rule.isRespected(player)) {
             return false;
         }

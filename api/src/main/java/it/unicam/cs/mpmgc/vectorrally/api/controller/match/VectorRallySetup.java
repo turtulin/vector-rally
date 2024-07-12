@@ -1,13 +1,12 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
-import it.unicam.cs.mpmgc.vectorrally.api.controller.io.Utils;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.io.TerminalIOController;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrackBuilder;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * This class implements the GameSetup interface, handling the setup process for the game.
@@ -17,35 +16,23 @@ import java.util.Scanner;
  */
 public class VectorRallySetup implements GameSetup {
 
+    private final TerminalIOController ioController;
+    private final RaceTrackBuilder trackBuilder;
     private RaceTrack raceTrack;
     private List<Player> players;
-    private final Utils utilities;
 
-    public VectorRallySetup(Utils utilities) {
-        this.utilities = utilities;
+    public VectorRallySetup(TerminalIOController ioController, RaceTrackBuilder trackBuilder) {
+        this.ioController = ioController;
+        this.trackBuilder = trackBuilder;
     }
 
     @Override
-    public void initializeGameSetup() {
-        try {
-            setupRaceTrack();
-            setupPlayers();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setupRaceTrack() throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        RaceTrackBuilder builder = new RaceTrackBuilder();
-        System.out.println("Choose the racetrack file:");
-        String filename = scanner.nextLine();
-        raceTrack = builder.buildTrack(filename);
-    }
-
-    private void setupPlayers() {
-        // Implementation for setting up players goes here
-        // Use utilities to display options and get user input
+    public void initializeGameSetupSequence() throws IOException {
+        String trackFile = ioController.chooseTrack();
+        this.raceTrack = trackBuilder.buildTrack(trackFile);
+        int numHumanPlayers = ioController.getNumberOfHumanPlayers();
+        int numBotPlayers = ioController.getNumberOfBotPlayers();
+        this.players = ioController.setupPlayers(raceTrack, numHumanPlayers, numBotPlayers);
     }
 
     @Override

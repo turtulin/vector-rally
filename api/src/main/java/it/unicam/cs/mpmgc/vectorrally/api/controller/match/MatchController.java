@@ -14,5 +14,5 @@ public interface MatchController {
     /**
      * Starts the game match.
      */
-    void startGame();
+    void startSimulation();
 }

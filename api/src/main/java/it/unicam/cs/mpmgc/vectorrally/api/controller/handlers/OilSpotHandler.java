@@ -20,15 +20,9 @@ public class OilSpotHandler implements MoveHandler {
 
     @Override
     public boolean handleMove(Player player, Position newPosition) {
-        Position currentPosition = player.getPosition();
-        if (componentPassChecker.passesThroughComponent(currentPosition, newPosition, TrackComponent.OIL_SPOT)) {
-            Acceleration defaultMove = new Acceleration(player.getPlayerAcceleration().getDx(), player.getPlayerAcceleration().getDy());
-            player.setPlayerAcceleration(defaultMove);
-            return true;
+        if (componentPassChecker.passesThroughComponent(player.getPosition(), newPosition, TrackComponent.OIL_SPOT)) {
+            player.setPlayerAcceleration(new Acceleration(0, 0));
         }
-        if (nextHandler != null) {
-            return nextHandler.handleMove(player, newPosition);
-        }
-        return true;
+        return nextHandler == null || nextHandler.handleMove(player, newPosition);
     }
 }

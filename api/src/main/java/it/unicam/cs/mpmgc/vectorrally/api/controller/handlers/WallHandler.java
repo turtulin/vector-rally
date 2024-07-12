@@ -19,14 +19,7 @@ public class WallHandler implements MoveHandler {
 
     @Override
     public boolean handleMove(Player player, Position newPosition) {
-        Position currentPosition = player.getPosition();
-        if (componentPassChecker.passesThroughComponent(currentPosition, newPosition, TrackComponent.WALL)) {
-            player.setRacing(false);
-            return false;
-        }
-        if (nextHandler != null) {
-            return nextHandler.handleMove(player, newPosition);
-        }
-        return true;
+        return !componentPassChecker.passesThroughComponent(player.getPosition(), newPosition, TrackComponent.WALL) &&
+                (nextHandler == null || nextHandler.handleMove(player, newPosition));
     }
 }

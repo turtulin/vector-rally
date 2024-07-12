@@ -22,8 +22,7 @@ public class StartingPositionValidator implements GameRule {
 
     @Override
     public boolean isRespected(Player player) {
-        List<Position> startPositions = raceTrack.getPositionsOfComponent(TrackComponent.START_POSITION);
         Position playerPosition = player.getPosition();
-        return startPositions.contains(playerPosition);
+        return raceTrack.getComponentAt(playerPosition.getX(), playerPosition.getY()) == TrackComponent.START_POSITION;
     }
 }
