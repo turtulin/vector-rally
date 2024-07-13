@@ -62,4 +62,9 @@ public class Acceleration implements Vector {
             default -> throw new IllegalStateException("Unexpected value: " + Integer.signum(dx) + ", " + Integer.signum(dy));
         };
     }
+
+    @Override
+    public String toString() {
+        return String.format("Acceleration(dx=%d, dy=%d)", this.dx, this.dy);
+    }
 }

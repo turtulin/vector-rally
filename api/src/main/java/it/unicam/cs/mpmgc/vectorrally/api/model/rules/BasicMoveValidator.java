@@ -19,14 +19,25 @@ public class BasicMoveValidator implements MoveValidator {
 
     @Override
     public boolean isValid(Move move, RaceTrack track, List<Player> allPlayers) {
-        Position start = (Position) move.position();
-        Position end = new Position(start.getX() + move.acceleration().getDx(), start.getY() + move.acceleration().getDy());
-        if (!track.isInBounds(end.getX(), end.getY())) return false;
+        Position start = move.position();
+        int newX = start.getX() + move.acceleration().getDx();
+        int newY = start.getY() + move.acceleration().getDy();
+        Position end = new Position(newX, newY);
+        if (!track.isInBounds(end.getX(), end.getY())) {
+            return false;
+        }
+
         if (componentPassChecker.passesThroughComponent(start, end, TrackComponent.WALL)) return false;
         if (componentPassChecker.passesThroughComponent(start, end, TrackComponent.END_LINE)) {
             if (!isValidDirection(move.acceleration().getDirection(), track)) return false;
         }
-        return !isPositionOccupied(end, allPlayers);
+
+        for (Player player : allPlayers) {
+            if (player.getPosition().equals(end)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean isValidDirection(Direction direction, RaceTrack track) {

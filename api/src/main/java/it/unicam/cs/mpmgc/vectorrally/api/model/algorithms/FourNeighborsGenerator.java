@@ -19,7 +19,9 @@ public class FourNeighborsGenerator implements NeighborsGenerator {
         int[] dy = {0, 0, -1, 1};
         List<Position> shifts = new ArrayList<>();
         for (int i = 0; i < dx.length; i++) {
-            shifts.add(new Position(position.getX() + dx[i], position.getY() + dy[i]));
+            int newX = position.getX() + dx[i];
+            int newY = position.getY() + dy[i];
+            shifts.add(new Position(newX, newY));
         }
         return shifts;
     }

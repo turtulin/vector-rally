@@ -59,11 +59,7 @@ public class Position implements Coordinates {
         return Objects.hash(x, y);
     }
 
-    @Override
     public String toString() {
-        return "Position{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+        return String.format("Position(x=%d, y=%d)", this.x, this.y);
     }
 }

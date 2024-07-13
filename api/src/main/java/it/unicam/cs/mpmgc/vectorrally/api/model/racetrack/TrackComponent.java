@@ -12,7 +12,6 @@ public enum TrackComponent implements Component {
     ROAD(' '),
     START_LINE('s'),
     END_LINE('e'),
-    OIL_SPOT('o'),
     START_POSITION('p');
 
     private final char symbol;

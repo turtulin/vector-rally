@@ -33,20 +33,20 @@ public class RaceTrack implements Track {
 
     @Override
     public TrackComponent getComponentAt(int x, int y) {
+        if (!isInBounds(x, y)) throw new ArrayIndexOutOfBoundsException("Position out of bounds: (" + x + ", " + y + ")");
         return track[x][y];
     }
-
     @Override
     public boolean isInBounds(int x, int y) {
-        return x >= 0 && y >= 0 && x < length && y < width;
+        return x >= 0 && x < length && y >= 0 && y < width;
     }
 
     @Override
     public List<Position> getPositionsOfComponent(TrackComponent component) {
         List<Position> positions = new ArrayList<>();
-        for (int y = 0; y < track.length; y++) {
-            for (int x = 0; x < track[y].length; x++) {
-                if (track[y][x] == component) {
+        for (int x = 0; x < length; x++) { // iterate over rows
+            for (int y = 0; y < width; y++) { // iterate over columns
+                if (track[x][y] == component) {
                     positions.add(new Position(x, y));
                 }
             }

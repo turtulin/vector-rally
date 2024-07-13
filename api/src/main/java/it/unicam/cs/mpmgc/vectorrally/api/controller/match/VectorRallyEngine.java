@@ -22,6 +22,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.rules.MoveValidator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategyDifficulty;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,6 +48,7 @@ public class VectorRallyEngine implements GameEngine {
 
     @Override
     public void startGame() throws Exception {
+        // TODO: pass this responsibility to the IOController
         displayWelcomeAndRules();
         NeighborsGenerator neighborsGenerator = chooseRuleType();
         RaceTrack raceTrack = chooseTrack();
@@ -123,6 +125,12 @@ public class VectorRallyEngine implements GameEngine {
 
     private boolean confirmConfiguration(RaceTrack raceTrack, List<Player> players) {
         ioController.printRaceTrack(raceTrack, players);
+        for (Player player : players) {
+            Position pos = player.getPosition();
+            if (!raceTrack.isInBounds(pos.getX(), pos.getY())) {
+                System.out.println("Initial position out of bounds: " + pos);
+            }
+        }
         return ioController.askIfSatisfiedWithConfiguration();
     }
 

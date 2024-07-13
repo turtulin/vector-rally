@@ -82,11 +82,28 @@ public interface Utils {
     }
 
     static void printRaceTrack(RaceTrack raceTrack, List<Player> players) {
-        for (int y = 0; y < raceTrack.getLength(); y++) {
-            for (int x = 0; x < raceTrack.getWidth(); x++) {
+        for (int x = 0; x < raceTrack.getLength(); x++) {
+            for (int y = 0; y < raceTrack.getWidth(); y++) {
                 Position position = new Position(x, y);
                 if (!printPlayer(position, players)) {
-                    System.out.print(raceTrack.getComponentAt(y, x).getSymbol());
+                    System.out.print(raceTrack.getComponentAt(x, y).getSymbol());
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    public static void printRaceTrack(RaceTrack raceTrack, List<Player> players, List<Position> destinations) {
+        for (int x = 0; x < raceTrack.getLength(); x++) {
+            for (int y = 0; y < raceTrack.getWidth(); y++) {
+                Position position = new Position(x, y);
+                if (!printPlayer(position, players)) {
+                    if (destinations.contains(position)) {
+                        System.out.print("*");
+                    } else {
+
+                        System.out.print(raceTrack.getComponentAt(x, y).getSymbol());
+                    }
                 }
             }
             System.out.println();

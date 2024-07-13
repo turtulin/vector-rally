@@ -2,6 +2,7 @@ package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
 import it.unicam.cs.mpmgc.vectorrally.api.controller.io.IOController;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.io.Utils;
+import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.BasicComponentPassChecker;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.ComponentPassChecker;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
@@ -14,7 +15,9 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class VectorRallyMatchController implements MatchController {
     private List<Player> players;
@@ -41,7 +44,7 @@ public class VectorRallyMatchController implements MatchController {
     @Override
     public void startMatch() {
         while (!gameOver) {
-            handleTurn(turnQueue.poll());
+            handleTurn(Objects.requireNonNull(turnQueue.poll()));
         }
         endMatch();
     }
@@ -53,6 +56,11 @@ public class VectorRallyMatchController implements MatchController {
         if (possibleMoves.isEmpty()) {
             handleElimination(player);
         } else {
+            List<Position> possibleDestinations = possibleMoves.stream()
+                    .map(move -> new Position(player.getPosition().getX() + move.acceleration().getDx(),
+                            player.getPosition().getY() + move.acceleration().getDy()))
+                    .collect(Collectors.toList());
+            Utils.printRaceTrack(raceTrack, players, possibleDestinations);
             int chosenMoveIndex = ioController.chooseMove(possibleMoves);
             Move chosenMove = possibleMoves.get(chosenMoveIndex);
             handleMove(player, chosenMove);
@@ -61,6 +69,7 @@ public class VectorRallyMatchController implements MatchController {
 
     @Override
     public void handleMove(Player player, Move move) {
+        Position newPosition = new Position(move.position().getX() + move.acceleration().getDx(), move.position().getY() + move.acceleration().getDy());
         if (checkIfPlayerWins(move)) {
             Utils.printWinMessage(player);
             gameOver = true;
@@ -79,6 +88,7 @@ public class VectorRallyMatchController implements MatchController {
     @Override
     public void handleElimination(Player player) {
         Utils.printEliminationMessage(player);
+        turnQueue.remove(player);
         players.remove(player);
         if (players.isEmpty()) {
             gameOver = true;
@@ -93,8 +103,12 @@ public class VectorRallyMatchController implements MatchController {
     private boolean checkIfPlayerWins(Move move) {
         Position start = move.position();
         Position end = new Position(start.getX() + move.acceleration().getDx(), start.getY() + move.acceleration().getDy());
+        System.out.println("Checking win condition from " + start + " to " + end);
         ComponentPassChecker checker = new BasicComponentPassChecker(raceTrack);
-        return raceTrack.getComponentAt(end.getX(), end.getY()) == TrackComponent.END_LINE || checker.passesThroughComponent(start, end, TrackComponent.END_LINE);
+        boolean result = raceTrack.getComponentAt(end.getX(), end.getY()) == TrackComponent.END_LINE || checker.passesThroughComponent(start, end, TrackComponent.END_LINE);
+        System.out.println("Win condition: " + result);
+        return result;
+        //return raceTrack.getComponentAt(end.getX(), end.getY()) == TrackComponent.END_LINE || checker.passesThroughComponent(start, end, TrackComponent.END_LINE);
     }
 
     @Override

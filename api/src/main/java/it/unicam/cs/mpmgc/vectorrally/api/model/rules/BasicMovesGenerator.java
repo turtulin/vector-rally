@@ -23,9 +23,9 @@ public class BasicMovesGenerator {
         List<Move> possibleMoves = new ArrayList<>();
         Position currentPosition = player.getPosition();
         List<Position> shifts = neighborsGenerator.generateShifts(currentPosition);
+
         for (Position shift : shifts) {
-            Acceleration acceleration = new Acceleration(shift.getX() - currentPosition.getX(), shift.getY() - currentPosition.getY());
-            Move move = new Move(acceleration, new Position(currentPosition.getX() + acceleration.getDx(), currentPosition.getY() + acceleration.getDy()));
+            Move move = new Move(new Acceleration(shift.getX() - currentPosition.getX(), shift.getY() - currentPosition.getY()), currentPosition);
             if (moveValidator.isValid(move, track, allPlayers)) {
                 possibleMoves.add(move);
             }
