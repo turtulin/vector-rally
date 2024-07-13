@@ -1,5 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.strategies;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 
@@ -23,5 +24,5 @@ public interface DecisionStrategy {
      * @param possibleMoves a list of possible moves the player can make.
      * @return the chosen move.
      */
-    Position decideMove(Player player, List<Position> possibleMoves);
+    Move decideMove(Player player, List<Move> possibleMoves);
 }

@@ -5,7 +5,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
-import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategyDifficulty;
+import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 
 import java.util.List;
 
@@ -65,7 +65,7 @@ public interface IOController {
      * Asks the player to choose a bot strategy difficulty.
      * @return the chosen bot strategy difficulty.
      */
-    BotStrategyDifficulty chooseBotStrategyDifficulty(CarColour carColour);
+    BotStrategy chooseBotStrategyDifficulty(CarColour carColour);
 
     /**
      * Asks if the player is satisfied with the current configuration.

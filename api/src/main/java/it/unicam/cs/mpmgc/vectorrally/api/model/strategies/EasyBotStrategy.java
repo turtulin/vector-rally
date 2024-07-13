@@ -1,5 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.strategies;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 
@@ -13,13 +14,13 @@ import java.util.Random;
  * @version 1.0
  * @since 2024-07-11
  */
-public class EasyDecisionStrategy implements DecisionStrategy {
+public class EasyBotStrategy implements DecisionStrategy {
     private final Random random;
 
     /**
-     * Constructs an EasyDecisionStrategy with a new random number generator.
+     * Constructs an EasyBotStrategy with a new random number generator.
      */
-    public EasyDecisionStrategy() {
+    public EasyBotStrategy() {
         this.random = new Random();
     }
 
@@ -32,10 +33,7 @@ public class EasyDecisionStrategy implements DecisionStrategy {
      * @throws IllegalArgumentException if no possible moves are available.
      */
     @Override
-    public Position decideMove(Player player, List<Position> possibleMoves) {
-        if (possibleMoves.isEmpty()) {
-            throw new IllegalArgumentException("No possible moves available for the player.");
-        }
+    public Move decideMove(Player player, List<Move> possibleMoves) {
         return possibleMoves.get(random.nextInt(possibleMoves.size()));
     }
 }

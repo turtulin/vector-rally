@@ -44,8 +44,8 @@ public class RaceTrack implements Track {
     @Override
     public List<Position> getPositionsOfComponent(TrackComponent component) {
         List<Position> positions = new ArrayList<>();
-        for (int x = 0; x < length; x++) { // iterate over rows
-            for (int y = 0; y < width; y++) { // iterate over columns
+        for (int x = 0; x < length; x++) {
+            for (int y = 0; y < width; y++) {
                 if (track[x][y] == component) {
                     positions.add(new Position(x, y));
                 }

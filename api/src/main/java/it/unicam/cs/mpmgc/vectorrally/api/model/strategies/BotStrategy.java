@@ -6,6 +6,6 @@ package it.unicam.cs.mpmgc.vectorrally.api.model.strategies;
  * @version 1.0
  * @since 2024-07-11
  */
-public enum BotStrategyDifficulty {
+public enum BotStrategy {
     EASY, MEDIUM, HARD;
 }

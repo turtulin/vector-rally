@@ -10,11 +10,11 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BasicMovesGenerator {
-    private final NeighborsGenerator neighborsGenerator;
+public class BasicMovesGenerator<T extends NeighborsGenerator> {
+    private final T neighborsGenerator;
     private final MoveValidator moveValidator;
 
-    public BasicMovesGenerator(NeighborsGenerator neighborsGenerator, MoveValidator moveValidator) {
+    public BasicMovesGenerator(T neighborsGenerator, MoveValidator moveValidator) {
         this.neighborsGenerator = neighborsGenerator;
         this.moveValidator = moveValidator;
     }

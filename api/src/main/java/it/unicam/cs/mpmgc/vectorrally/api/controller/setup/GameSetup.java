@@ -1,9 +1,9 @@
-package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
+package it.unicam.cs.mpmgc.vectorrally.api.controller.setup;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
-import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategyDifficulty;
+import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,5 +20,5 @@ import java.util.List;
 public interface GameSetup {
     RaceTrack selectTrack() throws Exception;
     List<Player> configurePlayers(int maxPlayers, List<Player> existingPlayers);
-    BotStrategyDifficulty chooseBotStrategy(CarColour carColour) throws IOException;
+    BotStrategy chooseBotStrategy(CarColour carColour) throws IOException;
 }

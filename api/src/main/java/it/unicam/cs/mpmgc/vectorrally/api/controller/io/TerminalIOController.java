@@ -5,7 +5,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
-import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategyDifficulty;
+import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 
 import java.io.File;
 import java.io.IOException;
@@ -98,7 +98,7 @@ public class TerminalIOController implements IOController {
     }
 
     @Override
-    public BotStrategyDifficulty chooseBotStrategyDifficulty(CarColour carColour) {
+    public BotStrategy chooseBotStrategyDifficulty(CarColour carColour) {
         System.out.println("Choose the bot [" + carColour + "] strategy difficulty:");
         System.out.println("1. Easy");
         System.out.println("2. Medium");
@@ -106,9 +106,9 @@ public class TerminalIOController implements IOController {
         int choice = scanner.nextInt();
         scanner.nextLine();
         return switch (choice) {
-            case 1 -> BotStrategyDifficulty.EASY;
-            case 2 -> BotStrategyDifficulty.MEDIUM;
-            case 3 -> BotStrategyDifficulty.HARD;
+            case 1 -> BotStrategy.EASY;
+            case 2 -> BotStrategy.MEDIUM;
+            case 3 -> BotStrategy.HARD;
             default -> throw new IllegalArgumentException("Invalid choice");
         };
     }

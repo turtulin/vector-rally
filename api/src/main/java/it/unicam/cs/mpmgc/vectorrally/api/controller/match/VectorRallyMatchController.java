@@ -2,16 +2,17 @@ package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
 import it.unicam.cs.mpmgc.vectorrally.api.controller.io.IOController;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.io.Utils;
-import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.BasicComponentPassChecker;
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.ComponentPassChecker;
+import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.AStar;
+import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.AStarManhattan;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
+import it.unicam.cs.mpmgc.vectorrally.api.model.players.BotPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
-import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicDestinationsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.BotStrategyFactory;
+import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.DecisionStrategy;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,12 +26,19 @@ public class VectorRallyMatchController implements MatchController {
     private final IOController ioController;
     private final BasicMovesGenerator moveGenerator;
     private Queue<Player> turnQueue;
+    private final BotStrategyFactory botStrategyFactory;
     private boolean gameOver;
 
 
     public VectorRallyMatchController(IOController ioController, BasicMovesGenerator moveGenerator) {
         this.ioController = ioController;
         this.moveGenerator = moveGenerator;
+        this.botStrategyFactory = initializeBotStrategyFactory();
+    }
+
+    private BotStrategyFactory initializeBotStrategyFactory() {
+        AStar aStarAlgorithm = new AStarManhattan(raceTrack);  // Initialize AStar with raceTrack
+        return new BotStrategyFactory(aStarAlgorithm);  // Initialize BotStrategyFactory
     }
 
     @Override
@@ -57,11 +65,22 @@ public class VectorRallyMatchController implements MatchController {
             handleElimination(player);
         } else {
             List<Position> possibleDestinations = possibleMoves.stream()
-                    .map(move -> new Position(player.getPosition().getX() + move.acceleration().getDx(),
-                            player.getPosition().getY() + move.acceleration().getDy()))
+                    .map(Move::position)
                     .collect(Collectors.toList());
             Utils.printRaceTrack(raceTrack, players, possibleDestinations);
-            int chosenMoveIndex = ioController.chooseMove(possibleMoves);
+
+            int chosenMoveIndex;
+            if (player instanceof BotPlayer botPlayer) {
+                DecisionStrategy strategy = botStrategyFactory.getStrategy(botPlayer.getStrategy());
+                Move chosenPosition = strategy.decideMove(player, possibleMoves);
+                chosenMoveIndex = possibleMoves.indexOf(possibleMoves.stream()
+                        .filter(move -> move.equals(chosenPosition))
+                        .findFirst()
+                        .orElseThrow());
+            } else {
+                chosenMoveIndex = ioController.chooseMove(possibleMoves);
+            }
+
             Move chosenMove = possibleMoves.get(chosenMoveIndex);
             handleMove(player, chosenMove);
         }
@@ -75,7 +94,7 @@ public class VectorRallyMatchController implements MatchController {
             gameOver = true;
             return;
         }
-        player.setPosition(move.position());
+        player.setPosition(newPosition);
         player.setPlayerAcceleration(move.acceleration());
 
         if (!moveGenerator.generatePossibleMoves(player, raceTrack, players).isEmpty()) {
@@ -104,11 +123,9 @@ public class VectorRallyMatchController implements MatchController {
         Position start = move.position();
         Position end = new Position(start.getX() + move.acceleration().getDx(), start.getY() + move.acceleration().getDy());
         System.out.println("Checking win condition from " + start + " to " + end);
-        ComponentPassChecker checker = new BasicComponentPassChecker(raceTrack);
-        boolean result = raceTrack.getComponentAt(end.getX(), end.getY()) == TrackComponent.END_LINE || checker.passesThroughComponent(start, end, TrackComponent.END_LINE);
+        boolean result = raceTrack.getComponentAt(end.getX(), end.getY()) == TrackComponent.END_LINE;
         System.out.println("Win condition: " + result);
         return result;
-        //return raceTrack.getComponentAt(end.getX(), end.getY()) == TrackComponent.END_LINE || checker.passesThroughComponent(start, end, TrackComponent.END_LINE);
     }
 
     @Override

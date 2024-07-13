@@ -1,19 +1,19 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.players;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
-import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategyDifficulty;
+import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.DecisionStrategy;
 
 public class BotPlayer extends DefaultPlayer {
-    private final BotStrategyDifficulty strategy;
+    private final BotStrategy strategy;
 
-    public BotPlayer(Car playerCar, BotStrategyDifficulty strategy) {
+    public BotPlayer(Car playerCar, BotStrategy strategy) {
         super(playerCar);
         if (strategy == null) throw new NullPointerException("Strategy cannot be null");
         this.strategy = strategy;
     }
 
-    public BotStrategyDifficulty getStrategy() {
+    public BotStrategy getStrategy() {
         return strategy;
     }
 }

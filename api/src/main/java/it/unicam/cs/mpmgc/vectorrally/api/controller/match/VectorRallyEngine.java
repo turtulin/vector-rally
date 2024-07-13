@@ -8,7 +8,6 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.RaceCar;
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.BasicComponentPassChecker;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.BotPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.HumanPlayer;
@@ -18,11 +17,8 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrackBuilder;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMoveValidator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
-import it.unicam.cs.mpmgc.vectorrally.api.model.rules.MoveValidator;
-import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategyDifficulty;
+import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 
-import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -114,7 +110,7 @@ public class VectorRallyEngine implements GameEngine {
         int numBots = Math.min(remainingPositions, availableColors.size());
         for (int i = 0; i < numBots; i++) {
             CarColour chosenColor = availableColors.get(i);
-            BotStrategyDifficulty difficulty = ioController.chooseBotStrategyDifficulty(chosenColor);
+            BotStrategy difficulty = ioController.chooseBotStrategyDifficulty(chosenColor);
             Car car = new RaceCar(chosenColor);
             Player botPlayer = new BotPlayer(car, difficulty);
             Position botPosition = availablePositions.get(i);
@@ -135,7 +131,7 @@ public class VectorRallyEngine implements GameEngine {
     }
 
     private void startMatch(List<Player> players, RaceTrack raceTrack, NeighborsGenerator neighborsGenerator) {
-        MatchController matchController = new VectorRallyMatchController(ioController, new BasicMovesGenerator(neighborsGenerator, new BasicMoveValidator(new BasicComponentPassChecker(raceTrack))));
+        MatchController matchController = new VectorRallyMatchController(ioController, new BasicMovesGenerator(neighborsGenerator, new BasicMoveValidator()));
         matchController.initializeMatch(players, raceTrack);
         matchController.startMatch();
     }

@@ -33,7 +33,7 @@ public class RaceTrackBuilder implements TrackBuilder {
      */
     private TrackComponent[][] constructMatrix(List<String> lines) {
         int rows = lines.size();
-        int cols = lines.get(0).length();
+        int cols = lines.getFirst().length();
         TrackComponent[][] track = new TrackComponent[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -77,11 +77,10 @@ public class RaceTrackBuilder implements TrackBuilder {
     }
 
     private boolean areLinesStraightAndParallel(List<Position> startPositions, List<Position> endPositions) {
-        boolean startLineIsHorizontal = startPositions.stream().allMatch(p -> p.getY() == startPositions.get(0).getY());
-        boolean endLineIsHorizontal = endPositions.stream().allMatch(p -> p.getY() == endPositions.get(0).getY());
-        boolean startLineIsVertical = startPositions.stream().allMatch(p -> p.getX() == startPositions.get(0).getX());
-        boolean endLineIsVertical = endPositions.stream().allMatch(p -> p.getX() == endPositions.get(0).getX());
-
+        boolean startLineIsHorizontal = startPositions.stream().allMatch(p -> p.getY() == startPositions.getFirst().getY());
+        boolean endLineIsHorizontal = endPositions.stream().allMatch(p -> p.getY() == endPositions.getFirst().getY());
+        boolean startLineIsVertical = startPositions.stream().allMatch(p -> p.getX() == startPositions.getFirst().getX());
+        boolean endLineIsVertical = endPositions.stream().allMatch(p -> p.getX() == endPositions.getFirst().getX());
         return (startLineIsHorizontal && endLineIsHorizontal) || (startLineIsVertical && endLineIsVertical);
     }
 }

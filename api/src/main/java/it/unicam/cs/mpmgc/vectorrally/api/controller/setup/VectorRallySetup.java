@@ -1,7 +1,7 @@
-package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
+package it.unicam.cs.mpmgc.vectorrally.api.controller.setup;
 
 import it.unicam.cs.mpmgc.vectorrally.api.controller.io.IOController;
-import it.unicam.cs.mpmgc.vectorrally.api.controller.io.TerminalIOController;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.GameSetup;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.RaceCar;
@@ -10,9 +10,8 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.players.HumanPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrackBuilder;
-import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategyDifficulty;
+import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +55,7 @@ public class VectorRallySetup implements GameSetup {
         for (int i = 0; i < remainingSpots; i++) {
             CarColour chosenColor = availableColors.get(0);
             availableColors.remove(chosenColor);
-            BotStrategyDifficulty difficulty = ioController.chooseBotStrategyDifficulty(chosenColor);
+            BotStrategy difficulty = ioController.chooseBotStrategyDifficulty(chosenColor);
             Car car = new RaceCar(chosenColor);
             Player botPlayer = new BotPlayer(car, difficulty);
             players.add(botPlayer);
@@ -66,7 +65,7 @@ public class VectorRallySetup implements GameSetup {
     }
 
     @Override
-    public BotStrategyDifficulty chooseBotStrategy(CarColour botColor) {
+    public BotStrategy chooseBotStrategy(CarColour botColor) {
         return ioController.chooseBotStrategyDifficulty(botColor);
     }
 }

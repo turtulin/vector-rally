@@ -13,7 +13,6 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.cars.RaceCar;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.HumanPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMoveValidator;
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.BasicComponentPassChecker;
 
 
 import java.util.List;
