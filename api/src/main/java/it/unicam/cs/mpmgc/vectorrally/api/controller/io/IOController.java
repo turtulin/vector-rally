@@ -71,7 +71,7 @@ public interface IOController {
      * Asks if the player is satisfied with the current configuration.
      * @return true if the player is satisfied, false otherwise.
      */
-    boolean askIfSatisfiedWithConfiguration();
+    boolean askIfSatisfiedWithConfiguration(RaceTrack raceTrack, List<Player> players);
 
     /**
      * Asks the player to choose a move from the available moves.

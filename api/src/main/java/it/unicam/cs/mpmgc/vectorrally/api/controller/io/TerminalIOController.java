@@ -114,7 +114,8 @@ public class TerminalIOController implements IOController {
     }
 
     @Override
-    public boolean askIfSatisfiedWithConfiguration() {
+    public boolean askIfSatisfiedWithConfiguration(RaceTrack raceTrack, List<Player> players) {
+        Utils.printRaceTrack(raceTrack, players);
         System.out.println("Are you satisfied with the current configuration? (yes/no)");
         String answer = scanner.nextLine().trim().toLowerCase();
         return answer.equals("yes");
