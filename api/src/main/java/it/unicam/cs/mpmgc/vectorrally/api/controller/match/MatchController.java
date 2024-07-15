@@ -28,7 +28,7 @@ public interface MatchController {
 
     void handleElimination(Player player);
 
-    boolean checkGameOver();
+    boolean isGameOver();
 
     void endMatch();
 }

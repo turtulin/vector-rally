@@ -7,10 +7,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 import java.util.*;
 
 public class AStarManhattan implements AStar {
-    private final RaceTrack raceTrack;
-
-    public AStarManhattan(RaceTrack raceTrack) {
-        this.raceTrack = raceTrack;
+    public AStarManhattan() {
     }
 
     @Override
@@ -33,7 +30,7 @@ public class AStarManhattan implements AStar {
     @Override
     public double calculateCost(Position start, Position goal) {
         List<Position> path = findPath(start, goal);
-        return path.size() > 0 ? path.size() - 1 : Double.MAX_VALUE;
+        return !path.isEmpty() ? path.size() - 1 : Double.MAX_VALUE;
     }
 
     private Node createStartNode(Position start, Position goal, PriorityQueue<Node> openList, Map<Position, Node> allNodes) {
@@ -89,8 +86,7 @@ public class AStarManhattan implements AStar {
     }
 
     private void addNeighborIfValid(List<Node> neighbors, int newX, int newY, Position goal) {
-        if (raceTrack.isInBounds(newX, newY) && (raceTrack.getComponentAt(newX, newY) == TrackComponent.ROAD
-                || (newX == goal.getX() && newY == goal.getY()))) {
+        if (newX == goal.getX() && newY == goal.getY()) {
             neighbors.add(new Node(new Position(newX, newY)));
         }
     }

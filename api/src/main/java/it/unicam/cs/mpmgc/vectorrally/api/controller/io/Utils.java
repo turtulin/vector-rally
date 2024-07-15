@@ -9,34 +9,10 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import java.util.List;
 
 public interface Utils {
-    static void printDisqualificationWarning(Player player) {
-        String colorCode = getCarColorCode(player.getPlayerCarColour());
-        System.out.println("Player " + colorCode + "P" + "\033[0m" + ", if you do not cross the line in the next turns you will be disqualified!!!");
-    }
-
-    static void printDisqualificationMessage(Player player) {
-        String colorCode = getCarColorCode(player.getPlayerCarColour());
-        System.out.println("Player " + colorCode + "P" + "\033[0m" + " has been disqualified.");
-    }
 
     static void printTurnMessage(int turn, Player player) {
         String playerColorCode = getCarColorCode(player.getPlayerCarColour());
         System.out.println("TURN " + turn + " for player " + playerColorCode + "P" + "\033[0m");
-    }
-
-    static void printMoves(RaceTrack raceTrack, List<Player> players, List<Position> possibleDestinations) {
-        System.out.println("Here are the moves you can perform:");
-        for (int y = 0; y < raceTrack.getLength(); y++) {
-            for (int x = 0; x < raceTrack.getWidth(); x++) {
-                Position position = new Position(x, y);
-                if (possibleDestinations.contains(position)) {
-                    System.out.print("*"); // Mark possible destinations
-                } else if (!printPlayer(position, players)) {
-                    System.out.print(raceTrack.getComponentAt(x, y).getSymbol());
-                }
-            }
-            System.out.println();
-        }
     }
 
     private static boolean printPlayer(Position position, List<Player> players) {
@@ -81,16 +57,8 @@ public interface Utils {
         System.out.println("ERROR: " + message);
     }
 
-    static void printRaceTrack(RaceTrack raceTrack, List<Player> players) {
-        for (int x = 0; x < raceTrack.getLength(); x++) {
-            for (int y = 0; y < raceTrack.getWidth(); y++) {
-                Position position = new Position(x, y);
-                if (!printPlayer(position, players)) {
-                    System.out.print(raceTrack.getComponentAt(x, y).getSymbol());
-                }
-            }
-            System.out.println();
-        }
+    public static void printRaceTrack(RaceTrack raceTrack, List<Player> players) {
+        printRaceTrack(raceTrack, players, null);
     }
 
     public static void printRaceTrack(RaceTrack raceTrack, List<Player> players, List<Position> destinations) {
@@ -98,8 +66,9 @@ public interface Utils {
             for (int y = 0; y < raceTrack.getWidth(); y++) {
                 Position position = new Position(x, y);
                 if (!printPlayer(position, players)) {
-                    if (destinations.contains(position)) {
-                        System.out.print("*");
+                    if (destinations != null && destinations.contains(position)) {
+                        int index = destinations.indexOf(position) + 1;
+                        System.out.print(index);
                     } else {
                         System.out.print(raceTrack.getComponentAt(x, y).getSymbol());
                     }

@@ -2,8 +2,7 @@ package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
 import it.unicam.cs.mpmgc.vectorrally.api.controller.io.IOController;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.io.Utils;
-import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.AStar;
-import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.AStarManhattan;
+import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.BotPlayer;
@@ -13,10 +12,8 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMoveValidator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.BotStrategyFactory;
-import it.unicam.cs.mpmgc.vectorrally.api.model.rules.MoveValidator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.DecisionStrategy;
 
-import java.nio.file.attribute.PosixFileAttributes;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -27,14 +24,14 @@ public class VectorRallyMatchController implements MatchController {
     private List<Player> players;
     private RaceTrack raceTrack;
     private final IOController ioController;
-    private final BasicMovesGenerator moveGenerator;
+    private final BasicMovesGenerator<NeighborsGenerator> moveGenerator;
     private Queue<Player> turnQueue;
     private final BotStrategyFactory botStrategyFactory;
     private boolean gameOver;
-    private BasicMoveValidator moveValidator;
+    private final BasicMoveValidator moveValidator;
 
 
-    public VectorRallyMatchController(IOController ioController, BasicMovesGenerator moveGenerator) {
+    public VectorRallyMatchController(IOController ioController, BasicMovesGenerator<NeighborsGenerator> moveGenerator) {
         this.ioController = ioController;
         this.moveGenerator = moveGenerator;
         this.botStrategyFactory = initializeBotStrategyFactory();
@@ -42,8 +39,7 @@ public class VectorRallyMatchController implements MatchController {
     }
 
     private BotStrategyFactory initializeBotStrategyFactory() {
-        AStar aStarAlgorithm = new AStarManhattan(raceTrack);  // Initialize AStar with raceTrack
-        return new BotStrategyFactory(aStarAlgorithm);  // Initialize BotStrategyFactory
+        return new BotStrategyFactory();
     }
 
     @Override
@@ -66,24 +62,31 @@ public class VectorRallyMatchController implements MatchController {
     public void handleTurn(Player player) {
         Utils.printTurnMessage(turnQueue.size(), player);
         List<Move> possibleMoves = moveGenerator.generatePossibleMoves(player, raceTrack, players);
-        Utils.printRaceTrack(raceTrack, players, getPossibleDestinations(possibleMoves));
-        if (possibleMoves.isEmpty()) {
-            handleElimination(player);
-        } else {
+        if (possibleMoves.isEmpty()) handleElimination(player);
+         else {
             int chosenMoveIndex;
             if (player instanceof BotPlayer botPlayer) {
-                DecisionStrategy strategy = botStrategyFactory.getStrategy(botPlayer.getStrategy());
-                Move chosenPosition = strategy.decideMove(player, possibleMoves);
-                chosenMoveIndex = possibleMoves.indexOf(possibleMoves.stream()
-                        .filter(move -> move.equals(chosenPosition))
-                        .findFirst()
-                        .orElseThrow());
+                chosenMoveIndex = handleTurnBot(botPlayer, possibleMoves);
             } else {
-                chosenMoveIndex = ioController.chooseMove(possibleMoves);
+                chosenMoveIndex = handleTurnHuman(possibleMoves);
             }
             Move chosenMove = possibleMoves.get(chosenMoveIndex);
             handleMove(player, chosenMove);
         }
+    }
+
+    private int handleTurnHuman(List<Move> possibleMoves) {
+        Utils.printRaceTrack(raceTrack, players, getPossibleDestinations(possibleMoves));
+        return ioController.chooseMove(possibleMoves);
+    }
+
+    private int handleTurnBot(BotPlayer botPlayer, List<Move> possibleMoves) {
+        DecisionStrategy strategy = botStrategyFactory.getStrategy(botPlayer.getStrategy());
+        Move chosenMove = strategy.decideMove(botPlayer, possibleMoves);
+        return possibleMoves.indexOf(possibleMoves.stream()
+                .filter(move -> move.equals(chosenMove))
+                .findFirst()
+                .orElseThrow());
     }
 
     @Override
@@ -95,7 +98,6 @@ public class VectorRallyMatchController implements MatchController {
         }
         player.setPosition(move.getDestination());
         player.setPlayerAcceleration(move.acceleration());
-        System.out.println(" new speed " + move.acceleration());
         turnQueue.add(player);
     }
 
@@ -121,7 +123,7 @@ public class VectorRallyMatchController implements MatchController {
     }
 
     @Override
-    public boolean checkGameOver() {
+    public boolean isGameOver() {
         return gameOver;
     }
 

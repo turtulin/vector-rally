@@ -31,13 +31,13 @@ public class VectorRallySetup implements GameSetup {
         this.trackBuilder = trackBuilder;
     }
 
-    @Override
+
     public RaceTrack selectTrack() throws Exception {
         String trackFilePath = ioController.chooseTrack();
         return trackBuilder.buildTrack(trackFilePath);
     }
 
-    @Override
+
     public List<Player> configurePlayers(int maxPlayers, List<Player> existingPlayers) {
         List<Player> players = new ArrayList<>(existingPlayers);
         int numHumanPlayers = ioController.askNumberOfHumanPlayers(maxPlayers);
@@ -64,7 +64,7 @@ public class VectorRallySetup implements GameSetup {
         return players;
     }
 
-    @Override
+
     public BotStrategy chooseBotStrategy(CarColour botColor) {
         return ioController.chooseBotStrategyDifficulty(botColor);
     }

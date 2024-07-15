@@ -18,7 +18,4 @@ import java.util.List;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public interface GameSetup {
-    RaceTrack selectTrack() throws Exception;
-    List<Player> configurePlayers(int maxPlayers, List<Player> existingPlayers);
-    BotStrategy chooseBotStrategy(CarColour carColour) throws IOException;
 }
