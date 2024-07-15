@@ -1,5 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.algorithms;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 
 import java.util.ArrayList;
@@ -14,14 +15,12 @@ import java.util.List;
  */
 public class FourNeighborsGenerator implements NeighborsGenerator {
     @Override
-    public List<Position> generateShifts(Position position) {
+    public List<Acceleration> generateShifts(Acceleration speed) {
         int[] dx = {-1, 1, 0, 0};
         int[] dy = {0, 0, -1, 1};
-        List<Position> shifts = new ArrayList<>();
+        List<Acceleration> shifts = new ArrayList<>();
         for (int i = 0; i < dx.length; i++) {
-            int newX = position.getX() + dx[i];
-            int newY = position.getY() + dy[i];
-            shifts.add(new Position(newX, newY));
+            shifts.add(new Acceleration(speed.getDx() + dx[i], speed.getDy() + dy[i]));
         }
         return shifts;
     }

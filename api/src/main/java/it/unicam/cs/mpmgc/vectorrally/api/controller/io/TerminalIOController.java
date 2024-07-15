@@ -125,12 +125,11 @@ public class TerminalIOController implements IOController {
         System.out.println("Choose your move:");
         for (int i = 0; i < possibleMoves.size(); i++) {
             Move move = possibleMoves.get(i);
-            Position destination = new Position(move.position().getX() + move.acceleration().getDx(),
-                    move.position().getY() + move.acceleration().getDy());
+            Position destination = move.getDestination();
             System.out.println((i + 1) + ". Move to " + destination + " with " + move.acceleration());
         }
         int choice = scanner.nextInt();
-        scanner.nextLine(); // consume the newline
+        scanner.nextLine();
         return choice - 1;
     }
 

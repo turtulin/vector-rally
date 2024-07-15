@@ -34,12 +34,12 @@ public class Acceleration implements Vector {
 
     @Override
     public void setDx(int x) {
-        this.dx = dx;
+        this.dx = x;
     }
 
     @Override
     public void setDy(int y) {
-        this.dy = dy;
+        this.dy = y;
     }
 
     @Override

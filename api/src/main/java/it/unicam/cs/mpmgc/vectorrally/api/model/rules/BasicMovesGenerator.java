@@ -21,15 +21,14 @@ public class BasicMovesGenerator<T extends NeighborsGenerator> {
 
     public List<Move> generatePossibleMoves(Player player, RaceTrack track, List<Player> allPlayers) {
         List<Move> possibleMoves = new ArrayList<>();
-        Position currentPosition = player.getPosition();
-        List<Position> shifts = neighborsGenerator.generateShifts(currentPosition);
-
-        for (Position shift : shifts) {
-            Move move = new Move(new Acceleration(shift.getX() - currentPosition.getX(), shift.getY() - currentPosition.getY()), currentPosition);
+        List<Acceleration> shifts = neighborsGenerator.generateShifts(player.getPlayerAcceleration());
+        for (Acceleration shift : shifts) {
+            Move move = new Move(new Acceleration(shift.getDx(), shift.getDy()), player.getPosition());
             if (moveValidator.isValid(move, track, allPlayers)) {
                 possibleMoves.add(move);
             }
         }
         return possibleMoves;
     }
+
 }

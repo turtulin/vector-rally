@@ -1,5 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.algorithms;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 
 import java.util.List;
@@ -21,5 +22,5 @@ public interface NeighborsGenerator {
      * @param position the position from which to generate the shifts.
      * @return a list of possible new positions representing the shifts.
      */
-    List<Position> generateShifts(Position position);
+    List<Acceleration> generateShifts(Acceleration speed);
 }

@@ -131,7 +131,7 @@ public class VectorRallyEngine implements GameEngine {
     }
 
     private void startMatch(List<Player> players, RaceTrack raceTrack, NeighborsGenerator neighborsGenerator) {
-        MatchController matchController = new VectorRallyMatchController(ioController, new BasicMovesGenerator(neighborsGenerator, new BasicMoveValidator()));
+        MatchController matchController = new VectorRallyMatchController(ioController, new BasicMovesGenerator<>(neighborsGenerator, new BasicMoveValidator()));
         matchController.initializeMatch(players, raceTrack);
         matchController.startMatch();
     }

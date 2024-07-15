@@ -32,6 +32,7 @@ public abstract class DefaultPlayer implements Player {
     public void setPlayerAcceleration(Acceleration acceleration) {
         if (acceleration == null) throw new NullPointerException("Player acceleration cannot be null");
         this.playerCar.setAcceleration(acceleration);
+        System.out.println("acceleration player: " + this.playerCar.getAcceleration());
     }
 
     @Override

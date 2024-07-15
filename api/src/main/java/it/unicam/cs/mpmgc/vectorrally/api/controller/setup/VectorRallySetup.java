@@ -53,7 +53,7 @@ public class VectorRallySetup implements GameSetup {
 
         int remainingSpots = maxPlayers - numHumanPlayers;
         for (int i = 0; i < remainingSpots; i++) {
-            CarColour chosenColor = availableColors.get(0);
+            CarColour chosenColor = availableColors.getFirst();
             availableColors.remove(chosenColor);
             BotStrategy difficulty = ioController.chooseBotStrategyDifficulty(chosenColor);
             Car car = new RaceCar(chosenColor);

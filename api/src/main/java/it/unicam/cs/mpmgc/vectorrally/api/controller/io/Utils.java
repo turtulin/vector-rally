@@ -101,7 +101,6 @@ public interface Utils {
                     if (destinations.contains(position)) {
                         System.out.print("*");
                     } else {
-
                         System.out.print(raceTrack.getComponentAt(x, y).getSymbol());
                     }
                 }
