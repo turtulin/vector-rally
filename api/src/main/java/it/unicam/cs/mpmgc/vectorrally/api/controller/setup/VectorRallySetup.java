@@ -1,6 +1,7 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.setup;
 
 import it.unicam.cs.mpmgc.vectorrally.api.controller.io.IOController;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.io.Utils;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.EightNeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.FourNeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
@@ -16,6 +17,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrackBuilder;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.Track;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
+import jdk.jshell.execution.Util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,8 +41,8 @@ public class VectorRallySetup implements GameSetup {
 
     @Override
     public NeighborsGenerator initializeShiftAlgorithm() {
-        displayWelcomeAndRules();
-        return chooseRuleType();
+        int ruleType = ioController.chooseRuleType();
+        return ruleType == 1 ? new FourNeighborsGenerator() : new EightNeighborsGenerator();
     }
 
     @Override
@@ -57,23 +59,7 @@ public class VectorRallySetup implements GameSetup {
 
     @Override
     public RaceTrack initializeTrack() throws Exception {
-        return selectTrack();
-    }
-
-    private void displayWelcomeAndRules() {
-        ioController.displayWelcomeMessage();
-        if (!ioController.askIfPlayerKnowsRules()) {
-            ioController.displayGameRules();
-        }
-    }
-
-    private NeighborsGenerator chooseRuleType() {
-        int ruleType = ioController.chooseRuleType();
-        return ruleType == 1 ? new FourNeighborsGenerator() : new EightNeighborsGenerator();
-    }
-
-    public RaceTrack selectTrack() throws Exception {
-        String trackFilePath = ioController.chooseTrack();
+        String trackFilePath = ioController.findTrack();
         return trackBuilder.buildTrack(trackFilePath);
     }
 
@@ -90,54 +76,33 @@ public class VectorRallySetup implements GameSetup {
     private void chooseStartingPositions(int numHumanPlayers, List<Player> players, List<Position> availablePositions) {
         for (int i = 0; i < numHumanPlayers; i++) {
             Position chosenPosition = ioController.chooseStartingPosition(players.get(i), availablePositions);
+            //Utils.printRaceTrack(players, raceTrack, availablePositions);
             availablePositions.remove(chosenPosition);
             players.get(i).setPosition(chosenPosition);
         }
     }
 
     private void setupBotPlayers(int remainingPositions, List<Player> players, List<CarColour> availableColors, List<Position> availablePositions) {
-        int numBots = Math.min(remainingPositions, availableColors.size());
-        for (int i = 0; i < numBots; i++) {
-            CarColour chosenColor = availableColors.get(i);
-            BotStrategy difficulty = ioController.chooseBotStrategyDifficulty(chosenColor);
-            Car car = new RaceCar(chosenColor);
-            Player botPlayer = new BotPlayer(car, difficulty);
-            Position botPosition = availablePositions.get(i);
-            botPlayer.setPosition(botPosition);
-            players.add(botPlayer);
+        boolean chooseForEachBot = ioController.askToChooseForEachBot();
+        if (chooseForEachBot) {
+            for (int i = 0; i < remainingPositions; i++) {
+                CarColour chosenColor = availableColors.get(i);
+                BotStrategy difficulty = ioController.chooseEachBotStrategyDifficulty(chosenColor);
+                addPlayer(players, chosenColor, difficulty, availablePositions.get(i));
+            }
+        } else {
+            BotStrategy difficulty = ioController.chooseAllBotStrategyDifficulty();
+            for (int i = 0; i < remainingPositions; i++) {
+                CarColour chosenColor = availableColors.get(i);
+                addPlayer(players, chosenColor, difficulty, availablePositions.get(i));
+            }
         }
     }
-//    public List<Player> configurePlayers(int maxPlayers, List<Player> existingPlayers) {
-//        List<Player> players = new ArrayList<>(existingPlayers);
-//        int numHumanPlayers = ioController.askNumberOfHumanPlayers(maxPlayers);
-//        List<CarColour> availableColors = new ArrayList<>(List.of(CarColour.values()));
-//
-//        for (int i = 0; i < numHumanPlayers; i++) {
-//            CarColour chosenColor = ioController.chooseCarColor(availableColors);
-//            availableColors.remove(chosenColor);
-//            Car car = new RaceCar(chosenColor);
-//            Player humanPlayer = new HumanPlayer(car);
-//            players.add(humanPlayer);
-//        }
-//
-//        int remainingSpots = maxPlayers - numHumanPlayers;
-//        for (int i = 0; i < remainingSpots; i++) {
-//            CarColour chosenColor = availableColors.getFirst();
-//            availableColors.remove(chosenColor);
-//            BotStrategy difficulty = ioController.chooseBotStrategyDifficulty(chosenColor);
-//            Car car = new RaceCar(chosenColor);
-//            Player botPlayer = new BotPlayer(car, difficulty);
-//            players.add(botPlayer);
-//        }
-//
-//        return players;
-//    }
 
-
-    public BotStrategy chooseBotStrategy(CarColour botColor) {
-        return ioController.chooseBotStrategyDifficulty(botColor);
+    private void addPlayer(List<Player> players, CarColour chosenColor, BotStrategy difficulty, Position position) {
+        Car car = new RaceCar(chosenColor);
+        Player player = (difficulty == null) ? new HumanPlayer(car) : new BotPlayer(car, difficulty);
+        player.setPosition(position);
+        players.add(player);
     }
-
-
-
 }

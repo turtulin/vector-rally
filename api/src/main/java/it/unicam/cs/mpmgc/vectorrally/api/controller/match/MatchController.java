@@ -20,7 +20,7 @@ public interface MatchController {
 
     void initializeMatch(List<Player> players, RaceTrack raceTrack);
 
-    void startMatch();
+    void startMatch() throws Exception;
 
     void handleTurn(Player player);
 
@@ -30,5 +30,5 @@ public interface MatchController {
 
     boolean isGameOver();
 
-    void endMatch();
+    void endMatch() throws Exception;
 }

@@ -56,6 +56,9 @@ public interface Utils {
     static void printErrorMessage(String message) {
         System.out.println("ERROR: " + message);
     }
+    static void printMessage(String message) {
+        System.out.println(message);
+    }
 
     public static void printRaceTrack(RaceTrack raceTrack, List<Player> players) {
         printRaceTrack(raceTrack, players, null);
@@ -76,5 +79,57 @@ public interface Utils {
             }
             System.out.println();
         }
+    }
+
+    static void displayWelcomeMessage() {
+        System.out.println("""
+                \u001B[32m\u001B[1m
+                Welcome to\s
+                ░█░█░█▀▀░█▀▀░▀█▀░█▀█░█▀▄░░░█▀▄░█▀█░█░░░█░░░█░█
+                ░▀▄▀░█▀▀░█░░░░█░░█░█░█▀▄░░░█▀▄░█▀█░█░░░█░░░░█░
+                ░░▀░░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░▀░░░▀░▀░▀░▀░▀▀▀░▀▀▀░░▀░
+                \u001B[0m""");
+    }
+
+    static void displayGameRules() {
+        String rules = """        
+        \u001B[0m
+        \u001B[36mHere are the rules of the game:\u001B[0m
+        
+        \u001B[34m1. Objective:\u001B[0m
+           The objective of the game is to be the first player to reach the finish line.
+        
+        \u001B[34m2. Movement:\u001B[0m
+           - Players take turns to move their cars on the race track.
+           - Each car can move to adjacent positions based on their current acceleration.
+           - The possible moves are determined using either the four or eight neighbors rule, 
+             depending on the game configuration.
+        
+        \u001B[34m3. Acceleration:\u001B[0m
+           - Acceleration determines the change in position for the next move.
+           - Players can choose to change their acceleration within the allowed limits during their turn.
+        
+        \u001B[34m4. Collisions:\u001B[0m
+           - If a car passes through or lands on a wall, it crashes and is eliminated from the race.
+           - If a car passes through or lands on another car, it crashes and is eliminated from the race.
+        
+        \u001B[34m5. Winning the Game:\u001B[0m
+           - The first player to cross the finish line wins the game.
+           - If all players crash before reaching the finish line, the game ends with no winner.
+        
+        \u001B[34m6. Game Setup:\u001B[0m
+           - Players choose a race track to race on.
+           - Each player selects a car color.
+           - The number of players can be configured, and players can be either human or bots.
+        
+        \u001B[34m7. Bot Strategies:\u001B[0m
+           - Bots can have different difficulty levels: Easy, Medium, and Hard.
+           - Easy bots make random moves.
+           - Medium bots choose the longest move that does not lead to a crash.
+           - Hard bots use the A* algorithm to determine the best move.
+        
+        \u001B[36mGood luck, and may the best driver win!\u001B[0m
+            """;
+        System.out.println(rules);
     }
 }

@@ -1,8 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.setup;
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.AStar;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.AStarManhattan;
-import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.*;
 
 import java.util.HashMap;

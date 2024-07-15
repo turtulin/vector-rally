@@ -1,5 +1,7 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.movements;
 
+import java.util.Objects;
+
 /**
  * This class represents the acceleration in the game, which is a vector quantity
  * having both magnitude and direction. It implements the {@link Vector} interface.
@@ -61,6 +63,19 @@ public class Acceleration implements Vector {
             case 0 -> Direction.NONE;
             default -> throw new IllegalStateException("Unexpected value: " + Integer.signum(dx) + ", " + Integer.signum(dy));
         };
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Acceleration that = (Acceleration) o;
+        return dx == that.dx && dy == that.dy;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dx, dy);
     }
 
     @Override

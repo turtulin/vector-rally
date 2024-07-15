@@ -19,21 +19,12 @@ import java.util.List;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public interface IOController {
-    /**
-     * Displays a welcome message to the player.
-     */
-    void displayWelcomeMessage();
 
     /**
      * Asks if the player knows the game rules.
      * @return true if the player knows the rules, false otherwise.
      */
     boolean askIfPlayerKnowsRules();
-
-    /**
-     * Displays the game rules.
-     */
-    void displayGameRules();
 
     /**
      * Asks the player to choose a rule type.
@@ -45,7 +36,7 @@ public interface IOController {
      * Asks the player to choose a track from the available tracks.
      * @return the chosen track file name.
      */
-    String chooseTrack() throws Exception;
+    String findTrack() throws Exception;
 
     /**
      * Asks for the number of human players.
@@ -65,7 +56,7 @@ public interface IOController {
      * Asks the player to choose a bot strategy difficulty.
      * @return the chosen bot strategy difficulty.
      */
-    BotStrategy chooseBotStrategyDifficulty(CarColour carColour);
+    BotStrategy chooseEachBotStrategyDifficulty(CarColour carColour);
 
     /**
      * Asks if the player is satisfied with the current configuration.
@@ -87,20 +78,11 @@ public interface IOController {
     boolean askToPlayAnotherMatch();
 
     /**
-     * Ask the player to start another match with the same configuration.
-     */
-    boolean sameConfiguration();
-
-    /**
      * Displays the end of the game message.
      */
     void displayEndMatchMessage();
 
-    /**
-     * Displays an error message.
-     */
-    void displayErrorMessage(String message);
-    void printRaceTrack(RaceTrack raceTrack, List<Player> players);
-
     Position chooseStartingPosition(Player player, List<Position> availablePositions);
+    boolean askToChooseForEachBot();
+    public BotStrategy chooseAllBotStrategyDifficulty();
 }

@@ -16,7 +16,7 @@ public class BasicMoveValidator implements MoveValidator {
         if (!track.isInBounds(move.getDestination().getX(), move.getDestination().getY())) return false;
         if (passesThroughComponent(track, move, TrackComponent.WALL)) return false;
         if (passesThroughComponent(track, move, TrackComponent.END_LINE) && !isValidDirection(move.acceleration().getDirection(), track)) return false;
-        //if (passesThroughPlayers(move, allPlayers)) return false;
+        if (passesThroughPlayers(move, allPlayers)) return false;
         return !isPositionOccupied(move.getDestination(), allPlayers);
     }
 
@@ -54,11 +54,11 @@ public class BasicMoveValidator implements MoveValidator {
         return false;
     }
 
-    public boolean passesThroughPlayers(Move move, List<Player> allPlayers) {
+    private boolean passesThroughPlayers(Move move, List<Player> allPlayers) {
         List<Position> positions = getPositionsBetween(move);
         for (Position position : positions) {
             for (Player player : allPlayers) {
-                if (player.getPosition().equals(position)) return true;
+                if (player.getPosition().equals(position) && !(move.position().equals(player.getPosition()))) return true;
             }
         }
         return false;

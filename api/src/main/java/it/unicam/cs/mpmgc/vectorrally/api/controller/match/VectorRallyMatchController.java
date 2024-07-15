@@ -29,6 +29,7 @@ public class VectorRallyMatchController implements MatchController {
     private final BotStrategyFactory botStrategyFactory;
     private boolean gameOver;
     private final BasicMoveValidator moveValidator;
+    private int turnCounter = 0;
 
 
     public VectorRallyMatchController(IOController ioController, BasicMovesGenerator<NeighborsGenerator> moveGenerator) {
@@ -51,7 +52,7 @@ public class VectorRallyMatchController implements MatchController {
     }
 
     @Override
-    public void startMatch() {
+    public void startMatch() throws Exception {
         while (!gameOver) {
             handleTurn(Objects.requireNonNull(turnQueue.poll()));
         }
@@ -60,7 +61,7 @@ public class VectorRallyMatchController implements MatchController {
 
     @Override
     public void handleTurn(Player player) {
-        Utils.printTurnMessage(turnQueue.size(), player);
+        Utils.printTurnMessage(turnCounter++, player);
         List<Move> possibleMoves = moveGenerator.generatePossibleMoves(player, raceTrack, players);
         if (possibleMoves.isEmpty()) handleElimination(player);
          else {
@@ -106,14 +107,16 @@ public class VectorRallyMatchController implements MatchController {
         Utils.printEliminationMessage(player);
         turnQueue.remove(player);
         players.remove(player);
-        if (players.isEmpty()) {
-            gameOver = true;
-        }
+        if (players.isEmpty()) gameOver = true;
     }
 
     @Override
-    public void endMatch() {
+    public void endMatch() throws Exception {
         ioController.displayEndMatchMessage();
+        if (ioController.askToPlayAnotherMatch()) {
+            GameEngine engine = new VectorRallyEngine();
+            engine.startGame();
+        }
     }
 
     private boolean checkIfPlayerWins(Move move) {

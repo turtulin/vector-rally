@@ -21,7 +21,6 @@ public class Position implements Coordinates {
      * @throws IllegalArgumentException if x or y are negative.
      */
     public Position(int x, int y) {
-        if(x < 0 || y < 0) throw new IllegalArgumentException("x and y must be positive");
         this.x = x;
         this.y = y;
     }
@@ -70,7 +69,7 @@ public class Position implements Coordinates {
      * @param end the ending position.
      * @return the Euclidean distance between the two positions.
      */
-    public double calculateDistance(Position start, Position end) {
+    public static double calculateDistance(Position start, Position end) {
         int dx = end.getX() - start.getX();
         int dy = end.getY() - start.getY();
         return Math.sqrt(dx * dx + dy * dy);
