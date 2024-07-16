@@ -9,6 +9,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -42,7 +43,7 @@ public class TerminalIOController implements IOController {
 
     @Override
     public String findTrack() {
-        String directoryPath = "api/src/main/resources/racetracks";
+        String directoryPath = checkRootPath();
         File directory = new File(directoryPath);
         File[] files = directory.listFiles((dir, name) -> name.endsWith(".txt"));
         if (!doesDirectoryExist(directory) || !doFilesExist(files)) {
@@ -57,6 +58,16 @@ public class TerminalIOController implements IOController {
         return directoryPath + "/" + trackFiles.get(choice - 1);
     }
 
+    private String checkRootPath () {
+        String currentWorkingDir = System.getProperty("user.dir");
+        String directoryPath;
+        if (currentWorkingDir.endsWith("app")) {
+            directoryPath = "../api/src/main/resources/racetracks";
+        } else {
+            directoryPath = "api/src/main/resources/racetracks";
+        }
+        return directoryPath;
+    }
     private boolean doesDirectoryExist(File directory) {
         return directory.exists() && directory.isDirectory();
     }
