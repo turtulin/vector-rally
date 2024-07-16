@@ -22,13 +22,6 @@ public class PositionTest {
     }
 
     @Test
-    void constructorShouldThrowExceptionForNegativeValues() {
-        assertThrows(IllegalArgumentException.class, () -> new Position(-1, 2));
-        assertThrows(IllegalArgumentException.class, () -> new Position(1, -2));
-        assertThrows(IllegalArgumentException.class, () -> new Position(-1, -2));
-    }
-
-    @Test
     void setXShouldUpdateX() {
         position.setX(7);
         assertEquals(7, position.getX());

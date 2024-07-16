@@ -5,15 +5,45 @@
  */
 
 plugins {
-    id 'buildlogic.java-application-conventions'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+    id("buildlogic.java-application-conventions")
+}
+
+repositories {
+    mavenCentral()
+}
+
+run {
+    standardInput = System.in
 }
 
 dependencies {
-    implementation 'org.apache.commons:commons-text'
-    implementation project(':utilities')
+    implementation 'org.apache.commons:commons-text:1.10.0'
+    implementation 'org.openjfx:javafx-controls:18.0.1'
+    implementation 'org.openjfx:javafx-fxml:18.0.1'
+    implementation project(':api')
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+javafx {
+    version = "17.0.8"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 application {
-    // Define the main class for the application.
-    mainClass = 'it.unicam.cs.mpmgc.vectorrally.app.App'
+    mainClass = 'it.unicam.cs.mpmgc.vectorrally.app.TerminalApp'
+}
+
+tasks.register('wrapper', Wrapper) {
+    gradleVersion = '7.2'
+}
+
+tasks.register('prepareKotlinBuildScriptModel') {
+
 }

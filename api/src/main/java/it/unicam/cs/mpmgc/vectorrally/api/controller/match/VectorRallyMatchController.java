@@ -60,7 +60,7 @@ public class VectorRallyMatchController implements MatchController {
     }
 
     @Override
-    public void handleTurn(Player player) {
+    public void handleTurn(Player player) throws Exception {
         Utils.printTurnMessage(turnCounter++, player);
         List<Move> possibleMoves = moveGenerator.generatePossibleMoves(player, raceTrack, players);
         if (possibleMoves.isEmpty()) handleElimination(player);
@@ -103,11 +103,16 @@ public class VectorRallyMatchController implements MatchController {
     }
 
     @Override
-    public void handleElimination(Player player) {
+    public void handleElimination(Player player) throws Exception {
         Utils.printEliminationMessage(player);
         turnQueue.remove(player);
         players.remove(player);
-        if (players.isEmpty()) gameOver = true;
+        if (players.isEmpty())
+        {
+            gameOver = true;
+            Utils.displayGameOver();
+            endMatch();
+        }
     }
 
     @Override

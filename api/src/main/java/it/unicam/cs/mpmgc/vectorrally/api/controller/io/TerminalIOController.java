@@ -42,7 +42,7 @@ public class TerminalIOController implements IOController {
 
     @Override
     public String findTrack() {
-        String directoryPath = "api/src/main/resources";
+        String directoryPath = "api/src/main/resources/racetracks";
         File directory = new File(directoryPath);
         File[] files = directory.listFiles((dir, name) -> name.endsWith(".txt"));
         if (!doesDirectoryExist(directory) || !doFilesExist(files)) {
@@ -84,6 +84,10 @@ public class TerminalIOController implements IOController {
         Utils.printMessage("Enter the number of human players (max " + maxPlayers + "):");
         int numPlayers = scanner.nextInt();
         scanner.nextLine();
+        if (numPlayers < 0 || numPlayers > maxPlayers) {
+            Utils.printErrorMessage("Invalid number of players.");
+            askNumberOfHumanPlayers(maxPlayers);
+        }
         return numPlayers;
     }
 

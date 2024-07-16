@@ -6,7 +6,7 @@ package it.unicam.cs.mpmgc.vectorrally.app;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.match.GameEngine;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.match.VectorRallyEngine;
 
-public class App {
+public class TerminalApp {
     public static void main(String[] args) {
         try {
             GameEngine gameController = new VectorRallyEngine();

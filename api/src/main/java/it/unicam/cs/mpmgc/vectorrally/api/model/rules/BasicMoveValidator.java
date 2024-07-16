@@ -54,7 +54,7 @@ public class BasicMoveValidator implements MoveValidator {
         return false;
     }
 
-    private boolean passesThroughPlayers(Move move, List<Player> allPlayers) {
+    public boolean passesThroughPlayers(Move move, List<Player> allPlayers) {
         List<Position> positions = getPositionsBetween(move);
         for (Position position : positions) {
             for (Player player : allPlayers) {
@@ -64,7 +64,7 @@ public class BasicMoveValidator implements MoveValidator {
         return false;
     }
 
-    private List<Position> getPositionsBetween(Move move) {
+    public List<Position> getPositionsBetween(Move move) {
         int dx = move.acceleration().getDx();
         int dy = move.acceleration().getDy();
         int steps = Math.max(Math.abs(dx), Math.abs(dy));

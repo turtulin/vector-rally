@@ -46,13 +46,13 @@ public class VectorRallySetup implements GameSetup {
     }
 
     @Override
-    public List<Player> initializePlayers(Track raceTrack) {
+    public List<Player> initializePlayers(RaceTrack raceTrack) {
         int numHumanPlayers = ioController.askNumberOfHumanPlayers(raceTrack.getPositionsOfComponent(TrackComponent.START_POSITION).size());
         List<Player> players = new ArrayList<>();
         List<CarColour> availableColors = new ArrayList<>(Arrays.asList(CarColour.values()));
         setupHumanPlayers(numHumanPlayers, players, availableColors);
         List<Position> availablePositions = raceTrack.getPositionsOfComponent(TrackComponent.START_POSITION);
-        chooseStartingPositions(numHumanPlayers, players, availablePositions);
+        chooseStartingPositions(raceTrack, numHumanPlayers, players, availablePositions);
         setupBotPlayers(availablePositions.size(), players, availableColors, availablePositions);
         return players;
     }
@@ -73,10 +73,10 @@ public class VectorRallySetup implements GameSetup {
         }
     }
 
-    private void chooseStartingPositions(int numHumanPlayers, List<Player> players, List<Position> availablePositions) {
+    private void chooseStartingPositions(RaceTrack track, int numHumanPlayers, List<Player> players, List<Position> availablePositions) {
+        Utils.printRaceTrack(track, players, availablePositions);
         for (int i = 0; i < numHumanPlayers; i++) {
             Position chosenPosition = ioController.chooseStartingPosition(players.get(i), availablePositions);
-            //Utils.printRaceTrack(players, raceTrack, availablePositions);
             availablePositions.remove(chosenPosition);
             players.get(i).setPosition(chosenPosition);
         }

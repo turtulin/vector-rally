@@ -17,3 +17,10 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+tasks.register('wrapper', Wrapper) {
+    gradleVersion = '7.2'
+}
+tasks.register('prepareKotlinBuildScriptModel') {
+
+}

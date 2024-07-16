@@ -23,7 +23,7 @@ public interface GameSetup {
 
     public NeighborsGenerator initializeShiftAlgorithm() throws Exception;
 
-    public List<Player> initializePlayers(Track raceTrack) throws Exception;
+    public List<Player> initializePlayers(RaceTrack raceTrack) throws Exception;
 
     public RaceTrack initializeTrack() throws Exception;
 }

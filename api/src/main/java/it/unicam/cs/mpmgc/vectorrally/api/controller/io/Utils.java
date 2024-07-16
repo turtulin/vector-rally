@@ -3,6 +3,7 @@ package it.unicam.cs.mpmgc.vectorrally.api.controller.io;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.BotPlayer;
+import it.unicam.cs.mpmgc.vectorrally.api.model.players.HumanPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 
@@ -12,12 +13,14 @@ public interface Utils {
 
     static void printTurnMessage(int turn, Player player) {
         String playerColorCode = getCarColorCode(player.getPlayerCarColour());
-        System.out.println("TURN " + turn + " for player " + playerColorCode + "P" + "\033[0m");
+        if (player instanceof HumanPlayer) System.out.println("TURN " + turn + " for player " + playerColorCode + "P" + "\033[0m");
+        else System.out.println("TURN " + turn + " for player " + playerColorCode + "B" + "\033[0m");
     }
 
     private static boolean printPlayer(Position position, List<Player> players) {
         for (Player player : players) {
-            if (player.getPosition().equals(position)) {
+            if (player.getPosition().equals(position) &&
+                    player.getPosition().getX() != 0 && player.getPosition().getY() != 0) {
                 String code = getCarColorCode(player.getPlayerCarColour());
                 String reset = "\033[0m";
                 String toPrint = player instanceof BotPlayer ? code + 'B' + reset : code + 'P' + reset;
@@ -45,7 +48,15 @@ public interface Utils {
 
     static void printWinMessage(Player player) {
         System.out.println("Player " + player.getPlayerCarColour() + " has crossed the finish line");
-        System.out.println("Player " + player.getPlayerCarColour() + " WINS!!!");
+        System.out.println("""
+                  \u001B[33m\u001B[1m
+                  ______   ______   .__   __.   _______ .______          ___   .___________. __    __   __          ___   .___________. __    ______   .__   __.      _______.
+                 /      | /  __  \\  |  \\ |  |  /  _____||   _  \\        /   \\  |           ||  |  |  | |  |        /   \\  |           ||  |  /  __  \\  |  \\ |  |     /       |
+                |  ,----'|  |  |  | |   \\|  | |  |  __  |  |_)  |      /  ^  \\ `---|  |----`|  |  |  | |  |       /  ^  \\ `---|  |----`|  | |  |  |  | |   \\|  |    |   (----`
+                |  |     |  |  |  | |  . `  | |  | |_ | |      /      /  /_\\  \\    |  |     |  |  |  | |  |      /  /_\\  \\    |  |     |  | |  |  |  | |  . `  |     \\   \\   
+                |  `----.|  `--'  | |  |\\   | |  |__| | |  |\\  \\----./  _____  \\   |  |     |  `--'  | |  `----./  _____  \\   |  |     |  | |  `--'  | |  |\\   | .----)   |  
+                 \\______| \\______/  |__| \\__|  \\______| | _| `._____/__/     \\__\\  |__|      \\______/  |_______/__/     \\__\\  |__|     |__|  \\______/  |__| \\__| |_______/   
+                 \u001B[0m""");
     }
 
     static void printEliminationMessage(Player player) {
@@ -131,5 +142,22 @@ public interface Utils {
         \u001B[36mGood luck, and may the best driver win!\u001B[0m
             """;
         System.out.println(rules);
+    }
+
+    static void displayGameOver() {
+        System.out.println("""
+                \u001B[31m\u001B[1m
+                  
+                  ▄████  ▄▄▄       ███▄ ▄███▓▓█████     ▒█████   ██▒   █▓▓█████  ██▀███ 
+                 ██▒ ▀█▒▒████▄    ▓██▒▀█▀ ██▒▓█   ▀    ▒██▒  ██▒▓██░   █▒▓█   ▀ ▓██ ▒ ██▒
+                ▒██░▄▄▄░▒██  ▀█▄  ▓██    ▓██░▒███      ▒██░  ██▒ ▓██  █▒░▒███   ▓██ ░▄█ ▒
+                ░▓█  ██▓░██▄▄▄▄██ ▒██    ▒██ ▒▓█  ▄    ▒██   ██░  ▒██ █░░▒▓█  ▄ ▒██▀▀█▄ 
+                ░▒▓███▀▒ ▓█   ▓██▒▒██▒   ░██▒░▒████▒   ░ ████▓▒░   ▒▀█░  ░▒████▒░██▓ ▒██▒
+                 ░▒   ▒  ▒▒   ▓▒█░░ ▒░   ░  ░░░ ▒░ ░   ░ ▒░▒░▒░    ░ ▐░  ░░ ▒░ ░░ ▒▓ ░▒▓░
+                  ░   ░   ▒   ▒▒ ░░  ░      ░ ░ ░  ░     ░ ▒ ▒░    ░ ░░   ░ ░  ░  ░▒ ░ ▒░
+                ░ ░   ░   ░   ▒   ░      ░      ░      ░ ░ ░ ▒       ░░     ░     ░░   ░
+                      ░       ░  ░       ░      ░  ░       ░ ░        ░     ░  ░   ░    
+                                                                     ░                 
+                \u001B[0m""");
     }
 }

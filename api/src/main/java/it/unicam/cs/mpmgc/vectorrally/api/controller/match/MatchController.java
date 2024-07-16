@@ -22,11 +22,11 @@ public interface MatchController {
 
     void startMatch() throws Exception;
 
-    void handleTurn(Player player);
+    void handleTurn(Player player) throws Exception;
 
     void handleMove(Player player, Move move);
 
-    void handleElimination(Player player);
+    void handleElimination(Player player) throws Exception;
 
     boolean isGameOver();
 
