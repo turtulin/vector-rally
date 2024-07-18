@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.BoxBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TitledPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1142.0" text="Settings" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpmgc.vectorrally.app.handler.SettingsHandler">
+   <content>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fitHeight="814.0" fitWidth="1296.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/backgroundSettings.jpg" />
+               </image>
+               <effect>
+                  <BoxBlur />
+               </effect>
+            </ImageView>
+            <SplitMenuButton layoutX="187.0" layoutY="203.0" mnemonicParsing="false" onAction="#handleListTracks" text="Racetracks" />
+            <SplitMenuButton layoutX="1022.0" layoutY="203.0" mnemonicParsing="false" text="Bots difficulty">
+              <items>
+                <MenuItem mnemonicParsing="false" text="EASY" />
+                <MenuItem mnemonicParsing="false" text="MEDIUM" />
+                  <MenuItem mnemonicParsing="false" text="HARD" />
+              </items>
+            </SplitMenuButton>
+            <SplitMenuButton layoutX="608.0" layoutY="203.0" mnemonicParsing="false" text="Shift rule">
+              <items>
+                <MenuItem mnemonicParsing="false" text="4 neighbors" />
+                <MenuItem mnemonicParsing="false" text="8 neighbors" />
+              </items>
+            </SplitMenuButton>
+         </children>
+      </AnchorPane>
+   </content>
+</TitledPane>

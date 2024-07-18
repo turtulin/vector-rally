@@ -1,4 +1,4 @@
-package it.unicam.cs.mpmgc.vectorrally.api.controller.io;
+package it.unicam.cs.mpmgc.vectorrally.api.view;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
@@ -9,7 +9,6 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -68,6 +67,7 @@ public class TerminalIOController implements IOController {
         }
         return directoryPath;
     }
+
     private boolean doesDirectoryExist(File directory) {
         return directory.exists() && directory.isDirectory();
     }

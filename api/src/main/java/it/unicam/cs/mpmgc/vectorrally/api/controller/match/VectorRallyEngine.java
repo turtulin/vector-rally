@@ -1,16 +1,16 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
-import it.unicam.cs.mpmgc.vectorrally.api.controller.io.IOController;
-import it.unicam.cs.mpmgc.vectorrally.api.controller.io.Utils;
+
 import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.VectorRallySetup;
-import it.unicam.cs.mpmgc.vectorrally.api.controller.io.TerminalIOController;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrackBuilder;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMoveValidator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
-import jdk.jshell.execution.Util;
+import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
+import it.unicam.cs.mpmgc.vectorrally.api.view.TerminalIOController;
+import it.unicam.cs.mpmgc.vectorrally.api.view.Utils;
 
 import java.util.List;
 

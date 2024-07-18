@@ -1,4 +1,4 @@
-package it.unicam.cs.mpmgc.vectorrally.api.controller.io;
+package it.unicam.cs.mpmgc.vectorrally.api.view;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;

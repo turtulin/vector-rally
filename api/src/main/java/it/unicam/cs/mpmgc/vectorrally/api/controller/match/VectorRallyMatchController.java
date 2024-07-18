@@ -1,7 +1,7 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
-import it.unicam.cs.mpmgc.vectorrally.api.controller.io.IOController;
-import it.unicam.cs.mpmgc.vectorrally.api.controller.io.Utils;
+import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
+import it.unicam.cs.mpmgc.vectorrally.api.view.Utils;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;

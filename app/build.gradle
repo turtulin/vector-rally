@@ -6,7 +6,7 @@
 
 plugins {
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
     id("buildlogic.java-application-conventions")
 }
 
@@ -32,12 +32,12 @@ java {
 }
 
 javafx {
-    version = "17.0.8"
+    version = "22.0.1"
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 application {
-    mainClass = 'it.unicam.cs.mpmgc.vectorrally.app.TerminalApp'
+    mainClass = 'it.unicam.cs.mpmgc.vectorrally.app.GraphicalApp'
 }
 
 tasks.register('wrapper', Wrapper) {
