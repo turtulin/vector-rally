@@ -33,10 +33,17 @@ public interface IOController {
     int chooseRuleType();
 
     /**
-     * Asks the player to choose a track from the available tracks.
+     * Finds the track files in the directory.
      * @return the chosen track file name.
      */
-    String findTrack() throws Exception;
+    List<String> findTrack() throws Exception;
+
+    /**
+     * Asks the player to choose a track file.
+     * @param trackFiles the track choosen by the player.
+     * @return the chosen track file name.
+     */
+    String pickTrack(List<String> trackFiles);
 
     /**
      * Asks for the number of human players.

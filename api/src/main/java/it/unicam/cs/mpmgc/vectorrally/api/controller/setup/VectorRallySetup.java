@@ -59,7 +59,8 @@ public class VectorRallySetup implements GameSetup {
 
     @Override
     public RaceTrack initializeTrack() throws Exception {
-        String trackFilePath = ioController.findTrack();
+        List<String> tracksFilePath = ioController.findTrack();
+        String trackFilePath = ioController.pickTrack(tracksFilePath);
         return trackBuilder.buildTrack(trackFilePath);
     }
 

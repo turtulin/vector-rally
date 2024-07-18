@@ -41,7 +41,7 @@ public class TerminalIOController implements IOController {
     }
 
     @Override
-    public String findTrack() {
+    public List<String> findTrack() {
         String directoryPath = checkRootPath();
         File directory = new File(directoryPath);
         File[] files = directory.listFiles((dir, name) -> name.endsWith(".txt"));
@@ -53,6 +53,12 @@ public class TerminalIOController implements IOController {
         for (File file : files) {
             trackFiles.add(file.getName());
         }
+        return trackFiles;
+    }
+
+    @Override
+    public String pickTrack(List<String> trackFiles){
+        String directoryPath = checkRootPath();
         int choice = chooseRaceTrack(trackFiles);
         return directoryPath + "/" + trackFiles.get(choice - 1);
     }
@@ -83,9 +89,10 @@ public class TerminalIOController implements IOController {
         }
         int choice = scanner.nextInt();
         scanner.nextLine();
-        if (choice < 1 || choice > trackFiles.size()) {
+        while (choice < 1 || choice > trackFiles.size()) {
             Utils.printErrorMessage("Invalid choice.");
-            chooseRaceTrack(trackFiles);
+            choice = scanner.nextInt();
+            scanner.nextLine();
         }
         return choice;
     }
