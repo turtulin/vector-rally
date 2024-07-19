@@ -3,7 +3,7 @@ package it.unicam.cs.mpmgc.vectorrally.app.handler;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.FourNeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.EightNeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
-import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
+import it.unicam.cs.mpmgc.vectorrally.api.view.IOControllerNew;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class SettingsHandler {
 
-    private final IOController ioController;
+    private final IOControllerNew IOControllerNew;
 
     @FXML
     private SplitMenuButton trackMenuButton;
@@ -35,8 +35,8 @@ public class SettingsHandler {
     @FXML
     private Button setupButton;
 
-    public SettingsHandler(IOController ioController) {
-        this.ioController = ioController;
+    public SettingsHandler(IOControllerNew IOControllerNew) {
+        this.IOControllerNew = IOControllerNew;
     }
 
     @FXML
@@ -59,7 +59,7 @@ public class SettingsHandler {
 
 
     public void loadTrackNames() throws Exception {
-        List<String> trackNames = ioController.findTrack();
+        List<String> trackNames = IOControllerNew.findTrack();
         for (String track : trackNames) {
             MenuItem menuItem = new MenuItem(track);
             menuItem.setOnAction(event -> {

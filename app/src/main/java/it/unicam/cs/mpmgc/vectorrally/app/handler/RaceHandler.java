@@ -36,11 +36,11 @@ public class RaceHandler {
         }
     }
 
-    private void handleSetup() throws Exception {
-        String difficulty = this.difficultyLabel.getText();
-        String track = this.trackLabel.getText();
-        String shiftRule = this.shiftRuleLabel.getText();
-        GameEngine gameController = new VectorRallyEngine();
-        gameController.startGame();
-    }
+//    private void handleSetup() throws Exception {
+//        String difficulty = this.difficultyLabel.getText();
+//        String track = this.trackLabel.getText();
+//        String shiftRule = this.shiftRuleLabel.getText();
+//        GameEngine gameController = new VectorRallyEngine();
+//        gameController.startGame();
+//    }
 }

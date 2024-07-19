@@ -17,6 +17,6 @@ public class EightNeighborsGenerator implements NeighborsGenerator {
     public List<Acceleration> generateShifts(Acceleration speed) {
         int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1, 0};
         int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1, 0};
-        return NeighborsGenerator.getAccelerations(speed, dx, dy);
+        return getAccelerations(speed, dx, dy);
     }
 }

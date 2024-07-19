@@ -23,7 +23,7 @@ public interface NeighborsGenerator {
      */
     List<Acceleration> generateShifts(Acceleration speed);
 
-    static List<Acceleration> getAccelerations(Acceleration speed, int[] dx, int[] dy) {
+    default List<Acceleration> getAccelerations(Acceleration speed, int[] dx, int[] dy) {
         List<Acceleration> shifts = new ArrayList<>();
         for (int i = 0; i < dx.length; i++) {
             shifts.add(new Acceleration(speed.getDx() + dx[i], speed.getDy() + dy[i]));

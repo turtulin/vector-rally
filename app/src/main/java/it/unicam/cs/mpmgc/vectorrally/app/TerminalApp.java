@@ -3,14 +3,21 @@
  */
 package it.unicam.cs.mpmgc.vectorrally.app;
 
+
+import it.unicam.cs.mpmgc.vectorrally.api.view.CLIIOController;
+import it.unicam.cs.mpmgc.vectorrally.api.view.IOControllerNew;
+
 import it.unicam.cs.mpmgc.vectorrally.api.controller.match.GameEngine;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.match.VectorRallyEngine;
+import it.unicam.cs.mpmgc.vectorrally.api.view.IOControllerNew;
+import it.unicam.cs.mpmgc.vectorrally.api.view.TerminalIOControllerNew;
 
 public class TerminalApp {
     public static void main(String[] args) {
         try {
-            GameEngine gameController = new VectorRallyEngine();
-            gameController.displayWelcomeAndRules();
+            CLIIOController ioController = new TerminalIOControllerNew();
+            GameEngine gameController = new VectorRallyEngine(ioController);
+            ioController.displayWelcomeAndRules();
             gameController.startGame();
         } catch (Exception e) {
             e.printStackTrace();
