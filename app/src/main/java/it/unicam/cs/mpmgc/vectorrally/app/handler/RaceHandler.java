@@ -1,5 +1,9 @@
 package it.unicam.cs.mpmgc.vectorrally.app.handler;
 
+import it.unicam.cs.mpmgc.vectorrally.api.controller.match.GameEngine;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.match.VectorRallyEngine;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.Track;
+import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -30,5 +34,13 @@ public class RaceHandler {
         if (shiftRuleLabel != null) {
             shiftRuleLabel.setText(shiftRule);
         }
+    }
+
+    private void handleSetup() throws Exception {
+        String difficulty = this.difficultyLabel.getText();
+        String track = this.trackLabel.getText();
+        String shiftRule = this.shiftRuleLabel.getText();
+        GameEngine gameController = new VectorRallyEngine();
+        gameController.startGame();
     }
 }

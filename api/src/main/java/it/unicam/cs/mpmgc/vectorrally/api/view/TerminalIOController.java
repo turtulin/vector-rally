@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class TerminalIOController implements IOController {
     private final Scanner scanner;
@@ -23,6 +24,10 @@ public class TerminalIOController implements IOController {
     public boolean askIfPlayerKnowsRules() {
         Utils.printMessage("Do you know the game rules? (yes/no)");
         String answer = scanner.nextLine().trim().toLowerCase();
+        while (!answer.equals("yes") && !answer.equals("no")) {
+            Utils.printMessage("Invalid choice.");
+            answer = scanner.nextLine().trim().toLowerCase();
+        }
         return answer.equals("yes");
     }
 
@@ -33,20 +38,21 @@ public class TerminalIOController implements IOController {
         Utils.printMessage("2. Eight Neighbors Rule");
         int choice = scanner.nextInt();
         scanner.nextLine();
-        if (choice != 1 && choice != 2) {
-            Utils.printErrorMessage("Invalid choice.");
-            chooseRuleType();
+        while (choice != 1 && choice != 2) {
+            Utils.printMessage("Invalid choice.");
+            choice = scanner.nextInt();
+            scanner.nextLine();
         }
         return choice;
     }
 
     @Override
     public List<String> findTrack() {
-        String directoryPath = checkRootPath();
+        String directoryPath = IOController.checkRootPath();
         File directory = new File(directoryPath);
         File[] files = directory.listFiles((dir, name) -> name.endsWith(".txt"));
         if (!doesDirectoryExist(directory) || !doFilesExist(files)) {
-            Utils.printErrorMessage("Track directory not found or is not a directory.");
+            Utils.printMessage("Invalid choice.");
             return null;
         }
         List<String> trackFiles = new ArrayList<>();
@@ -58,20 +64,9 @@ public class TerminalIOController implements IOController {
 
     @Override
     public String pickTrack(List<String> trackFiles){
-        String directoryPath = checkRootPath();
+        String directoryPath = IOController.checkRootPath();
         int choice = chooseRaceTrack(trackFiles);
         return directoryPath + "/" + trackFiles.get(choice - 1);
-    }
-
-    private String checkRootPath () {
-        String currentWorkingDir = System.getProperty("user.dir");
-        String directoryPath;
-        if (currentWorkingDir.endsWith("app")) {
-            directoryPath = "../api/src/main/resources/racetracks";
-        } else {
-            directoryPath = "api/src/main/resources/racetracks";
-        }
-        return directoryPath;
     }
 
     private boolean doesDirectoryExist(File directory) {
@@ -84,13 +79,11 @@ public class TerminalIOController implements IOController {
 
     private int chooseRaceTrack (List<String> trackFiles) {
         Utils.printMessage("Choose a track from the available tracks:");
-        for (int i = 0; i < trackFiles.size(); i++) {
-            Utils.printMessage((i + 1) + ". " + trackFiles.get(i));
-        }
+        IntStream.range(0, trackFiles.size()).mapToObj(i -> (i + 1) + ". " + trackFiles.get(i)).forEach(Utils::printMessage);
         int choice = scanner.nextInt();
         scanner.nextLine();
         while (choice < 1 || choice > trackFiles.size()) {
-            Utils.printErrorMessage("Invalid choice.");
+            Utils.printMessage("Invalid choice.");
             choice = scanner.nextInt();
             scanner.nextLine();
         }
@@ -102,9 +95,10 @@ public class TerminalIOController implements IOController {
         Utils.printMessage("Enter the number of human players (max " + maxPlayers + "):");
         int numPlayers = scanner.nextInt();
         scanner.nextLine();
-        if (numPlayers < 0 || numPlayers > maxPlayers) {
-            Utils.printErrorMessage("Invalid number of players.");
-            askNumberOfHumanPlayers(maxPlayers);
+        while (numPlayers < 0 || numPlayers > maxPlayers) {
+            Utils.printMessage("Invalid choice.");
+            numPlayers = scanner.nextInt();
+            scanner.nextLine();
         }
         return numPlayers;
     }
@@ -117,6 +111,11 @@ public class TerminalIOController implements IOController {
         }
         int choice = scanner.nextInt();
         scanner.nextLine();
+        while (choice < 1 || choice > availableColors.size()) {
+            Utils.printMessage("Invalid choice.");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+        }
         return availableColors.get(choice - 1);
     }
 
@@ -124,9 +123,9 @@ public class TerminalIOController implements IOController {
     public boolean askToChooseForEachBot() {
         Utils.printMessage("Do you want to choose the strategy for each bot? (yes/no)");
         String response = scanner.nextLine();
-        if (!response.equalsIgnoreCase("yes") && !response.equalsIgnoreCase("no")) {
-            Utils.printErrorMessage("Invalid choice.");
-            askToChooseForEachBot();
+        while (!response.equalsIgnoreCase("yes") && !response.equalsIgnoreCase("no")) {
+            Utils.printMessage("Invalid choice.");
+            response = scanner.nextLine();
         }
         return response.equalsIgnoreCase("yes");
     }
@@ -149,10 +148,9 @@ public class TerminalIOController implements IOController {
         int choice = scanner.nextInt();
         scanner.nextLine();
         return switch (choice) {
-            case 1 -> BotStrategy.EASY;
             case 2 -> BotStrategy.MEDIUM;
             case 3 -> BotStrategy.HARD;
-            default -> getBotStrategyDifficulty(message);
+            default -> BotStrategy.EASY;
         };
     }
 
@@ -161,9 +159,9 @@ public class TerminalIOController implements IOController {
         Utils.printRaceTrack(raceTrack, players);
         Utils.printMessage("Are you satisfied with the current configuration? (yes/no)");
         String answer = scanner.nextLine().trim().toLowerCase();
-        if (!answer.equals("yes") && !answer.equals("no")) {
-            Utils.printErrorMessage("Invalid choice.");
-            askIfSatisfiedWithConfiguration(raceTrack, players);
+        while (!answer.equals("yes") && !answer.equals("no")) {
+            Utils.printMessage("Invalid choice.");
+            answer = scanner.nextLine().trim().toLowerCase();
         }
         return answer.equals("yes");
     }
@@ -172,17 +170,14 @@ public class TerminalIOController implements IOController {
     public int chooseMove(List<Move> possibleMoves) {
         Utils.printMessage("Choose your move:");
         for (int i = 0; i < possibleMoves.size(); i++) {
-            Move move = possibleMoves.get(i);
-            Position destination = move.getDestination();
-
-            // TODO: CHANGE THE MESSAGE
-            Utils.printMessage((i + 1) + ". Move to  position " + destination + " with " + move.acceleration());
+            Utils.printMessage((i + 1) + ".");
         }
         int choice = scanner.nextInt();
         scanner.nextLine();
-        if (choice < 1 || choice > possibleMoves.size()) {
-            Utils.printErrorMessage("Invalid choice.");
-            chooseMove(possibleMoves);
+        while (choice < 1 || choice > possibleMoves.size()) {
+            Utils.printMessage("Invalid choice.");
+            choice = scanner.nextInt();
+            scanner.nextLine();
         }
         return choice - 1;
     }
@@ -191,9 +186,9 @@ public class TerminalIOController implements IOController {
     public boolean askToPlayAnotherMatch() {
         Utils.printMessage("Do you want to play another match? (yes/no)");
         String answer = scanner.nextLine().trim().toLowerCase();
-        if (!answer.equals("yes") && !answer.equals("no")) {
-            Utils.printErrorMessage("Invalid choice.");
-            askToPlayAnotherMatch();
+        while (!answer.equals("yes") && !answer.equals("no")) {
+            Utils.printMessage("Invalid choice.");
+            answer = scanner.nextLine().trim().toLowerCase();
         }
         return answer.equals("yes");
     }
@@ -213,9 +208,10 @@ public class TerminalIOController implements IOController {
         }
         int choice = scanner.nextInt();
         scanner.nextLine();
-        if (choice < 1 || choice > availablePositions.size()) {
-            Utils.printErrorMessage("Invalid choice.");
-            chooseStartingPosition(player, availablePositions);
+        while (choice < 1 || choice > availablePositions.size()) {
+            Utils.printMessage("Invalid choice.");
+            choice = scanner.nextInt();
+            scanner.nextLine();
         }
         return availablePositions.get(choice - 1);
     }

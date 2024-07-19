@@ -29,6 +29,4 @@ public interface MatchController {
     void handleElimination(Player player) throws Exception;
 
     boolean isGameOver();
-
-    void endMatch() throws Exception;
 }

@@ -64,9 +64,6 @@ public interface Utils {
         System.out.println("Player " + player.getPlayerCarColour() + " LOSES!!!");
     }
 
-    static void printErrorMessage(String message) {
-        System.out.println("ERROR: " + message);
-    }
     static void printMessage(String message) {
         System.out.println(message);
     }

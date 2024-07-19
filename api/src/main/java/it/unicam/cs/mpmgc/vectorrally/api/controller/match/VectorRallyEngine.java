@@ -1,6 +1,7 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
 
+import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.SetupResult;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.VectorRallySetup;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
@@ -42,7 +43,15 @@ public class VectorRallyEngine implements GameEngine {
 
     @Override
     public void startGame() throws Exception {
-        displayWelcomeAndRules();
+        SetupResult setup = setupMatch();
+        startMatch(setup.players(), setup.raceTrack(), setup.generator());
+        while (endMatch()) {
+            setup = setupMatch();
+            startMatch(setup.players(), setup.raceTrack(), setup.generator());
+        }
+    }
+
+    private SetupResult setupMatch() throws Exception {
         boolean confirmConfiguration = false;
         while (!confirmConfiguration) {
             this.neighborsGenerator = this.setup.initializeShiftAlgorithm();
@@ -50,7 +59,7 @@ public class VectorRallyEngine implements GameEngine {
             this.players = this.setup.initializePlayers(raceTrack);
             confirmConfiguration = ioController.askIfSatisfiedWithConfiguration(raceTrack, players);
         }
-        startMatch(players, raceTrack, neighborsGenerator);
+        return new SetupResult(neighborsGenerator, raceTrack, players);
     }
 
     private void startMatch(List<Player> players, RaceTrack raceTrack, NeighborsGenerator neighborsGenerator) throws Exception {
@@ -59,7 +68,13 @@ public class VectorRallyEngine implements GameEngine {
         matchController.startMatch();
     }
 
-    private void displayWelcomeAndRules() {
+    private boolean endMatch() {
+        ioController.displayEndMatchMessage();
+        return ioController.askToPlayAnotherMatch();
+    }
+
+
+    public void displayWelcomeAndRules() {
         Utils.displayWelcomeMessage();
         if (!ioController.askIfPlayerKnowsRules()) {
             Utils.displayGameRules();

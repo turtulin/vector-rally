@@ -92,4 +92,15 @@ public interface IOController {
     Position chooseStartingPosition(Player player, List<Position> availablePositions);
     boolean askToChooseForEachBot();
     public BotStrategy chooseAllBotStrategyDifficulty();
+
+    static String checkRootPath () {
+        String currentWorkingDir = System.getProperty("user.dir");
+        String directoryPath;
+        if (currentWorkingDir.endsWith("app")) {
+            directoryPath = "../api/src/main/resources/racetracks";
+        } else {
+            directoryPath = "api/src/main/resources/racetracks";
+        }
+        return directoryPath;
+    }
 }

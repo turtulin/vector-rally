@@ -1,6 +1,7 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.setup;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.AStarManhattan;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.*;
 
 import java.util.HashMap;
@@ -12,7 +13,9 @@ public class BotStrategyFactory {
     public BotStrategyFactory() {
         strategyMap.put(BotStrategy.EASY, new EasyBotStrategy());
         strategyMap.put(BotStrategy.MEDIUM, new MediumBotStrategy());
-        strategyMap.put(BotStrategy.HARD, new HardBotStrategy(new AStarManhattan()));
+        strategyMap.put(BotStrategy.HARD, new HardBotStrategy(
+                new AStarManhattan(AStarManhattan::calculateHeuristic)
+        ));
     }
 
     public DecisionStrategy getStrategy(BotStrategy botStrategy) {

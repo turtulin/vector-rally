@@ -10,6 +10,7 @@ public class TerminalApp {
     public static void main(String[] args) {
         try {
             GameEngine gameController = new VectorRallyEngine();
+            gameController.displayWelcomeAndRules();
             gameController.startGame();
         } catch (Exception e) {
             e.printStackTrace();

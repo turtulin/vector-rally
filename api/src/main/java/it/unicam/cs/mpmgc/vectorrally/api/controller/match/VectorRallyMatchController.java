@@ -56,7 +56,7 @@ public class VectorRallyMatchController implements MatchController {
         while (!gameOver) {
             handleTurn(Objects.requireNonNull(turnQueue.poll()));
         }
-        endMatch();
+
     }
 
     @Override
@@ -111,18 +111,9 @@ public class VectorRallyMatchController implements MatchController {
         {
             gameOver = true;
             Utils.displayGameOver();
-            endMatch();
         }
     }
 
-    @Override
-    public void endMatch() throws Exception {
-        ioController.displayEndMatchMessage();
-        if (ioController.askToPlayAnotherMatch()) {
-            GameEngine engine = new VectorRallyEngine();
-            engine.startGame();
-        }
-    }
 
     private boolean checkIfPlayerWins(Move move) {
         Position end = move.getDestination();

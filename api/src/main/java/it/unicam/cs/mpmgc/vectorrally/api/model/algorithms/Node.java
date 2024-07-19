@@ -10,7 +10,7 @@ public class Node implements Comparable<Node>{
 
     public Node(Position position) {
         this.position = position;
-        this.gCost = 0;
+        this.gCost = Double.MAX_VALUE;
         this.hCost = 0;
     }
 

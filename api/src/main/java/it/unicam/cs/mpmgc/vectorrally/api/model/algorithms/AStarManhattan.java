@@ -1,48 +1,45 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.algorithms;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
-import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
-import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 
 import java.util.*;
+import java.util.function.BiFunction;
 
-public class AStarManhattan implements AStar {
-    public AStarManhattan() {
+public class AStarManhattan {
+    private final BiFunction<Position, Position, Float> heuristic;
+    public AStarManhattan(BiFunction<Position, Position, Float> heuristic) {
+        this.heuristic = heuristic;
     }
 
-    @Override
     public List<Position> findPath(Position start, Position goal) {
-        PriorityQueue<Node> openList = new PriorityQueue<>();
-        Map<Position, Node> allNodes = new HashMap<>();
-        Node startNode = createStartNode(start, goal, openList, allNodes);
+        PriorityQueue<Node> openList = new PriorityQueue<>(100, (a, b) -> (int) (a.getFCost() - b.getFCost()));
+        initialize(start, goal, openList);
 
         while (!openList.isEmpty()) {
             Node currentNode = openList.poll();
             if (currentNode.getPosition().equals(goal)) {
                 return reconstructPath(currentNode);
             }
-            exploreNeighbors(currentNode, goal, openList, allNodes);
+            exploreNeighbors(currentNode, goal, openList);
         }
 
         return new ArrayList<>();
     }
 
-    @Override
+
     public double calculateCost(Position start, Position goal) {
         List<Position> path = findPath(start, goal);
         return !path.isEmpty() ? path.size() - 1 : Double.MAX_VALUE;
     }
 
-    private Node createStartNode(Position start, Position goal, PriorityQueue<Node> openList, Map<Position, Node> allNodes) {
+    private void initialize(Position start, Position goal, PriorityQueue<Node> openList) {
         Node startNode = new Node(start);
         startNode.setGCost(0);
-        startNode.setHCost(calculateHeuristic(start, goal));
+        startNode.setHCost(this.heuristic.apply(start, goal));
         openList.add(startNode);
-        allNodes.put(start, startNode);
-        return startNode;
     }
 
-    private void exploreNeighbors(Node currentNode, Position goal, PriorityQueue<Node> openList, Map<Position, Node> allNodes) {
+    private void exploreNeighbors(Node currentNode, Position goal, PriorityQueue<Node> openList) {
         for (Node neighbor : getNeighbors(currentNode, goal)) {
             double tentativeGCost = currentNode.getGCost() + calculateDistance(currentNode.getPosition(), neighbor.getPosition());
             if (tentativeGCost < neighbor.getGCost()) {
@@ -57,10 +54,10 @@ public class AStarManhattan implements AStar {
     private void updateNeighbor(Node neighbor, Node currentNode, double tentativeGCost, Position goal) {
         neighbor.setParent(currentNode);
         neighbor.setGCost(tentativeGCost);
-        neighbor.setHCost(calculateHeuristic(neighbor.getPosition(), goal));
+        neighbor.setHCost(this.heuristic.apply(neighbor.getPosition(), goal));
     }
 
-    private double calculateHeuristic(Position position, Position goal) {
+    public static float calculateHeuristic(Position position, Position goal) {
         return Math.abs(position.getX() - goal.getX()) + Math.abs(position.getY() - goal.getY());
     }
 
@@ -85,6 +82,7 @@ public class AStarManhattan implements AStar {
         return neighbors;
     }
 
+    //TODO: check if the neighbor is inside the track
     private void addNeighborIfValid(List<Node> neighbors, int newX, int newY, Position goal) {
         if (newX == goal.getX() && newY == goal.getY()) {
             neighbors.add(new Node(new Position(newX, newY)));
