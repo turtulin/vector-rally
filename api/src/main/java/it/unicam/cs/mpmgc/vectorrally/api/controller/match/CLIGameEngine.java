@@ -23,7 +23,7 @@ import java.util.List;
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-public class VectorRallyEngine implements GameEngine {
+public class CLIGameEngine implements GameEngine {
     private final CLIIOController ioControllerNew;
 
     private List<Player> players;
@@ -34,7 +34,7 @@ public class VectorRallyEngine implements GameEngine {
 
     private final GameSetup setup;
 
-    public VectorRallyEngine(CLIIOController ioControllerNew) {
+    public CLIGameEngine(CLIIOController ioControllerNew) {
         this.ioControllerNew = ioControllerNew;
         RaceTrackBuilder raceTrackBuilder = new RaceTrackBuilder();
         this.setup = new CLIGameSetup(ioControllerNew, raceTrackBuilder);
@@ -42,11 +42,11 @@ public class VectorRallyEngine implements GameEngine {
 
     @Override
     public void startGame() throws Exception {
-        SetupResult setup = setupMatch();
-        startMatch(setup.players(), setup.raceTrack(), setup.generator());
+        SetupResult setupResult = setupMatch();
+        startMatch(setupResult.players(), setupResult.raceTrack(), setupResult.generator());
         while (endMatch()) {
-            setup = setupMatch();
-            startMatch(setup.players(), setup.raceTrack(), setup.generator());
+            setupResult = setupMatch();
+            startMatch(setupResult.players(), setupResult.raceTrack(), setupResult.generator());
         }
     }
 
@@ -62,7 +62,7 @@ public class VectorRallyEngine implements GameEngine {
     }
 
     private void startMatch(List<Player> players, RaceTrack raceTrack, NeighborsGenerator neighborsGenerator) throws Exception {
-        MatchController matchController = new VectorRallyMatchController(ioControllerNew, new BasicMovesGenerator<>(neighborsGenerator, new BasicMoveValidator()));
+        MatchController matchController = new CLIMatchController(ioControllerNew, new BasicMovesGenerator<>(neighborsGenerator, new BasicMoveValidator()));
         matchController.initializeMatch(players, raceTrack);
         matchController.startMatch();
     }

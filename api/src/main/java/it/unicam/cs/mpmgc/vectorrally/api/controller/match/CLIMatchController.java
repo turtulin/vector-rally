@@ -1,6 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
-import it.unicam.cs.mpmgc.vectorrally.api.view.IOControllerNew;
+import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
 import it.unicam.cs.mpmgc.vectorrally.api.view.old.Utils;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
@@ -20,10 +20,10 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
-public class VectorRallyMatchController implements MatchController {
+public class CLIMatchController implements MatchController {
     private List<Player> players;
     private RaceTrack raceTrack;
-    private final IOControllerNew ioController;
+    private final IOController ioController;
     private final BasicMovesGenerator<NeighborsGenerator> moveGenerator;
     private Queue<Player> turnQueue;
     private final BotStrategyFactory botStrategyFactory;
@@ -32,7 +32,7 @@ public class VectorRallyMatchController implements MatchController {
     private int turnCounter = 0;
 
 
-    public VectorRallyMatchController(IOControllerNew ioController, BasicMovesGenerator<NeighborsGenerator> moveGenerator) {
+    public CLIMatchController(IOController ioController, BasicMovesGenerator<NeighborsGenerator> moveGenerator) {
         this.ioController = ioController;
         this.moveGenerator = moveGenerator;
         this.botStrategyFactory = initializeBotStrategyFactory();

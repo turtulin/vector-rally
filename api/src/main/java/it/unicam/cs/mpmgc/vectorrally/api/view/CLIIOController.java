@@ -7,7 +7,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 
 import java.util.List;
 
-public interface CLIIOController extends IOControllerNew {
+public interface CLIIOController extends IOController {
 
     /**
      * Displays the welcome message and the game rules.

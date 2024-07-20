@@ -16,7 +16,7 @@ import java.util.List;
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-public interface IOControllerNew {
+public interface IOController {
 
     /**
      * Finds the track files in the directory.

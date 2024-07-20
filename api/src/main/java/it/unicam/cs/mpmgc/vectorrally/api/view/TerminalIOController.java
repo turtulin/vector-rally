@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
-public class TerminalIOControllerNew implements CLIIOController {
+public class TerminalIOController implements CLIIOController {
     private final Scanner scanner;
     private final MessageProvider messageProvider = new GameMessageProvider();
     private final TerminalUtils utils = new TerminalUtils();
 
-    public TerminalIOControllerNew() {
+    public TerminalIOController() {
         this.scanner = new Scanner(System.in);
     }
 
@@ -56,7 +56,7 @@ public class TerminalIOControllerNew implements CLIIOController {
 
     @Override
     public String pickTrack(List<String> trackFiles) {
-        String directoryPath = IOControllerNew.checkRootPath();
+        String directoryPath = IOController.checkRootPath();
         int choice = chooseRaceTrack(trackFiles);
         return directoryPath + "/" + trackFiles.get(choice - 1);
     }
@@ -144,7 +144,7 @@ public class TerminalIOControllerNew implements CLIIOController {
 
     @Override
     public List<String> findTrack() throws Exception {
-        String directoryPath = IOControllerNew.checkRootPath();
+        String directoryPath = IOController.checkRootPath();
         File directory = new File(directoryPath);
         File[] files = directory.listFiles((dir, name) -> name.endsWith(".txt"));
         if (!doesDirectoryExist(directory) || !doFilesExist(files)) {

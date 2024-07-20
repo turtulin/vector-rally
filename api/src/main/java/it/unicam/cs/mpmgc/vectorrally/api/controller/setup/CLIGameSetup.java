@@ -31,23 +31,23 @@ import java.util.List;
  */
 public class CLIGameSetup implements GameSetup {
 
-    private final CLIIOController ioControllerNew;
+    private final CLIIOController ioController;
     private final RaceTrackBuilder trackBuilder;
 
-    public CLIGameSetup(CLIIOController IOControllerNew, RaceTrackBuilder trackBuilder) {
-        this.ioControllerNew = IOControllerNew;
+    public CLIGameSetup(CLIIOController ioController, RaceTrackBuilder trackBuilder) {
+        this.ioController = ioController;
         this.trackBuilder = trackBuilder;
     }
 
     @Override
     public NeighborsGenerator initializeShiftAlgorithm() {
-        int ruleType = ioControllerNew.chooseRuleType();
+        int ruleType = ioController.chooseRuleType();
         return ruleType == 1 ? new FourNeighborsGenerator() : new EightNeighborsGenerator();
     }
 
     @Override
     public List<Player> initializePlayers(RaceTrack raceTrack) {
-        int numHumanPlayers = ioControllerNew.askNumberOfHumanPlayers(raceTrack.getPositionsOfComponent(TrackComponent.START_POSITION).size());
+        int numHumanPlayers = ioController.askNumberOfHumanPlayers(raceTrack.getPositionsOfComponent(TrackComponent.START_POSITION).size());
         List<Player> players = new ArrayList<>();
         List<CarColour> availableColors = new ArrayList<>(Arrays.asList(CarColour.values()));
         setupHumanPlayers(numHumanPlayers, players, availableColors);
@@ -59,14 +59,14 @@ public class CLIGameSetup implements GameSetup {
 
     @Override
     public RaceTrack initializeTrack() throws Exception {
-        List<String> tracksFilePath = ioControllerNew.findTrack();
-        String trackFilePath = ioControllerNew.pickTrack(tracksFilePath);
+        List<String> tracksFilePath = ioController.findTrack();
+        String trackFilePath = ioController.pickTrack(tracksFilePath);
         return trackBuilder.buildTrack(trackFilePath);
     }
 
     private void setupHumanPlayers(int numHumanPlayers, List<Player> players, List<CarColour> availableColors) {
         for (int i = 0; i < numHumanPlayers; i++) {
-            CarColour chosenColor = ioControllerNew.chooseCarColor(availableColors);
+            CarColour chosenColor = ioController.chooseCarColor(availableColors);
             availableColors.remove(chosenColor);
             Car car = new RaceCar(chosenColor);
             Player humanPlayer = new HumanPlayer(car);
@@ -77,22 +77,22 @@ public class CLIGameSetup implements GameSetup {
     private void chooseStartingPositions(RaceTrack track, int numHumanPlayers, List<Player> players, List<Position> availablePositions) {
         Utils.printRaceTrack(track, players, availablePositions);
         for (int i = 0; i < numHumanPlayers; i++) {
-            Position chosenPosition = ioControllerNew.chooseStartingPosition(players.get(i), availablePositions);
+            Position chosenPosition = ioController.chooseStartingPosition(players.get(i), availablePositions);
             availablePositions.remove(chosenPosition);
             players.get(i).setPosition(chosenPosition);
         }
     }
 
     private void setupBotPlayers(int remainingPositions, List<Player> players, List<CarColour> availableColors, List<Position> availablePositions) {
-        boolean chooseForEachBot = ioControllerNew.askToChooseForEachBot();
+        boolean chooseForEachBot = ioController.askToChooseForEachBot();
         if (chooseForEachBot) {
             for (int i = 0; i < remainingPositions; i++) {
                 CarColour chosenColor = availableColors.get(i);
-                BotStrategy difficulty = ioControllerNew.chooseEachBotStrategyDifficulty(chosenColor);
+                BotStrategy difficulty = ioController.chooseEachBotStrategyDifficulty(chosenColor);
                 addPlayer(players, chosenColor, difficulty, availablePositions.get(i));
             }
         } else {
-            BotStrategy difficulty = ioControllerNew.chooseAllBotsStrategyDifficulty();
+            BotStrategy difficulty = ioController.chooseAllBotsStrategyDifficulty();
             for (int i = 0; i < remainingPositions; i++) {
                 CarColour chosenColor = availableColors.get(i);
                 addPlayer(players, chosenColor, difficulty, availablePositions.get(i));
