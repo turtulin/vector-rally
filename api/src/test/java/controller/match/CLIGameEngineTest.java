@@ -1,7 +1,7 @@
 package controller.match;
 
 import it.unicam.cs.mpmgc.vectorrally.api.controller.match.CLIGameEngine;
-import it.unicam.cs.mpmgc.vectorrally.api.view.CLIIOController;
+import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,11 +11,11 @@ import static org.mockito.Mockito.*;
 class CLIGameEngineTest {
 
     private CLIGameEngine gameEngine;
-    private CLIIOController ioController;
+    private IOController ioController;
 
     @BeforeEach
     void setUp() {
-        ioController = mock(CLIIOController.class);
+        ioController = mock(IOController.class);
         gameEngine = new CLIGameEngine(ioController) {
         };
     }

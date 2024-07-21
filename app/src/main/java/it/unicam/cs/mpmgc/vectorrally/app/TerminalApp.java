@@ -4,7 +4,7 @@
 package it.unicam.cs.mpmgc.vectorrally.app;
 
 
-import it.unicam.cs.mpmgc.vectorrally.api.view.CLIIOController;
+import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
 
 import it.unicam.cs.mpmgc.vectorrally.api.controller.match.GameEngine;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.match.CLIGameEngine;
@@ -21,7 +21,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.view.TerminalIOController;
 public class TerminalApp {
     public static void main(String[] args) {
         try {
-            CLIIOController ioController = new TerminalIOController();
+            IOController ioController = new TerminalIOController();
             GameEngine gameController = new CLIGameEngine(ioController);
             ioController.displayWelcomeAndRules();
             gameController.startGame();

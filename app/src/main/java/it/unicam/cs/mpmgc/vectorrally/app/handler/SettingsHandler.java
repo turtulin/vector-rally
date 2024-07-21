@@ -3,8 +3,8 @@ package it.unicam.cs.mpmgc.vectorrally.app.handler;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.FourNeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.EightNeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
-import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
 
+import it.unicam.cs.mpmgc.vectorrally.api.view.TrackPathController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class SettingsHandler {
 
-    private final IOController IOController;
+    private final TrackPathController IOController;
 
     @FXML
     private SplitMenuButton trackMenuButton;
@@ -43,12 +43,12 @@ public class SettingsHandler {
     @FXML
     private Button setupButton;
 
-    public SettingsHandler(IOController IOController) {
+    public SettingsHandler(TrackPathController IOController) {
         this.IOController = IOController;
     }
 
     @FXML
-    public void initialize() throws Exception {
+    public void initialize() {
         setupButton.setDisable(true);
         loadTrackNames();
         setupDifficultyMenu();
@@ -66,7 +66,7 @@ public class SettingsHandler {
     }
 
 
-    public void loadTrackNames() throws Exception {
+    public void loadTrackNames() {
         List<String> trackNames = IOController.findTrack();
         for (String track : trackNames) {
             MenuItem menuItem = new MenuItem(track);

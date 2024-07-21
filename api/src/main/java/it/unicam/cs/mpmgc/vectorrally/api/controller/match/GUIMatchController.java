@@ -12,7 +12,6 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMoveValidator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.DecisionStrategy;
 import it.unicam.cs.mpmgc.vectorrally.api.view.GraphicalIOController;
-import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
 public class GUIMatchController implements MatchController {
     private List<Player> players;
     private RaceTrack raceTrack;
-    private final IOController ioController;
+    private final GraphicalIOController ioController;
     private final BasicMovesGenerator<NeighborsGenerator> moveGenerator;
     private Queue<Player> turnQueue;
     private final BotStrategyFactory botStrategyFactory;
@@ -77,17 +76,8 @@ public class GUIMatchController implements MatchController {
         if (possibleMoves.isEmpty()) {
             handleElimination(player);
         } else {
-            if (player instanceof BotPlayer botPlayer) {
-                showBotMoves(botPlayer, possibleMoves);
-            } else {
-                showHumanPlayerMoves(possibleMoves);
-            }
+            if (player instanceof BotPlayer botPlayer) showBotMoves(botPlayer, possibleMoves);
         }
-    }
-
-    private void showHumanPlayerMoves(List<Move> possibleMoves) {
-        isMovePending = true;
-        ioController.waitForNextTurn();
     }
 
     private void showBotMoves(BotPlayer botPlayer, List<Move> possibleMoves) {

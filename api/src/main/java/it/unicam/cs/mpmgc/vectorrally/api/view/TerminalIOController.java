@@ -10,14 +10,12 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
 /**
- * Implements the CLIIOController interface, providing methods to handle
+ * Implements the IOController interface, providing methods to handle
  * input and output operations for the terminal-based game interface.
  *
  * @version 1.0
@@ -25,7 +23,7 @@ import java.util.stream.IntStream;
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-public class TerminalIOController implements CLIIOController {
+public class TerminalIOController extends TrackPathController implements IOController {
     private final Scanner scanner;
     private final MessageProvider messageProvider = new GameMessageProvider();
     private final TerminalUtils utils = new TerminalUtils();
@@ -71,7 +69,7 @@ public class TerminalIOController implements CLIIOController {
 
     @Override
     public String pickTrack(List<String> trackFiles) {
-        String directoryPath = IOController.checkRootPath();
+        String directoryPath = checkRootPath();
         int choice = chooseRaceTrack(trackFiles);
         return directoryPath + "/" + trackFiles.get(choice - 1);
     }
@@ -143,22 +141,6 @@ public class TerminalIOController implements CLIIOController {
         Output.printlnMessage(messageProvider.getEndMessage());
     }
 
-    @Override
-    public List<String> findTrack() {
-        String directoryPath = IOController.checkRootPath();
-        File directory = new File(directoryPath);
-        File[] files = directory.listFiles((dir, name) -> name.endsWith(".txt"));
-        if (!doesDirectoryExist(directory) || !doFilesExist(files)) {
-            Output.printlnMessage(messageProvider.getInvalidChoiceMessage());
-            return null;
-        }
-        List<String> trackFiles = new ArrayList<>();
-        assert files != null;
-        for (File file : files) {
-            trackFiles.add(file.getName());
-        }
-        return trackFiles;
-    }
 
     @Override
     public boolean askToPlayAnotherMatch() {

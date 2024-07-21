@@ -9,7 +9,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
-import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
+import it.unicam.cs.mpmgc.vectorrally.api.view.TrackPathController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * Provides the setup for a GUI-based game, implementing the GameSetup interface.
- * Manages the initialization of players and the race track based on selected difficulty and track.
+ * Manages the initialization of players and the racetrack based on selected difficulty and track.
  *
  * @version 1.0
  * @since 2024-07-11
@@ -50,16 +50,20 @@ public class GUIGameSetup implements  GameSetup {
         return players;
     }
 
-    public String getDifficulty() {
-        return difficulty;
-    }
-
-
     @Override
     public RaceTrack initializeTrack() throws Exception {
-        String directoryPath = IOController.checkRootPath();
+        String directoryPath = TrackPathController.checkRootPath();
         String trackPath = directoryPath + "/" + trackChosen;
         return trackBuilder.buildTrack(trackPath);
+    }
+
+    /**
+     * Retrieves the difficulty level for bot players.
+     *
+     * @return the difficulty level
+     */
+    public String getDifficulty() {
+        return difficulty;
     }
 
     /**

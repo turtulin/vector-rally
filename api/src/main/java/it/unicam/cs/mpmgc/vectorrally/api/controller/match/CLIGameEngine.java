@@ -10,7 +10,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.RaceTrackBuilder;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMoveValidator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
-import it.unicam.cs.mpmgc.vectorrally.api.view.CLIIOController;
+import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ import java.util.List;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public class CLIGameEngine implements GameEngine {
-    private final CLIIOController ioController;
+    private final IOController ioController;
     private List<Player> players;
     private NeighborsGenerator neighborsGenerator;
     private RaceTrack raceTrack;
@@ -35,7 +35,7 @@ public class CLIGameEngine implements GameEngine {
      *
      * @param ioController the IO controller used for input/output operations
      */
-    public CLIGameEngine(CLIIOController ioController) {
+    public CLIGameEngine(IOController ioController) {
         this.ioController = ioController;
         RaceTrackBuilder raceTrackBuilder = new RaceTrackBuilder();
         this.setup = new CLIGameSetup(ioController, raceTrackBuilder);

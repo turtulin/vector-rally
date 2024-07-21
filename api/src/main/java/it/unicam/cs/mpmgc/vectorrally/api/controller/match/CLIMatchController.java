@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class CLIMatchController implements MatchController {
     private List<Player> players;
     private RaceTrack raceTrack;
-    private final CLIIOController ioController;
+    private final IOController ioController;
     private final BasicMovesGenerator<NeighborsGenerator> moveGenerator;
     private Queue<Player> turnQueue;
     private final BotStrategyFactory botStrategyFactory;
@@ -37,6 +37,7 @@ public class CLIMatchController implements MatchController {
     private final BasicMoveValidator moveValidator;
     private final MessageProvider messageProvider = new GameMessageProvider();
     private int turnCounter = 0;
+    private int playerCounter = 0;
     private Player currentPlayer;
     private boolean isMovePending = false;
     private Move pendingMove;
@@ -47,7 +48,7 @@ public class CLIMatchController implements MatchController {
      * @param ioController the IO controller for CLI input/output
      * @param moveGenerator the generator for possible moves
      */
-    public CLIMatchController(CLIIOController ioController, BasicMovesGenerator<NeighborsGenerator> moveGenerator) {
+    public CLIMatchController(IOController ioController, BasicMovesGenerator<NeighborsGenerator> moveGenerator) {
         this.ioController = ioController;
         this.moveGenerator = moveGenerator;
         this.botStrategyFactory = initializeBotStrategyFactory(moveGenerator.getNeighborsGenerator());
@@ -86,7 +87,8 @@ public class CLIMatchController implements MatchController {
 
     @Override
     public void handleTurn(Player player) {
-        ioController.displayMessage(messageProvider.getTurnMessage(turnCounter++, player));
+        if(playerCounter++ >= players.size()) turnCounter++;
+        ioController.displayMessage(messageProvider.getTurnMessage(turnCounter+1, player));
         List<Move> possibleMoves = moveGenerator.generatePossibleMoves(player, raceTrack, players);
         if (possibleMoves.isEmpty()) {
             handleElimination(player);

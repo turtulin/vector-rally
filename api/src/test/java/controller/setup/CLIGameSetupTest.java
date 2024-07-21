@@ -3,15 +3,10 @@ package controller.setup;
 
 import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.CLIGameSetup;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.RaceTrackBuilder;
-import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
-import it.unicam.cs.mpmgc.vectorrally.api.model.players.BotPlayer;
-import it.unicam.cs.mpmgc.vectorrally.api.model.players.HumanPlayer;
-import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
-import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
-import it.unicam.cs.mpmgc.vectorrally.api.view.CLIIOController;
+import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,13 +18,13 @@ import static org.mockito.Mockito.*;
 
 class CLIGameSetupTest {
 
-    private CLIIOController ioController;
+    private IOController ioController;
     private RaceTrackBuilder trackBuilder;
     private CLIGameSetup gameSetup;
 
     @BeforeEach
     void setUp() {
-        ioController = mock(CLIIOController.class);
+        ioController = mock(IOController.class);
         trackBuilder = mock(RaceTrackBuilder.class);
         gameSetup = new CLIGameSetup(ioController, trackBuilder);
     }
