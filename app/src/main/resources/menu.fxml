@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TitledPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="657.0" prefWidth="966.0" text="Vector Rally" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpmgc.vectorrally.app.handler.MenuHandler">
+   <content>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fitHeight="666.0" fitWidth="1128.0" layoutX="1522.0" layoutY="973.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="973.5" AnchorPane.leftAnchor="1522.0" AnchorPane.rightAnchor="1521.0" AnchorPane.topAnchor="973.0">
+               <image>
+                  <Image url="@images/backgroundMenu.jpg" />
+               </image>
+            </ImageView>
+            <Button layoutX="2016.0" layoutY="1189.0" mnemonicParsing="false" onAction="#handleStartButtonAction" prefHeight="45.0" prefWidth="139.0" text="Start Match" />
+            <Button layoutX="2016.0" layoutY="1255.0" mnemonicParsing="false" onAction="#handleQuitButtonAction" prefHeight="47.0" prefWidth="139.0" text="Quit Game" />
+         </children>
+      </AnchorPane>
+   </content>
+</TitledPane>
