@@ -11,15 +11,25 @@ import java.util.List;
  *
  * @version 1.0
  * @since 2024-07-11
- *
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public interface GameSetup {
 
-    public NeighborsGenerator initializeShiftAlgorithm() throws Exception;
+    /**
+     * Initializes and returns a list of players for the game.
+     *
+     * @param raceTrack the racetrack on which the players will race.
+     * @return a list of initialized players.
+     * @throws Exception if an error occurs during initialization.
+     */
+    List<Player> initializePlayers(RaceTrack raceTrack) throws Exception;
 
-    public List<Player> initializePlayers(RaceTrack raceTrack) throws Exception;
-
-    public RaceTrack initializeTrack() throws Exception;
+    /**
+     * Initializes and returns the racetrack for the game.
+     *
+     * @return the initialized racetrack.
+     * @throws Exception if an error occurs during initialization.
+     */
+    RaceTrack initializeTrack() throws Exception;
 }

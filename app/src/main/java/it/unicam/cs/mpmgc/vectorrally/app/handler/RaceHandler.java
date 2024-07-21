@@ -101,8 +101,7 @@ public class RaceHandler {
         moveButton.setDisable(true);
         String difficulty = this.difficultyLabel.getText();
         String track = this.trackLabel.getText();
-        String shiftRule = this.shiftRuleLabel.getText();
-        GUIGameSetup setup = new GUIGameSetup(difficulty, track, shiftRule);
+        GUIGameSetup setup = new GUIGameSetup(difficulty, track);
         raceTrack = setup.initializeTrack();
         players = setup.initializePlayers(raceTrack);
         allPossibleMoves = new ArrayList<>();

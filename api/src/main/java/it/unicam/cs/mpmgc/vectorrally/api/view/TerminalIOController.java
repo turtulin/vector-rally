@@ -1,5 +1,8 @@
 package it.unicam.cs.mpmgc.vectorrally.api.view;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.EightNeighborsGenerator;
+import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.FourNeighborsGenerator;
+import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
@@ -229,5 +232,10 @@ public class TerminalIOController implements CLIIOController {
     @Override
     public void displayMessage(String message) {
         Output.printlnMessage(message);
+    }
+
+    public NeighborsGenerator initializeShiftAlgorithm() {
+        int ruleType = chooseRuleType();
+        return ruleType == 1 ? new FourNeighborsGenerator() : new EightNeighborsGenerator();
     }
 }

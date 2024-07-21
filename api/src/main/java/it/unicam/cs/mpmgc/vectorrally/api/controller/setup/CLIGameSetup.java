@@ -23,26 +23,29 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * This class implements the GameSetup interface, handling the setup process for the game.
+ * This class implements the GameSetup interface, handling the setup process for the game
+ * through a command-line interface (CLI). It interacts with the user via the terminal to set up
+ * the game's rules, players, and racetrack.
  *
  * @version 1.0
  * @since 2024-07-11
+ * @author Marta Musso
+ * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public class CLIGameSetup implements GameSetup {
-
     private final CLIIOController ioController;
     private final RaceTrackBuilder trackBuilder;
     private final TerminalUtils terminalUtils = new TerminalUtils();
 
+    /**
+     * Constructs a CLIGameSetup instance with the specified IO controller and track builder.
+     *
+     * @param ioController the IO controller for interacting with the user.
+     * @param trackBuilder the track builder for constructing the racetrack.
+     */
     public CLIGameSetup(CLIIOController ioController, RaceTrackBuilder trackBuilder) {
         this.ioController = ioController;
         this.trackBuilder = trackBuilder;
-    }
-
-    @Override
-    public NeighborsGenerator initializeShiftAlgorithm() {
-        int ruleType = ioController.chooseRuleType();
-        return ruleType == 1 ? new FourNeighborsGenerator() : new EightNeighborsGenerator();
     }
 
     @Override
@@ -64,6 +67,13 @@ public class CLIGameSetup implements GameSetup {
         return trackBuilder.buildTrack(trackFilePath);
     }
 
+    /**
+     * Sets up the human players based on user input.
+     *
+     * @param numHumanPlayers the number of human players to set up.
+     * @param players the list of players to which the human players will be added.
+     * @param availableColors the list of available car colors.
+     */
     private void setupHumanPlayers(int numHumanPlayers, List<Player> players, List<CarColour> availableColors) {
         for (int i = 0; i < numHumanPlayers; i++) {
             CarColour chosenColor = ioController.chooseCarColor(availableColors);
@@ -74,6 +84,14 @@ public class CLIGameSetup implements GameSetup {
         }
     }
 
+    /**
+     * Allows players to choose their starting positions on the racetrack.
+     *
+     * @param track the racetrack on which the players will race.
+     * @param numHumanPlayers the number of human players.
+     * @param players the list of players.
+     * @param availablePositions the list of available starting positions.
+     */
     private void chooseStartingPositions(RaceTrack track, int numHumanPlayers, List<Player> players, List<Position> availablePositions) {
         terminalUtils.printRaceTrack(track, players, availablePositions);
         for (int i = 0; i < numHumanPlayers; i++) {
@@ -83,23 +101,39 @@ public class CLIGameSetup implements GameSetup {
         }
     }
 
-    private void setupBotPlayers(int remainingPositions, List<Player> players, List<CarColour> availableColors, List<Position> availablePositions) {
+    /**
+     * Sets up the bot players based on user input.
+     *
+     * @param remainingPositions the number of remaining positions for the bots.
+     * @param players the list of players to which the bot players will be added.
+     * @param availableColours the list of available car colors.
+     * @param availablePositions the list of available starting positions.
+     */
+    private void setupBotPlayers(int remainingPositions, List<Player> players, List<CarColour> availableColours, List<Position> availablePositions) {
         boolean chooseForEachBot = ioController.askToChooseForEachBot();
         if (chooseForEachBot) {
             for (int i = 0; i < remainingPositions; i++) {
-                CarColour chosenColor = availableColors.get(i);
+                CarColour chosenColor = availableColours.get(i);
                 BotStrategy difficulty = ioController.chooseEachBotStrategyDifficulty(chosenColor);
                 addPlayer(players, chosenColor, difficulty, availablePositions.get(i));
             }
         } else {
             BotStrategy difficulty = ioController.chooseAllBotsStrategyDifficulty();
             for (int i = 0; i < remainingPositions; i++) {
-                CarColour chosenColor = availableColors.get(i);
+                CarColour chosenColor = availableColours.get(i);
                 addPlayer(players, chosenColor, difficulty, availablePositions.get(i));
             }
         }
     }
 
+    /**
+     * Adds a player to the list of players.
+     *
+     * @param players the list of players.
+     * @param chosenColor the chosen color for the player's car.
+     * @param difficulty the difficulty level for the bot player (null for human players).
+     * @param position the starting position for the player.
+     */
     private void addPlayer(List<Player> players, CarColour chosenColor, BotStrategy difficulty, Position position) {
         Car car = new RaceCar(chosenColor);
         Player player = (difficulty == null) ? new HumanPlayer(car) : new BotPlayer(car, difficulty);

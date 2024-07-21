@@ -1,5 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.view;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
@@ -73,5 +74,7 @@ public interface CLIIOController extends IOController {
      * Prints the message of the end of the match.
      */
     void displayEndMatchMessage();
+
+    public NeighborsGenerator initializeShiftAlgorithm();
 
 }

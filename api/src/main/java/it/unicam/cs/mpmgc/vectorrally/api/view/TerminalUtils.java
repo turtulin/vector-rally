@@ -7,11 +7,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 
 import java.util.List;
 
-public class TerminalUtils {
-    private static final MessageProvider messageProvider = new GameMessageProvider();
-
-    public TerminalUtils() {
-    }
+public class TerminalUtils implements CLIUtils {
 
     public void printRaceTrack(RaceTrack raceTrack, List<Player> players) {
         printRaceTrack(raceTrack, players, null);
@@ -38,7 +34,7 @@ public class TerminalUtils {
         for (Player player : players) {
             if (player.getPosition().equals(position) &&
                     player.getPosition().getX() != 0 && player.getPosition().getY() != 0) {
-                String code = messageProvider.getCarColorCode(player.getPlayerCarColour());
+                String code = getCarColorCode(player.getPlayerCarColour());
                 String reset = "\033[0m";
                 String toPrint = player instanceof BotPlayer ? code + 'B' + reset : code + 'P' + reset;
                 Output.printMessage(toPrint);

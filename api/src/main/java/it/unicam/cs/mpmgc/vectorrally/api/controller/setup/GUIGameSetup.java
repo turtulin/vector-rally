@@ -1,6 +1,5 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.setup;
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.RaceCar;
@@ -17,23 +16,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GUIGameSetup implements  GameSetup {
-    
     private final String difficulty;
     private final String trackChosen;
-    private final String shiftAlgorithm;
-    
     private final RaceTrackBuilder trackBuilder;
     
-    public GUIGameSetup(String difficulty, String trackChosen, String shiftAlgorithm) {
+    public GUIGameSetup(String difficulty, String trackChosen) {
         this.difficulty = difficulty;
         this.trackChosen = trackChosen;
-        this.shiftAlgorithm = shiftAlgorithm;
         this.trackBuilder = new RaceTrackBuilder();
-    }
-
-    @Override
-    public NeighborsGenerator initializeShiftAlgorithm() {
-        return null;
     }
 
     @Override
@@ -65,13 +55,9 @@ public class GUIGameSetup implements  GameSetup {
         return difficulty;
     }
 
-    public String getShiftAlgorithm() {
-        return shiftAlgorithm;
-    }
 
     @Override
     public RaceTrack initializeTrack() throws Exception {
-
         String directoryPath = IOController.checkRootPath();
         String trackPath = directoryPath + "/" + trackChosen;
         return trackBuilder.buildTrack(trackPath);
