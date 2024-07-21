@@ -25,13 +25,9 @@ import java.util.List;
  */
 public class CLIGameEngine implements GameEngine {
     private final CLIIOController ioController;
-
     private List<Player> players;
-
     private NeighborsGenerator neighborsGenerator;
-
     private RaceTrack raceTrack;
-
     private final GameSetup setup;
 
     public CLIGameEngine(CLIIOController ioController) {

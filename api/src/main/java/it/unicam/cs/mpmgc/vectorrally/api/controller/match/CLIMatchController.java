@@ -37,12 +37,12 @@ public class CLIMatchController implements MatchController {
     public CLIMatchController(IOController ioController, BasicMovesGenerator<NeighborsGenerator> moveGenerator) {
         this.ioController = ioController;
         this.moveGenerator = moveGenerator;
-        this.botStrategyFactory = initializeBotStrategyFactory();
+        this.botStrategyFactory = initializeBotStrategyFactory(moveGenerator.getNeighborsGenerator());
         this.moveValidator = new BasicMoveValidator();
     }
 
-    private BotStrategyFactory initializeBotStrategyFactory() {
-        return new BotStrategyFactory();
+    private BotStrategyFactory initializeBotStrategyFactory(NeighborsGenerator neighborsGenerator) {
+        return new BotStrategyFactory(neighborsGenerator);
     }
 
     @Override

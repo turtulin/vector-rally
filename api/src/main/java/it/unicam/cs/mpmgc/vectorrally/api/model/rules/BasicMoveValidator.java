@@ -73,15 +73,15 @@ public class BasicMoveValidator implements MoveValidator {
         int dx = move.acceleration().getDx();
         int dy = move.acceleration().getDy();
         int steps = Math.max(Math.abs(dx), Math.abs(dy));
-        int xIncrement = Integer.signum(dx);
-        int yIncrement = Integer.signum(dy);
+        List<Position> positions = new ArrayList<>();
         int x = move.position().getX();
         int y = move.position().getY();
-        List<Position> positions = new ArrayList<>();
         for (int i = 0; i <= steps; i++) {
             positions.add(new Position(x, y));
-            x += xIncrement;
-            y += yIncrement;
+            if (steps != 0) {
+                x += dx / steps;
+                y += dy / steps;
+            }
         }
         return positions;
     }
