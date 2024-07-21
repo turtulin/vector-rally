@@ -16,7 +16,6 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.DecisionStrategy;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.stream.Collectors;
 
 /**
  * Manages the game match for the CLI-based interface, implementing the MatchController interface.
@@ -26,7 +25,7 @@ import java.util.stream.Collectors;
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-public class CLIMatchController implements MatchController {
+public class CLIMatchController extends DefaultMatchController implements MatchController {
     private List<Player> players;
     private RaceTrack raceTrack;
     private final IOController ioController;
@@ -34,13 +33,13 @@ public class CLIMatchController implements MatchController {
     private Queue<Player> turnQueue;
     private final BotStrategyFactory botStrategyFactory;
     private boolean gameOver;
-    private final BasicMoveValidator moveValidator;
     private final MessageProvider messageProvider = new GameMessageProvider();
     private int turnCounter = 0;
     private int playerCounter = 0;
     private Player currentPlayer;
     private boolean isMovePending = false;
     private Move pendingMove;
+    private final BasicMoveValidator moveValidator;
 
     /**
      * Constructs a CLIMatchController with the specified IO controller and move generator.
@@ -56,18 +55,18 @@ public class CLIMatchController implements MatchController {
     }
 
     @Override
+    public void startMatch() {
+        while (!gameOver) {
+            nextTurn();
+        }
+    }
+
+    @Override
     public void initializeMatch(List<Player> players, RaceTrack raceTrack) {
         this.players = players;
         this.raceTrack = raceTrack;
         this.turnQueue = new LinkedList<>(players);
         this.gameOver = false;
-    }
-
-    @Override
-    public void startMatch() {
-        while (!gameOver) {
-            nextTurn();
-        }
     }
 
     /**
@@ -113,28 +112,6 @@ public class CLIMatchController implements MatchController {
     }
 
     /**
-     * Checks if the move results in the player winning the match.
-     *
-     * @param move the move made by the player
-     * @return true if the player wins, false otherwise
-     */
-    private boolean checkIfPlayerWins(Move move) {
-        Position end = move.getDestination();
-        return raceTrack.getComponentAt(end.getX(), end.getY()) == TrackComponent.END_LINE ||
-                moveValidator.passesThroughComponent(raceTrack, move, TrackComponent.END_LINE);
-    }
-
-    /**
-     * Gets the possible destinations for the given moves.
-     *
-     * @param moves the list of moves
-     * @return the list of possible destination positions
-     */
-    private List<Position> getPossibleDestinations(List<Move> moves) {
-        return moves.stream().map(Move::getDestination).collect(Collectors.toList());
-    }
-
-    /**
      * Displays possible moves for a human player and sets up for the next turn.
      *
      * @param possibleMoves the list of possible moves for the human player
@@ -175,24 +152,16 @@ public class CLIMatchController implements MatchController {
     }
 
     /**
-     * Makes the specified move for the given player.
+     * Checks if the move results in the player winning the match.
      *
-     * @param player the player making the move
-     * @param move the move to be made
+     * @param move the move made by the player
+     * @return true if the player wins, false otherwise
      */
-    private void makeMove(Player player, Move move) {
-        player.setPosition(move.getDestination());
-        player.setPlayerAcceleration(move.acceleration());
+    private boolean checkIfPlayerWins(Move move) {
+        Position end = move.getDestination();
+        return raceTrack.getComponentAt(end.getX(), end.getY()) == TrackComponent.END_LINE ||
+                moveValidator.passesThroughComponent(raceTrack, move, TrackComponent.END_LINE);
     }
 
-    /**
-     * Initializes the bot strategy factory with the specified neighbors' generator.
-     *
-     * @param neighborsGenerator the neighbors generator
-     * @return the bot strategy factory
-     */
-    private BotStrategyFactory initializeBotStrategyFactory(NeighborsGenerator neighborsGenerator) {
-        return new BotStrategyFactory(neighborsGenerator);
-    }
 }
 
