@@ -24,8 +24,6 @@ public interface MatchController {
 
     void handleTurn(Player player) throws Exception;
 
-    void handleMove(Player player, Move move);
-
     void handleElimination(Player player) throws Exception;
 
     boolean isGameOver();

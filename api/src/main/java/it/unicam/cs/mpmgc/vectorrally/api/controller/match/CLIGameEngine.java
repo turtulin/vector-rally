@@ -7,7 +7,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.SetupResult;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
-import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrackBuilder;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.RaceTrackBuilder;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMoveValidator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.view.CLIIOController;
@@ -24,7 +24,7 @@ import java.util.List;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public class CLIGameEngine implements GameEngine {
-    private final CLIIOController ioControllerNew;
+    private final CLIIOController ioController;
 
     private List<Player> players;
 
@@ -34,10 +34,10 @@ public class CLIGameEngine implements GameEngine {
 
     private final GameSetup setup;
 
-    public CLIGameEngine(CLIIOController ioControllerNew) {
-        this.ioControllerNew = ioControllerNew;
+    public CLIGameEngine(CLIIOController ioController) {
+        this.ioController = ioController;
         RaceTrackBuilder raceTrackBuilder = new RaceTrackBuilder();
-        this.setup = new CLIGameSetup(ioControllerNew, raceTrackBuilder);
+        this.setup = new CLIGameSetup(ioController, raceTrackBuilder);
     }
 
     @Override
@@ -56,20 +56,20 @@ public class CLIGameEngine implements GameEngine {
             this.neighborsGenerator = this.setup.initializeShiftAlgorithm();
             this.raceTrack = this.setup.initializeTrack();
             this.players = this.setup.initializePlayers(raceTrack);
-            confirmConfiguration = ioControllerNew.askIfSatisfiedWithConfiguration(raceTrack, players);
+            confirmConfiguration = ioController.askIfSatisfiedWithConfiguration(raceTrack, players);
         }
         return new SetupResult(neighborsGenerator, raceTrack, players);
     }
 
     private void startMatch(List<Player> players, RaceTrack raceTrack, NeighborsGenerator neighborsGenerator) throws Exception {
-        MatchController matchController = new CLIMatchController(ioControllerNew, new BasicMovesGenerator<>(neighborsGenerator, new BasicMoveValidator()));
+        MatchController matchController = new CLIMatchController(ioController, new BasicMovesGenerator<>(neighborsGenerator, new BasicMoveValidator()));
         matchController.initializeMatch(players, raceTrack);
         matchController.startMatch();
     }
 
     private boolean endMatch() {
-        ioControllerNew.displayEndMatchMessage();
-        return ioControllerNew.askToPlayAnotherMatch();
+        ioController.displayEndMatchMessage();
+        return ioController.askToPlayAnotherMatch();
     }
 
 }

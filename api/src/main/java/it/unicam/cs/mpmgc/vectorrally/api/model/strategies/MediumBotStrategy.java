@@ -3,8 +3,6 @@ package it.unicam.cs.mpmgc.vectorrally.api.model.strategies;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
-import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
-import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 
 import java.util.List;
 
@@ -31,12 +29,16 @@ public class MediumBotStrategy implements DecisionStrategy {
         Move bestMove = possibleMoves.getFirst();
         double maxDistance = 0;
         for (Move move : possibleMoves) {
-            double distance = move.position().calculateDistance(move.position(), move.getDestination());
+            double distance = distance(move.position(), move.getDestination());
             if (distance > maxDistance) {
                 maxDistance = distance;
                 bestMove = move;
             }
         }
         return bestMove;
+    }
+
+    private double distance(Position position, Position destination) {
+        return Math.sqrt(Math.pow(destination.getX() - position.getX(), 2) + Math.pow(destination.getY() - position.getY(), 2));
     }
 }

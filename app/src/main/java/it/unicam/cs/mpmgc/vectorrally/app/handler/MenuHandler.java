@@ -1,6 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.app.handler;
 
-import it.unicam.cs.mpmgc.vectorrally.api.view.GUIIOController;
+import it.unicam.cs.mpmgc.vectorrally.api.view.GraphicalIOController;
 import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -19,7 +19,7 @@ public class MenuHandler {
     private void handleStartButtonAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/settings.fxml"));
 
-        IOController IOController = new GUIIOController();
+        IOController IOController = new GraphicalIOController();
         loader.setControllerFactory(param -> new SettingsHandler(IOController));
 
         Parent settingsRoot = loader.load();

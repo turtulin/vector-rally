@@ -12,11 +12,10 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.players.BotPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.HumanPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
-import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrackBuilder;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 import it.unicam.cs.mpmgc.vectorrally.api.view.CLIIOController;
-import it.unicam.cs.mpmgc.vectorrally.api.view.old.Utils;
+import it.unicam.cs.mpmgc.vectorrally.api.view.TerminalUtils;
 
 
 import java.util.ArrayList;
@@ -33,6 +32,7 @@ public class CLIGameSetup implements GameSetup {
 
     private final CLIIOController ioController;
     private final RaceTrackBuilder trackBuilder;
+    private final TerminalUtils terminalUtils = new TerminalUtils();
 
     public CLIGameSetup(CLIIOController ioController, RaceTrackBuilder trackBuilder) {
         this.ioController = ioController;
@@ -75,7 +75,7 @@ public class CLIGameSetup implements GameSetup {
     }
 
     private void chooseStartingPositions(RaceTrack track, int numHumanPlayers, List<Player> players, List<Position> availablePositions) {
-        Utils.printRaceTrack(track, players, availablePositions);
+        terminalUtils.printRaceTrack(track, players, availablePositions);
         for (int i = 0; i < numHumanPlayers; i++) {
             Position chosenPosition = ioController.chooseStartingPosition(players.get(i), availablePositions);
             availablePositions.remove(chosenPosition);

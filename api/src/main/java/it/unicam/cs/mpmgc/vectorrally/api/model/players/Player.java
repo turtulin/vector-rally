@@ -5,68 +5,65 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 
 /**
- * This interface represents a player in the vector rally game.
- * It provides methods to get and set the player's acceleration, position, and racing status.
- * It also includes methods to get the type of player (BOT or HUMAN) and the colour of
- * the player's car.
+ * Represents a player in the Vector Rally game. This interface provides essential functionalities
+ * to manage a player's status in the game, including their position, acceleration, and car colour.
+ * Additionally, it offers the capability to update the player's racing status and execute game moves.
  *
  * @version 1.0
  * @since 2024-07-10
- *
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-
 public interface Player {
 
     /**
-     * Gets the current acceleration of the player.
+     * Retrieves the current acceleration of the player.
      *
      * @return the current acceleration.
      */
     Acceleration getPlayerAcceleration();
 
     /**
-     * Sets the acceleration of the player.
+     * Updates the player's acceleration.
      *
-     * @param acceleration the new acceleration.
-     * @throws NullPointerException if the new acceleration is null.
+     * @param acceleration the new acceleration to be set.
+     * @throws NullPointerException if the new acceleration is null, to ensure player always has valid data.
      */
     void setPlayerAcceleration(Acceleration acceleration);
 
     /**
-     * Gets the colour of the player's car.
+     * Retrieves the colour of the player's car.
      *
      * @return the car colour.
      */
     CarColour getPlayerCarColour();
 
     /**
-     * Gets the current position of the player.
+     * Retrieves the current position of the player on the game board.
      *
      * @return the current position.
      */
     Position getPosition();
 
     /**
-     * Sets the position of the player.
+     * Updates the player's position on the game board.
      *
-     * @param position the new position.
-     * @throws NullPointerException if the position is null.
+     * @param position the new position to be set.
+     * @throws NullPointerException if the position is null, ensuring all players have a valid location.
      */
     void setPosition(Position position);
 
     /**
-     * Checks if the player is currently racing.
+     * Checks whether the player is currently participating in the race.
      *
-     * @return true if the player is racing, false otherwise.
+     * @return true if the player is actively racing, false if not.
      */
     boolean isRacing();
 
     /**
-     * Sets the racing status of the player.
+     * Updates the racing status of the player.
      *
-     * @param isRacing the new racing status of the player.
+     * @param isRacing the new racing status of the player, true to set racing, false to stop.
      */
     void setRacing(boolean isRacing);
 }

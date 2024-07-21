@@ -10,16 +10,16 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.shape.Rectangle?>
-<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="885.0" text="untitled" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22" fx:controller="it.unicam.cs.mpmgc.vectorrally.app.handler.RaceHandler">
+<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="885.0" text="untitled" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpmgc.vectorrally.app.handler.RaceHandler">
     <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
             <children>
                 <ImageView fitHeight="728.0" fitWidth="1130.0" layoutX="-5.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@images/raceBackground.jpg" />
+                        <Image url="@images/backgroundRace.jpg" />
                     </image>
                 </ImageView>
                 <GridPane fx:id="trackGridPane" layoutX="500.0" layoutY="150.0" prefHeight="300.0" prefWidth="300.0">
@@ -33,12 +33,12 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                 </GridPane>
-                <Button layoutX="31.0" layoutY="573.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="121.0" text="Next Turn">
+                <Button fx:id="nextTurnButton" layoutX="31.0" layoutY="573.0" mnemonicParsing="false" onAction="#nextTurn" prefHeight="43.0" prefWidth="121.0" text="Next Turn">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Button>
-                <TextField layoutX="31.0" layoutY="511.0" prefHeight="39.0" prefWidth="60.0" />
+                <TextField fx:id="moveNumber" layoutX="31.0" layoutY="511.0" prefHeight="39.0" prefWidth="60.0" />
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="34.0" layoutX="36.0" layoutY="76.0" stroke="BLACK" strokeType="INSIDE" width="110.0" />
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="34.0" layoutX="36.0" layoutY="153.0" stroke="BLACK" strokeType="INSIDE" width="110.0" />
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="34.0" layoutX="37.0" layoutY="228.0" stroke="BLACK" strokeType="INSIDE" width="110.0" />
@@ -51,6 +51,11 @@
                 <Label layoutX="48.0" layoutY="58.0" text="BOT DIFFICULTY" textFill="WHITE" />
                 <Label layoutX="58.0" layoutY="135.0" text="RACETRACK" textFill="WHITE" />
                 <Label layoutX="62.0" layoutY="210.0" text="SHIFT RULE" textFill="WHITE" />
+            <Button fx:id="moveButton" layoutX="32.0" layoutY="437.0" mnemonicParsing="false" onAction="#ExecuteMovement" prefHeight="48.0" prefWidth="121.0" text="Move">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
     </content>

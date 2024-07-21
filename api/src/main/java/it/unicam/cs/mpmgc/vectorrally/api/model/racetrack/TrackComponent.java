@@ -1,11 +1,13 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.racetrack;
 
 /**
- * This enum represents the different elements of a racetrack.
- * Each element is associated with a specific character symbol.
+ * Represents the different elements of a racetrack. Each element is associated with
+ * a specific character symbol that can be used to construct and represent the racetrack.
  *
  * @version 1.0
  * @since 2024-07-10
+ * @author Marta Musso
+ * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public enum TrackComponent implements Component {
     WALL('w'),
@@ -26,7 +28,7 @@ public enum TrackComponent implements Component {
     }
 
     /**
-     * Gets the RaceTrackComponent corresponding to the given character.
+     * Retrieves the {@link TrackComponent} corresponding to the given character.
      *
      * @param c the character representing a track component.
      * @return the corresponding RaceTrackComponent.

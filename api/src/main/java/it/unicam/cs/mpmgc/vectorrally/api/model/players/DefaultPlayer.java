@@ -5,6 +5,16 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 
+/**
+ * Abstract implementation of the {@link Player} interface. This class provides the basic
+ * functionality for a player in the Vector Rally game, including management of the player's
+ * car, position, and racing status.
+ *
+ * @version 1.0
+ * @since 2024-07-10
+ * @author Marta Musso
+ * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
+ */
 public abstract class DefaultPlayer implements Player {
     protected final Car playerCar;
     protected Position position;
@@ -32,7 +42,6 @@ public abstract class DefaultPlayer implements Player {
     public void setPlayerAcceleration(Acceleration acceleration) {
         if (acceleration == null) throw new NullPointerException("Player acceleration cannot be null");
         this.playerCar.setAcceleration(acceleration);
-        System.out.println("acceleration player: " + this.playerCar.getAcceleration());
     }
 
     @Override

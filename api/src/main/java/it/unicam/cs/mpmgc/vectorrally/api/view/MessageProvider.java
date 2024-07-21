@@ -10,6 +10,7 @@ public interface MessageProvider {
     String getWelcomeMessage();
     String getGameRules();
     String getGameOverMessage();
+    String getCongratulationsMessage();
     String getEndMessage();
     String getInvalidChoiceMessage();
     String getAskIfPlayerKnowsRulesMessage();
@@ -24,6 +25,7 @@ public interface MessageProvider {
     String getChooseEachBotStrategyDifficultyMessage(CarColour carColour);
     String getChooseAllBotStrategyDifficultyMessage();
     String getChooseStartingPositionMessage(CarColour carColour);
+    String getNextTurnMessage();
 
     default String getCarColorCode(CarColour colour) {
         return switch (colour) {
@@ -33,9 +35,8 @@ public interface MessageProvider {
             case GREEN -> "\033[32m";
             case BLUE -> "\033[34m";
             case PURPLE -> "\033[35m";
-            case WHITE -> "\033[37m";
             case PINK -> "\033[38;5;205m";
-            case GREY -> "\033[38;5;240m";
+            case CYAN -> "\033[36m";
             case BROWN -> "\033[38;5;94m";
         };
     }

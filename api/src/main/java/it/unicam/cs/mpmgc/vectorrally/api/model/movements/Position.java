@@ -57,21 +57,4 @@ public class Position implements Coordinates {
     public int hashCode() {
         return Objects.hash(x, y);
     }
-
-    public String toString() {
-        return String.format("Position(x=%d, y=%d)", this.x, this.y);
-    }
-
-    /**
-     * Calculates the Euclidean distance between two positions.
-     *
-     * @param start the starting position.
-     * @param end the ending position.
-     * @return the Euclidean distance between the two positions.
-     */
-    public static double calculateDistance(Position start, Position end) {
-        int dx = end.getX() - start.getX();
-        int dy = end.getY() - start.getY();
-        return Math.sqrt(dx * dx + dy * dy);
-    }
 }

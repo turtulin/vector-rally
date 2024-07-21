@@ -3,16 +3,17 @@ package it.unicam.cs.mpmgc.vectorrally.api.model.cars;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 
 /**
- * This class represents a race car in the vector rally game.
- * It implements the {@link Car} interface.
+ * Represents a race car in the Vector Rally game. This class implements the {@link Car} interface
+ * and provides the necessary functionality to manage the car's acceleration and colour.
  *
  * @version 1.0
  * @since 2024-07-10
+ * @author Marta Musso
+ * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public class RaceCar implements Car {
 
     private final Acceleration acceleration;
-
     private final CarColour carColour;
 
     /**

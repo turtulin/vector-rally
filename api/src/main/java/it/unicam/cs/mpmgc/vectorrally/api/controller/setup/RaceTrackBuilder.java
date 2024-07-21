@@ -1,6 +1,8 @@
-package it.unicam.cs.mpmgc.vectorrally.api.model.racetrack;
+package it.unicam.cs.mpmgc.vectorrally.api.controller.setup;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,8 +11,9 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 /**
- * This class implements the interface, responsible for reading a file
+ * Implements the {@link TrackBuilder} interface, responsible for reading a file
  * and constructing the racetrack matrix.
+ * The class also validates the track to ensure the start and end lines are straight and parallel.
  *
  * @version 1.0
  * @since 2024-07-10
@@ -48,7 +51,7 @@ public class RaceTrackBuilder implements TrackBuilder {
      *
      * @param filename the name of the file.
      * @return a list of strings representing the lines of the racetrack.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException if an I/O error occurs while reading the file.
      */
     private List<String> readTrackFromFile(String filename) throws IOException {
         List<String> lines = new ArrayList<>();
@@ -70,12 +73,16 @@ public class RaceTrackBuilder implements TrackBuilder {
     private void validateTrack(RaceTrack raceTrack) {
         List<Position> startPositions = raceTrack.getPositionsOfComponent(TrackComponent.START_LINE);
         List<Position> endPositions = raceTrack.getPositionsOfComponent(TrackComponent.END_LINE);
-
-        if (!areLinesStraightAndParallel(startPositions, endPositions)) {
-            throw new IllegalArgumentException("Start and end lines must be straight and parallel");
-        }
+        if (!areLinesStraightAndParallel(startPositions, endPositions)) throw new IllegalArgumentException("Start and end lines must be straight and parallel");
     }
 
+    /**
+     * Checks if the start and end lines are straight and parallel.
+     *
+     * @param startPositions the positions of the start line.
+     * @param endPositions the positions of the end line.
+     * @return true if the lines are straight and parallel, false otherwise.
+     */
     private boolean areLinesStraightAndParallel(List<Position> startPositions, List<Position> endPositions) {
         boolean startLineIsHorizontal = startPositions.stream().allMatch(p -> p.getY() == startPositions.getFirst().getY());
         boolean endLineIsHorizontal = endPositions.stream().allMatch(p -> p.getY() == endPositions.getFirst().getY());

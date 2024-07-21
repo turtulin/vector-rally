@@ -56,16 +56,6 @@ public class PositionTest {
         assertEquals("Position(x=3, y=4)", position.toString());
     }
 
-    @Test
-    void calculateDistanceShouldReturnCorrectDistance() {
-        Position start = new Position(0, 0);
-        Position end = new Position(3, 4);
-        assertEquals(5.0, Position.calculateDistance(start, end), 0.001);
-    }
 
-    @Test
-    void calculateDistanceShouldReturnZeroForSamePosition() {
-        assertEquals(0.0, Position.calculateDistance(position, position), 0.001);
-    }
 }
 

@@ -1,24 +1,23 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.racetrack;
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 
 import java.util.List;
 
 
 /**
- * This interface represents a track in the vector rally game.
- * It provides methods to interact with the track components and positions.
+ * Represents a track in the Vector Rally game. This interface provides methods
+ * to interact with the track components and positions, allowing for querying
+ * and manipulating the track.
  *
  * @version 1.0
  * @since 2024-07-10
- *
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public interface Track {
     /**
-     * Gets the component at the specified position on the track.
+     * Retrieves the component at the specified position on the track.
      *
      * @param x the x coordinate.
      * @param y the y coordinate.
@@ -36,7 +35,7 @@ public interface Track {
     boolean isInBounds(int x, int y);
 
     /**
-     * Gets all positions that have the specified component.
+     * Retrieves all positions that have the specified component.
      *
      * @param component the track component.
      * @return a list of positions that have the specified component.
@@ -44,14 +43,14 @@ public interface Track {
     List<Position> getPositionsOfComponent(TrackComponent component);
 
     /**
-     * Gets the width of the track.
+     * Retrieves the width of the track.
      *
      * @return the width of the track.
      */
     int getWidth();
 
     /**
-     * Gets the length of the track.
+     * Retrieves the length of the track.
      *
      * @return the length of the track.
      */

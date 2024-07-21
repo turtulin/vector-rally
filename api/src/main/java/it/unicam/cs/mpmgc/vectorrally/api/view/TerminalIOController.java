@@ -214,4 +214,20 @@ public class TerminalIOController implements CLIIOController {
         }
         return choice;
     }
+
+    @Override
+    public void waitForNextTurn() {
+        Output.printlnMessage(messageProvider.getNextTurnMessage());
+        scanner.nextLine();
+    }
+
+    @Override
+    public void printRaceTrack(RaceTrack raceTrack, List<Player> players, List<Position> destinations) {
+        utils.printRaceTrack(raceTrack, players, destinations);
+    }
+
+    @Override
+    public void displayMessage(String message) {
+        Output.printlnMessage(message);
+    }
 }

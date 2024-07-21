@@ -97,6 +97,11 @@ public final class GameMessageProvider implements MessageProvider {
     }
 
     @Override
+    public String getNextTurnMessage() {
+        return "Press enter to continue to the next turn...";
+    }
+
+    @Override
     public String getGameRules() {
         return """
         \u001B[0m
@@ -136,6 +141,19 @@ public final class GameMessageProvider implements MessageProvider {
         
         \u001B[36mGood luck, and may the best driver win!\u001B[0m
             """;
+    }
+
+    @Override
+    public String getCongratulationsMessage() {
+        return """
+                  \u001B[33m\u001B[1m
+                  ______   ______   .__   __.   _______ .______          ___   .___________. __    __   __          ___   .___________. __    ______   .__   __.      _______.
+                 /      | /  __  \\  |  \\ |  |  /  _____||   _  \\        /   \\  |           ||  |  |  | |  |        /   \\  |           ||  |  /  __  \\  |  \\ |  |     /       |
+                |  ,----'|  |  |  | |   \\|  | |  |  __  |  |_)  |      /  ^  \\ `---|  |----`|  |  |  | |  |       /  ^  \\ `---|  |----`|  | |  |  |  | |   \\|  |    |   (----`
+                |  |     |  |  |  | |  . `  | |  | |_ | |      /      /  /_\\  \\    |  |     |  |  |  | |  |      /  /_\\  \\    |  |     |  | |  |  |  | |  . `  |     \\   \\   
+                |  `----.|  `--'  | |  |\\   | |  |__| | |  |\\  \\----./  _____  \\   |  |     |  `--'  | |  `----./  _____  \\   |  |     |  | |  `--'  | |  |\\   | .----)   |  
+                 \\______| \\______/  |__| \\__|  \\______| | _| `._____/__/     \\__\\  |__|      \\______/  |_______/__/     \\__\\  |__|     |__|  \\______/  |__| \\__| |_______/   
+                 \u001B[0m""";
     }
 
     @Override

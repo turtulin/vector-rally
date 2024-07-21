@@ -3,6 +3,7 @@ package it.unicam.cs.mpmgc.vectorrally.api.view;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 
 import java.io.File;
 import java.util.List;
@@ -30,7 +31,6 @@ public interface IOController {
      */
     boolean askToPlayAnotherMatch();
 
-
     /**
      * Asks the player to choose a move from the available moves.
      * @param possibleMoves the list of possible moves.
@@ -45,6 +45,21 @@ public interface IOController {
      * @return the chosen starting position.
      */
     Position chooseStartingPosition(Player player, List<Position> availablePositions);
+
+    /**
+     * Asks the player to go to the next turn.
+     */
+    void waitForNextTurn();
+
+    /**
+     * Displays the racetrack.
+     * @param raceTrack the racetrack to display.
+     * @param players the list of players.
+     * @param destinations the list of destinations.
+     */
+    void printRaceTrack(RaceTrack raceTrack, List<Player> players, List<Position> destinations);
+
+    void displayMessage(String message);
 
     /**
      * Finds the root path of the directory.
