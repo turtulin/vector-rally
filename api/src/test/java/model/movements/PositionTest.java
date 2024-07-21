@@ -1,61 +1,69 @@
 package model.movements;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PositionTest {
+class PositionTest {
 
     private Position position;
 
     @BeforeEach
     void setUp() {
-        position = new Position(3, 4);
+        position = new Position(10, 15);
     }
 
     @Test
-    void constructorShouldInitializeXAndY() {
-        Position position = new Position(5, 6);
-        assertEquals(5, position.getX());
-        assertEquals(6, position.getY());
+    void positionShouldInitializeXAndYCorrectly() {
+        assertEquals(10, position.getX());
+        assertEquals(15, position.getY());
     }
 
     @Test
-    void setXShouldUpdateX() {
-        position.setX(7);
-        assertEquals(7, position.getX());
+    void getXShouldReturnCorrectValue() {
+        assertEquals(10, position.getX());
     }
 
     @Test
-    void setYShouldUpdateY() {
-        position.setY(8);
-        assertEquals(8, position.getY());
+    void getYShouldReturnCorrectValue() {
+        assertEquals(15, position.getY());
+    }
+
+    @Test
+    void setXShouldUpdateXCorrectly() {
+        position.setX(20);
+        assertEquals(20, position.getX());
+    }
+
+    @Test
+    void setYShouldUpdateYCorrectly() {
+        position.setY(25);
+        assertEquals(25, position.getY());
     }
 
     @Test
     void equalsShouldReturnTrueForEqualPositions() {
-        Position otherPosition = new Position(3, 4);
-        assertEquals(position, otherPosition);
+        Position otherPosition = new Position(10, 15);
+        assertTrue(position.equals(otherPosition));
     }
 
     @Test
     void equalsShouldReturnFalseForDifferentPositions() {
-        Position otherPosition = new Position(4, 5);
-        assertNotEquals(position, otherPosition);
+        Position otherPosition = new Position(20, 25);
+        assertFalse(position.equals(otherPosition));
     }
 
     @Test
-    void hashCodeShouldReturnSameHashCodeForEqualPositions() {
-        Position otherPosition = new Position(3, 4);
+    void hashCodeShouldReturnSameValueForEqualPositions() {
+        Position otherPosition = new Position(10, 15);
         assertEquals(position.hashCode(), otherPosition.hashCode());
     }
 
     @Test
-    void toStringShouldReturnCorrectStringRepresentation() {
-        assertEquals("Position(x=3, y=4)", position.toString());
+    void hashCodeShouldReturnDifferentValueForDifferentPositions() {
+        Position otherPosition = new Position(20, 25);
+        assertNotEquals(position.hashCode(), otherPosition.hashCode());
     }
-
-
 }
-

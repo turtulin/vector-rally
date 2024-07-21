@@ -16,6 +16,7 @@ import java.io.IOException;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public interface TrackBuilder {
+
     /**
      * Builds a {@link RaceTrack} from the specified file.
      *

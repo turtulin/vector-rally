@@ -28,7 +28,6 @@ public class GUIMatchController implements MatchController {
     private final BotStrategyFactory botStrategyFactory;
     private boolean gameOver;
     private final BasicMoveValidator moveValidator;
-    private int turnCounter = 0;
     private Player currentPlayer;
     private boolean isMovePending = false;
     private Move pendingMove;
@@ -74,7 +73,6 @@ public class GUIMatchController implements MatchController {
 
     @Override
     public void handleTurn(Player player) {
-        //ioController.displayMessage(messageProvider.getTurnMessage(turnCounter++, player));
         List<Move> possibleMoves = moveGenerator.generatePossibleMoves(player, raceTrack, players);
         if (possibleMoves.isEmpty()) {
             handleElimination(player);
@@ -88,14 +86,11 @@ public class GUIMatchController implements MatchController {
     }
 
     private void showHumanPlayerMoves(List<Move> possibleMoves) {
-        //ioController.printRaceTrack(raceTrack, players, getPossibleDestinations(possibleMoves));
-        //pendingMove = possibleMoves.get(ioController.chooseMove(possibleMoves));
         isMovePending = true;
         ioController.waitForNextTurn();
     }
 
     private void showBotMoves(BotPlayer botPlayer, List<Move> possibleMoves) {
-        //ioController.printRaceTrack(raceTrack, players, getPossibleDestinations(possibleMoves));
         DecisionStrategy strategy = botStrategyFactory.getStrategy(botPlayer.getStrategy());
         pendingMove = strategy.decideMove(botPlayer, possibleMoves);
         isMovePending = true;
@@ -130,11 +125,6 @@ public class GUIMatchController implements MatchController {
         Position end = move.getDestination();
         return raceTrack.getComponentAt(end.getX(), end.getY()) == TrackComponent.END_LINE ||
                 moveValidator.passesThroughComponent(raceTrack, move, TrackComponent.END_LINE);
-    }
-
-    @Override
-    public boolean isGameOver() {
-        return gameOver;
     }
 
     public List<Position> getPossibleDestinations(List<Move> moves) {

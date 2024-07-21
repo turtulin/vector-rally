@@ -70,7 +70,7 @@ public class RaceTrackBuilder implements TrackBuilder {
      * @param raceTrack the RaceTrack to validate.
      * @throws IllegalArgumentException if the start and end lines are not straight and parallel.
      */
-    private void validateTrack(RaceTrack raceTrack) {
+    public void validateTrack(RaceTrack raceTrack) {
         List<Position> startPositions = raceTrack.getPositionsOfComponent(TrackComponent.START_LINE);
         List<Position> endPositions = raceTrack.getPositionsOfComponent(TrackComponent.END_LINE);
         if (!areLinesStraightAndParallel(startPositions, endPositions)) throw new IllegalArgumentException("Start and end lines must be straight and parallel");

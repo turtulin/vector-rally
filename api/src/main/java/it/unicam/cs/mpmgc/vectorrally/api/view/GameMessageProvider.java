@@ -4,6 +4,14 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.HumanPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 
+/**
+ * Provides messages for the game, implementing the MessageProvider interface.
+ *
+ * @version 1.0
+ * @since 2024-07-11
+ * @author Marta Musso
+ * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
+ */
 public final class GameMessageProvider implements MessageProvider {
     @Override
     public String getTurnMessage(int turn, Player player) {
@@ -113,7 +121,7 @@ public final class GameMessageProvider implements MessageProvider {
         \u001B[34m2. Movement:\u001B[0m
            - Players take turns to move their cars on the race track.
            - Each car can move to adjacent positions based on their current acceleration.
-           - The possible moves are determined using either the four or eight neighbors rule, 
+           - The possible moves are determined using either the four or eight neighbors rule,\s
              depending on the game configuration.
         
         \u001B[34m3. Acceleration:\u001B[0m
@@ -150,9 +158,9 @@ public final class GameMessageProvider implements MessageProvider {
                   ______   ______   .__   __.   _______ .______          ___   .___________. __    __   __          ___   .___________. __    ______   .__   __.      _______.
                  /      | /  __  \\  |  \\ |  |  /  _____||   _  \\        /   \\  |           ||  |  |  | |  |        /   \\  |           ||  |  /  __  \\  |  \\ |  |     /       |
                 |  ,----'|  |  |  | |   \\|  | |  |  __  |  |_)  |      /  ^  \\ `---|  |----`|  |  |  | |  |       /  ^  \\ `---|  |----`|  | |  |  |  | |   \\|  |    |   (----`
-                |  |     |  |  |  | |  . `  | |  | |_ | |      /      /  /_\\  \\    |  |     |  |  |  | |  |      /  /_\\  \\    |  |     |  | |  |  |  | |  . `  |     \\   \\   
-                |  `----.|  `--'  | |  |\\   | |  |__| | |  |\\  \\----./  _____  \\   |  |     |  `--'  | |  `----./  _____  \\   |  |     |  | |  `--'  | |  |\\   | .----)   |  
-                 \\______| \\______/  |__| \\__|  \\______| | _| `._____/__/     \\__\\  |__|      \\______/  |_______/__/     \\__\\  |__|     |__|  \\______/  |__| \\__| |_______/   
+                |  |     |  |  |  | |  . `  | |  | |_ | |      /      /  /_\\  \\    |  |     |  |  |  | |  |      /  /_\\  \\    |  |     |  | |  |  |  | |  . `  |     \\   \\  \s
+                |  `----.|  `--'  | |  |\\   | |  |__| | |  |\\  \\----./  _____  \\   |  |     |  `--'  | |  `----./  _____  \\   |  |     |  | |  `--'  | |  |\\   | .----)   | \s
+                 \\______| \\______/  |__| \\__|  \\______| | _| `._____/__/     \\__\\  |__|      \\______/  |_______/__/     \\__\\  |__|     |__|  \\______/  |__| \\__| |_______/  \s
                  \u001B[0m""";
     }
 
@@ -161,16 +169,16 @@ public final class GameMessageProvider implements MessageProvider {
         return """
                 \u001B[31m\u001B[1m
                   
-                  ▄████  ▄▄▄       ███▄ ▄███▓▓█████     ▒█████   ██▒   █▓▓█████  ██▀███ 
+                  ▄████  ▄▄▄       ███▄ ▄███▓▓█████     ▒█████   ██▒   █▓▓█████  ██▀███\s
                  ██▒ ▀█▒▒████▄    ▓██▒▀█▀ ██▒▓█   ▀    ▒██▒  ██▒▓██░   █▒▓█   ▀ ▓██ ▒ ██▒
                 ▒██░▄▄▄░▒██  ▀█▄  ▓██    ▓██░▒███      ▒██░  ██▒ ▓██  █▒░▒███   ▓██ ░▄█ ▒
-                ░▓█  ██▓░██▄▄▄▄██ ▒██    ▒██ ▒▓█  ▄    ▒██   ██░  ▒██ █░░▒▓█  ▄ ▒██▀▀█▄ 
+                ░▓█  ██▓░██▄▄▄▄██ ▒██    ▒██ ▒▓█  ▄    ▒██   ██░  ▒██ █░░▒▓█  ▄ ▒██▀▀█▄\s
                 ░▒▓███▀▒ ▓█   ▓██▒▒██▒   ░██▒░▒████▒   ░ ████▓▒░   ▒▀█░  ░▒████▒░██▓ ▒██▒
                  ░▒   ▒  ▒▒   ▓▒█░░ ▒░   ░  ░░░ ▒░ ░   ░ ▒░▒░▒░    ░ ▐░  ░░ ▒░ ░░ ▒▓ ░▒▓░
                   ░   ░   ▒   ▒▒ ░░  ░      ░ ░ ░  ░     ░ ▒ ▒░    ░ ░░   ░ ░  ░  ░▒ ░ ▒░
                 ░ ░   ░   ░   ▒   ░      ░      ░      ░ ░ ░ ▒       ░░     ░     ░░   ░
-                      ░       ░  ░       ░      ░  ░       ░ ░        ░     ░  ░   ░    
-                                                                     ░                 
+                      ░       ░  ░       ░      ░  ░       ░ ░        ░     ░  ░   ░   \s
+                                                                     ░                \s
                 \u001B[0m""";
     }
 

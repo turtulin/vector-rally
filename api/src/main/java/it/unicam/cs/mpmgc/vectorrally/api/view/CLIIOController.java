@@ -2,6 +2,8 @@ package it.unicam.cs.mpmgc.vectorrally.api.view;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
@@ -9,6 +11,27 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 import java.util.List;
 
 public interface CLIIOController extends IOController {
+
+    /**
+     * Asks if the player wants to play another match.
+     * @return true if the player wants to play another match, false otherwise.
+     */
+    boolean askToPlayAnotherMatch();
+
+    /**
+     * Asks the player to choose a move from the available moves.
+     * @param possibleMoves the list of possible moves.
+     * @return the index of the chosen move.
+     */
+    int chooseMove(List<Move> possibleMoves);
+
+    /**
+     * Asks the player to choose a starting position from the available positions.
+     * @param player the player that has to choose the starting position.
+     * @param availablePositions the list of available positions.
+     * @return the chosen starting position.
+     */
+    Position chooseStartingPosition(Player player, List<Position> availablePositions);
 
     /**
      * Displays the welcome message and the game rules.

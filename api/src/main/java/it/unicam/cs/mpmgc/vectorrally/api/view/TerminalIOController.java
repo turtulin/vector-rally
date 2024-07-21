@@ -16,11 +16,23 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
+/**
+ * Implements the CLIIOController interface, providing methods to handle
+ * input and output operations for the terminal-based game interface.
+ *
+ * @version 1.0
+ * @since 2024-07-11
+ * @author Marta Musso
+ * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
+ */
 public class TerminalIOController implements CLIIOController {
     private final Scanner scanner;
     private final MessageProvider messageProvider = new GameMessageProvider();
     private final TerminalUtils utils = new TerminalUtils();
 
+    /**
+     * Constructs a TerminalIOController with a new Scanner for input.
+     */
     public TerminalIOController() {
         this.scanner = new Scanner(System.in);
     }
@@ -114,20 +126,6 @@ public class TerminalIOController implements CLIIOController {
         return getBotStrategyDifficulty(messageProvider.getChooseAllBotStrategyDifficultyMessage());
     }
 
-    private BotStrategy getBotStrategyDifficulty(String message) {
-        Output.printlnMessage(message);
-        Output.printlnMessage("1. Easy");
-        Output.printlnMessage("2. Medium");
-        Output.printlnMessage("3. Hard");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-        return switch (choice) {
-            case 2 -> BotStrategy.MEDIUM;
-            case 3 -> BotStrategy.HARD;
-            default -> BotStrategy.EASY;
-        };
-    }
-
     @Override
     public boolean askIfSatisfiedWithConfiguration(RaceTrack raceTrack, List<Player> players) {
         utils.printRaceTrack(raceTrack, players);
@@ -146,7 +144,7 @@ public class TerminalIOController implements CLIIOController {
     }
 
     @Override
-    public List<String> findTrack() throws Exception {
+    public List<String> findTrack() {
         String directoryPath = IOController.checkRootPath();
         File directory = new File(directoryPath);
         File[] files = directory.listFiles((dir, name) -> name.endsWith(".txt"));
@@ -155,6 +153,7 @@ public class TerminalIOController implements CLIIOController {
             return null;
         }
         List<String> trackFiles = new ArrayList<>();
+        assert files != null;
         for (File file : files) {
             trackFiles.add(file.getName());
         }
@@ -205,19 +204,6 @@ public class TerminalIOController implements CLIIOController {
         return availablePositions.get(choice - 1);
     }
 
-    private int chooseRaceTrack (List<String> trackFiles) {
-        Output.printlnMessage(messageProvider.getTrackChoiceMessage());
-        IntStream.range(0, trackFiles.size()).mapToObj(i -> (i + 1) + ". " + trackFiles.get(i)).forEach(Output::printlnMessage);
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-        while (choice < 1 || choice > trackFiles.size()) {
-            Output.printlnMessage(messageProvider.getInvalidChoiceMessage());
-            choice = scanner.nextInt();
-            scanner.nextLine();
-        }
-        return choice;
-    }
-
     @Override
     public void waitForNextTurn() {
         Output.printlnMessage(messageProvider.getNextTurnMessage());
@@ -234,8 +220,36 @@ public class TerminalIOController implements CLIIOController {
         Output.printlnMessage(message);
     }
 
+    @Override
     public NeighborsGenerator initializeShiftAlgorithm() {
         int ruleType = chooseRuleType();
         return ruleType == 1 ? new FourNeighborsGenerator() : new EightNeighborsGenerator();
+    }
+
+    private int chooseRaceTrack (List<String> trackFiles) {
+        Output.printlnMessage(messageProvider.getTrackChoiceMessage());
+        IntStream.range(0, trackFiles.size()).mapToObj(i -> (i + 1) + ". " + trackFiles.get(i)).forEach(Output::printlnMessage);
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        while (choice < 1 || choice > trackFiles.size()) {
+            Output.printlnMessage(messageProvider.getInvalidChoiceMessage());
+            choice = scanner.nextInt();
+            scanner.nextLine();
+        }
+        return choice;
+    }
+
+    private BotStrategy getBotStrategyDifficulty(String message) {
+        Output.printlnMessage(message);
+        Output.printlnMessage("1. Easy");
+        Output.printlnMessage("2. Medium");
+        Output.printlnMessage("3. Hard");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        return switch (choice) {
+            case 2 -> BotStrategy.MEDIUM;
+            case 3 -> BotStrategy.HARD;
+            default -> BotStrategy.EASY;
+        };
     }
 }

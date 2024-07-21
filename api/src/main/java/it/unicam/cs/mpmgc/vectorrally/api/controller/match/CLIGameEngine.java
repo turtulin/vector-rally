@@ -77,7 +77,7 @@ public class CLIGameEngine implements GameEngine {
      * @param neighborsGenerator the generator for neighboring moves
      * @throws Exception if an error occurs during match initialization or execution
      */
-    private void startMatch(List<Player> players, RaceTrack raceTrack, NeighborsGenerator neighborsGenerator) throws Exception {
+    public void startMatch(List<Player> players, RaceTrack raceTrack, NeighborsGenerator neighborsGenerator) throws Exception {
         MatchController matchController = new CLIMatchController(ioController, new BasicMovesGenerator<>(neighborsGenerator, new BasicMoveValidator()));
         matchController.initializeMatch(players, raceTrack);
         matchController.startMatch();
@@ -88,7 +88,7 @@ public class CLIGameEngine implements GameEngine {
      *
      * @return true if the user wants to play another match, false otherwise
      */
-    private boolean endMatch() {
+    public boolean endMatch() {
         ioController.displayEndMatchMessage();
         return ioController.askToPlayAnotherMatch();
     }

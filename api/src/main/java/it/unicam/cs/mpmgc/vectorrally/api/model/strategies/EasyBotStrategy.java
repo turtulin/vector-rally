@@ -25,14 +25,6 @@ public class EasyBotStrategy implements DecisionStrategy {
         this.random = new Random();
     }
 
-    /**
-     * Decides the next move for the player by choosing a random move from the list of possible moves.
-     *
-     * @param player the player for whom to decide the next move.
-     * @param possibleMoves a list of possible moves the player can make.
-     * @return the chosen move.
-     * @throws IllegalArgumentException if no possible moves are available.
-     */
     @Override
     public Move decideMove(Player player, List<Move> possibleMoves) {
         return possibleMoves.get(random.nextInt(possibleMoves.size()));

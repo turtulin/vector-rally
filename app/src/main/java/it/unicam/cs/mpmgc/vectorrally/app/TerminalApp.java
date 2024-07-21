@@ -10,6 +10,14 @@ import it.unicam.cs.mpmgc.vectorrally.api.controller.match.GameEngine;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.match.CLIGameEngine;
 import it.unicam.cs.mpmgc.vectorrally.api.view.TerminalIOController;
 
+/**
+ * This class is responsible for starting the terminal application.
+ *
+ * @version 1.0
+ * @since 2024-07-17
+ * @author Marta Musso
+ * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
+ */
 public class TerminalApp {
     public static void main(String[] args) {
         try {

@@ -1,9 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.setup;
 
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.EightNeighborsGenerator;
-import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.FourNeighborsGenerator;
-import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.RaceCar;
