@@ -1,1 +1,12 @@
-This repository contains the Vector Rally project, developed as part of the Object-Oriented Programming module in the Programming Methodologies course. The project simulates the classic paper game Vector Rally, implementing key object-oriented principles and techniques.
+# Vector Rally
+
+Vector Rally is a turn-based car racing simulation game designed to be played both via command-line interface (CLI) and a simple graphical user interface (GUI) using JavaFX.
+
+## Instructions to Run the Project
+
+### Run and Build
+
+To build and run the project, use the following Gradle commands:
+```sh
+gradle build
+gradle run
