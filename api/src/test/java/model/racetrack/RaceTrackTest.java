@@ -12,13 +12,12 @@ import java.util.List;
 public class RaceTrackTest {
 
     private RaceTrack raceTrack;
-    private TrackComponent[][] track;
 
     @BeforeEach
     void setUp() {
-        track = new TrackComponent[][] {
-                { TrackComponent.ROAD, TrackComponent.START_LINE },
-                { TrackComponent.END_LINE, TrackComponent.ROAD }
+        TrackComponent[][] track = new TrackComponent[][]{
+                {TrackComponent.ROAD, TrackComponent.START_LINE},
+                {TrackComponent.END_LINE, TrackComponent.ROAD}
         };
         raceTrack = new RaceTrack(track);
     }
@@ -63,10 +62,10 @@ public class RaceTrackTest {
         List<Position> endLinePositions = raceTrack.getPositionsOfComponent(TrackComponent.END_LINE);
 
         assertEquals(1, startLinePositions.size());
-        assertEquals(new Position(0, 1), startLinePositions.get(0));
+        assertEquals(new Position(0, 1), startLinePositions.getFirst());
 
         assertEquals(1, endLinePositions.size());
-        assertEquals(new Position(1, 0), endLinePositions.get(0));
+        assertEquals(new Position(1, 0), endLinePositions.getFirst());
     }
 
     @Test

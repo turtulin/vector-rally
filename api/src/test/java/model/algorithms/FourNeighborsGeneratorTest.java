@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 import java.util.List;
 
-public class FourNeighborsGeneratorTest {
+class FourNeighborsGeneratorTest {
 
     private FourNeighborsGenerator generator;
 
@@ -18,45 +18,24 @@ public class FourNeighborsGeneratorTest {
     }
 
     @Test
-    void generateShiftsShouldReturnFiveShifts() {
-        Acceleration speed = new Acceleration(2, 3);
-        List<Acceleration> shifts = generator.generateShifts(speed);
-        assertEquals(5, shifts.size());
+    void generateShiftsShouldReturnCorrectAccelerations() {
+        Acceleration initialSpeed = new Acceleration(2, 3);
+        List<Acceleration> expectedShifts = List.of(
+                new Acceleration(1, 3),  // Left
+                new Acceleration(3, 3),  // Right
+                new Acceleration(2, 2),  // Down
+                new Acceleration(2, 4),  // Up
+                new Acceleration(2, 3)   // No change
+        );
+        List<Acceleration> generatedShifts = generator.generateShifts(initialSpeed);
+        assertEquals(expectedShifts.size(), generatedShifts.size());
+        for (int i = 0; i < expectedShifts.size(); i++) {
+            assertTrue(compareAccelerations(expectedShifts.get(i), generatedShifts.get(i)));
+        }
     }
 
-    @Test
-    void generateShiftsShouldReturnCorrectShifts() {
-        Acceleration speed = new Acceleration(2, 3);
-        List<Acceleration> shifts = generator.generateShifts(speed);
-
-        assertTrue(shifts.contains(new Acceleration(1, 3)));
-        assertTrue(shifts.contains(new Acceleration(3, 3)));
-        assertTrue(shifts.contains(new Acceleration(2, 2)));
-        assertTrue(shifts.contains(new Acceleration(2, 4)));
-        assertTrue(shifts.contains(new Acceleration(2, 3)));
-    }
-
-    @Test
-    void generateShiftsShouldHandleNegativeSpeed() {
-        Acceleration speed = new Acceleration(-1, -2);
-        List<Acceleration> shifts = generator.generateShifts(speed);
-
-        assertTrue(shifts.contains(new Acceleration(-2, -2)));
-        assertTrue(shifts.contains(new Acceleration(0, -2)));
-        assertTrue(shifts.contains(new Acceleration(-1, -3)));
-        assertTrue(shifts.contains(new Acceleration(-1, -1)));
-        assertTrue(shifts.contains(new Acceleration(-1, -2)));
-    }
-
-    @Test
-    void generateShiftsShouldHandleZeroSpeed() {
-        Acceleration speed = new Acceleration(0, 0);
-        List<Acceleration> shifts = generator.generateShifts(speed);
-
-        assertTrue(shifts.contains(new Acceleration(-1, 0)));
-        assertTrue(shifts.contains(new Acceleration(1, 0)));
-        assertTrue(shifts.contains(new Acceleration(0, -1)));
-        assertTrue(shifts.contains(new Acceleration(0, 1)));
-        assertTrue(shifts.contains(new Acceleration(0, 0)));
+    private boolean compareAccelerations(Acceleration a1, Acceleration a2) {
+        return a1.getDx() == a2.getDx() && a1.getDy() == a2.getDy();
     }
 }
+

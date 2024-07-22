@@ -1,29 +1,40 @@
 package it.unicam.cs.mpmgc.vectorrally.api.view;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
+import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
+import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 
-import java.io.File;
 import java.util.List;
 
 /**
- * This interface defines methods for input and output operations in the game.
+ * Defines methods for input and output operations in the game.
  *
  * @version 1.0
  * @since 2024-07-11
- *
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-public interface IOController {
+public interface IOController extends BasicIOController {
 
     /**
-     * Finds the track files in the directory.
-     * @return the chosen track file name.
+     * Displays the racetrack.
+     *
+     * @param raceTrack the racetrack to display.
+     * @param players the list of players.
+     * @param destinations the list of destinations.
      */
-    List<String> findTrack() throws Exception;
+    void printRaceTrack(RaceTrack raceTrack, List<Player> players, List<Position> destinations);
+
+    /**
+     * Displays a message.
+     *
+     * @param message the message to display
+     */
+    void displayMessage(String message);
 
     /**
      * Asks if the player wants to play another match.
@@ -47,51 +58,74 @@ public interface IOController {
     Position chooseStartingPosition(Player player, List<Position> availablePositions);
 
     /**
-     * Asks the player to go to the next turn.
+     * Displays the welcome message and the game rules.
      */
-    void waitForNextTurn();
+    void displayWelcomeAndRules();
+    /**
+     * Asks if the player knows the game rules.
+     * @return true if the player knows the rules, false otherwise.
+     */
+    boolean askIfPlayerKnowsRules();
 
     /**
-     * Displays the racetrack.
-     * @param raceTrack the racetrack to display.
-     * @param players the list of players.
-     * @param destinations the list of destinations.
+     * Asks the player to choose a rule type.
+     * @return the chosen rule type.
      */
-    void printRaceTrack(RaceTrack raceTrack, List<Player> players, List<Position> destinations);
-
-    void displayMessage(String message);
+    int chooseRuleType();
 
     /**
-     * Finds the root path of the directory.
-     * @return the string of the root path.
+     * Choose the track files available.
+     * @return the chosen track file name.
      */
-    static String checkRootPath() {
-        String currentWorkingDir = System.getProperty("user.dir");
-        String directoryPath;
-        if (currentWorkingDir.endsWith("app")) {
-            directoryPath = "../api/src/main/resources/racetracks";
-        } else {
-            directoryPath = "api/src/main/resources/racetracks";
-        }
-        return directoryPath;
-    }
+    String pickTrack(List<String> trackFiles);
 
     /**
-     * Checks if the directory exist in the file system.
-     * @param directory the directory to check.
-     * @return true if the directory exist, false otherwise.
+     * Asks for the number of human players.
+     * @param maxPlayers the maximum number of players allowed.
+     * @return the number of human players.
      */
-    default boolean doesDirectoryExist(File directory) {
-        return directory.exists() && directory.isDirectory();
-    }
+    int askNumberOfHumanPlayers(int maxPlayers);
 
     /**
-     * Checks if the files exist in the directory.
-     * @param files the files to check.
-     * @return true if the files exist, false otherwise.
+     * Asks the player to choose a car color.
+     * @param availableColors the list of available colors.
+     * @return the chosen car color.
      */
-    default boolean doFilesExist(File[] files) {
-        return files != null && files.length > 0;
-    }
+    CarColour chooseCarColor(List<CarColour> availableColors);
 
+    /**
+     * Asks the player to choose the difficulty for each bot.
+     * @return true if the player wants to choose the difficulty for each bot, false otherwise.
+     */
+    boolean askToChooseForEachBot();
+
+    /**
+     * Asks the player to choose a bot strategy difficulty.
+     * @param carColour the car color of the bot.
+     * @return the chosen bot strategy difficulty.
+     */
+    BotStrategy chooseEachBotStrategyDifficulty(CarColour carColour);
+
+    /**
+     * Asks the player to choose a bot strategy difficulty for all bots.
+     * @return the chosen bot strategy difficulty.
+     */
+    BotStrategy chooseAllBotsStrategyDifficulty();
+    /**
+     * Asks if the player is satisfied with the configuration.
+     * @return true if the player is satisfied, false otherwise.
+     */
+    boolean askIfSatisfiedWithConfiguration(RaceTrack raceTrack, List<Player> players);
+
+    /**
+     * Prints the message of the end of the match.
+     */
+    void displayEndMatchMessage();
+
+    /**
+     * Initializes the shift algorithm chosen by the player.
+     *
+     * @return the neighbors generator initialized.
+     */
+    NeighborsGenerator initializeShiftAlgorithm();
 }

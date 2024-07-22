@@ -11,15 +11,6 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
 
 public class HumanPlayerTest {
 
-    private HumanPlayer humanPlayer;
-    private Car car;
-
-    @BeforeEach
-    void setUp() {
-        car = new RaceCar(CarColour.GREEN);
-        humanPlayer = new HumanPlayer(car);
-    }
-
     @Test
     void constructorShouldThrowExceptionWhenCarIsNull() {
         assertThrows(NullPointerException.class, () -> new HumanPlayer(null));

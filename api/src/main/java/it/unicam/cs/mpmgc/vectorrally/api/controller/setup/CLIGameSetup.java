@@ -1,9 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.setup;
 
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.EightNeighborsGenerator;
-import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.FourNeighborsGenerator;
-import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.RaceCar;
@@ -14,7 +11,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
-import it.unicam.cs.mpmgc.vectorrally.api.view.CLIIOController;
+import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
 import it.unicam.cs.mpmgc.vectorrally.api.view.TerminalUtils;
 
 
@@ -33,7 +30,7 @@ import java.util.List;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public class CLIGameSetup implements GameSetup {
-    private final CLIIOController ioController;
+    private final IOController ioController;
     private final RaceTrackBuilder trackBuilder;
     private final TerminalUtils terminalUtils = new TerminalUtils();
 
@@ -43,7 +40,7 @@ public class CLIGameSetup implements GameSetup {
      * @param ioController the IO controller for interacting with the user.
      * @param trackBuilder the track builder for constructing the racetrack.
      */
-    public CLIGameSetup(CLIIOController ioController, RaceTrackBuilder trackBuilder) {
+    public CLIGameSetup(IOController ioController, RaceTrackBuilder trackBuilder) {
         this.ioController = ioController;
         this.trackBuilder = trackBuilder;
     }

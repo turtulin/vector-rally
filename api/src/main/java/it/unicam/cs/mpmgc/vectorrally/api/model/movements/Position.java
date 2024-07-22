@@ -18,7 +18,6 @@ public class Position implements Coordinates {
      *
      * @param x the x value.
      * @param y the y value.
-     * @throws IllegalArgumentException if x or y are negative.
      */
     public Position(int x, int y) {
         this.x = x;

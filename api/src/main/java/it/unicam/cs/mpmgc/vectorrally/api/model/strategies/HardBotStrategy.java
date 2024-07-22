@@ -28,14 +28,6 @@ public class HardBotStrategy implements DecisionStrategy {
         this.aStar = aStar;
     }
 
-    /**
-     * Decides the next move for the player by using the A* algorithm to choose the best move from the list of possible moves.
-     *
-     * @param player the player for whom to decide the next move.
-     * @param possibleMoves a list of possible moves the player can make.
-     * @return the chosen move.
-     * @throws IllegalArgumentException if no possible moves are available.
-     */
     @Override
     public Move decideMove(Player player, List<Move> possibleMoves) {
         Move bestMove = possibleMoves.getFirst();

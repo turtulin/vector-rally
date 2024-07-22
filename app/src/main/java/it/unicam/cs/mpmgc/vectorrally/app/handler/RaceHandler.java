@@ -13,12 +13,10 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMoveValidator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.view.GraphicalIOController;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.shape.Rectangle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -29,64 +27,96 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
+/**
+ * This class is responsible for handling the match screen.
+ *
+ * @version 1.0
+ * @since 2024-07-19
+ * @author Marta Musso
+ * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
+ */
 public class RaceHandler {
-
-    public Button moveButton;
     private GUIMatchController matchController;
-
+    @FXML
+    public Button moveButton;
     @FXML
     private Label trackLabel;
-
     @FXML
     private Label difficultyLabel;
-
     @FXML
     private Label shiftRuleLabel;
-
     @FXML
     private GridPane trackGridPane;
-
-    @FXML
-    private TextField moveNumber;
     @FXML
     private Button nextTurnButton;
 
     private List<Player> players;
     private RaceTrack raceTrack;
-
     private List<List<Move>> allPossibleMoves;
 
     GraphicalIOController ioController = new GraphicalIOController();
     BasicMovesGenerator<NeighborsGenerator> movesGenerator = new BasicMovesGenerator<>(new FourNeighborsGenerator(), new BasicMoveValidator());
 
     public void setTrack(String track) {
-        if (trackLabel != null) {
-            trackLabel.setText(track);
-        }
+        if (trackLabel != null) trackLabel.setText(track);
         checkAllFieldsSet();
     }
 
     public void setDifficulty(String difficulty) {
-        if (difficultyLabel != null) {
-            difficultyLabel.setText(difficulty);
-        }
+        if (difficultyLabel != null) difficultyLabel.setText(difficulty);
         checkAllFieldsSet();
     }
 
     public void setShiftRule(String shiftRule) {
-        if (shiftRuleLabel != null) {
-            shiftRuleLabel.setText(shiftRule);
-        }
+        if (shiftRuleLabel != null) shiftRuleLabel.setText(shiftRule);
         checkAllFieldsSet();
+    }
+
+    public void clearPreviousMoves() {
+        allPossibleMoves.clear();
+    }
+
+    public void nextTurn() {
+        clearPreviousMoves();
+        List<Player> playersToEliminate = new ArrayList<>();
+        for (Player player : players) {
+            List<Move> possibleMoves = movesGenerator.generatePossibleMoves(player, raceTrack, players);
+            if (possibleMoves.isEmpty()) playersToEliminate.add(player);
+            else allPossibleMoves.add(possibleMoves);
+        }
+        for (Player player : playersToEliminate) matchController.handleElimination(player);
+        if (players.isEmpty()) {
+            nextTurnButton.setDisable(true);
+            moveButton.setDisable(true);
+            switchToGameOverScene();
+        } else {
+            nextTurnButton.setDisable(true);
+            moveButton.setDisable(false);
+        }
+    }
+
+    public void executeMovement() {
+        for (Player player : players) {
+            Random random = new Random();
+            int movement = random.nextInt(allPossibleMoves.getFirst().size());
+            player.setPosition(allPossibleMoves.getFirst().get(movement).getDestination());
+            player.setPlayerAcceleration(allPossibleMoves.getFirst().get(movement).acceleration());
+            if(matchController.checkIfPlayerWins(allPossibleMoves.getFirst().getFirst())) switchToWinScene();
+            allPossibleMoves.remove(allPossibleMoves.getFirst());
+        }
+        mapTrack(raceTrack, players);
+        clearPreviousMoves();
+        nextTurnButton.setDisable(false);
+        moveButton.setDisable(true);
     }
 
     private void checkAllFieldsSet() {
         if (trackLabel.getText() != null && !trackLabel.getText().isEmpty() &&
                 difficultyLabel.getText() != null && !difficultyLabel.getText().isEmpty() &&
                 shiftRuleLabel.getText() != null && !shiftRuleLabel.getText().isEmpty()) {
-
             Platform.runLater(() -> {
                 try {
                     handleSetup();
@@ -127,33 +157,11 @@ public class RaceHandler {
                 trackGridPane.add(rect, y, x);
             }
         }
-
         for (Player player : players) {
             Rectangle playerRect = new Rectangle(cellSize, cellSize, getColourForCar(player.getPlayerCarColour()));
             trackGridPane.add(playerRect, player.getPosition().getY(), player.getPosition().getX());
         }
-
-        for (List<Move> moves : allPossibleMoves) {
-            for (Move move : moves) {
-                Rectangle moveRect = new Rectangle(cellSize, cellSize, Color.GREY);
-                trackGridPane.add(moveRect, move.getDestination().getY(), move.getDestination().getX());
-            }
-        }
     }
-private void mapTrackMoves(RaceTrack raceTrack, List<Player> players, List<List<Move>> possibleMoves) {
-    mapTrack(raceTrack, players);
-
-    if (possibleMoves != null) {
-        int cellSize = 20;
-        for (List<Move> moves : possibleMoves) {
-            for (Move move : moves) {
-                System.out.println(move.getDestination().getX() + " " + move.getDestination().getY());
-                Rectangle moveRect = new Rectangle(cellSize, cellSize, Color.GREY);
-                trackGridPane.add(moveRect, move.getDestination().getY(), move.getDestination().getX());
-            }
-        }
-    }
-}
 
     private Color getColourForCar(CarColour colour) {
         return switch (colour) {
@@ -169,70 +177,9 @@ private void mapTrackMoves(RaceTrack raceTrack, List<Player> players, List<List<
         };
     }
 
-    public void showBotPlayerMoves(List<List<Move>> possibleMoves) {
-        allPossibleMoves.addAll(possibleMoves);
-        mapTrackMoves(raceTrack, players, possibleMoves);
-    }
-
-    public void clearPreviousMoves() {
-        allPossibleMoves.clear();
-    }
-
-    public void nextTurn() {
-        clearPreviousMoves();
-        BasicMovesGenerator<NeighborsGenerator> movesGenerator = new BasicMovesGenerator<>(new FourNeighborsGenerator(), new BasicMoveValidator());
-        allPossibleMoves = new ArrayList<>();
-        Integer i = 1;
-        List<Player> playersToEliminate = new ArrayList<>();
-        for (Player player : players) {
-            List<Move> possibleMoves = movesGenerator.generatePossibleMoves(player, raceTrack, players);
-            if (possibleMoves.isEmpty())
-                playersToEliminate.add(player);
-            else {
-                System.out.println(i.toString() + player.getPosition() + " " + player.getPlayerAcceleration());
-
-                allPossibleMoves.add(possibleMoves);
-                i++;
-            }
-        }
-        for (Player player : playersToEliminate) {
-            matchController.handleElimination(player);
-        }
-        if (players.isEmpty()){
-            nextTurnButton.setDisable(true);
-            moveButton.setDisable(true);
-            // game over
-            switchToGameOverScene();
-        }else {
-            nextTurnButton.setDisable(true);
-            moveButton.setDisable(false);
-        }
-    }
-
-    public void ExecuteMovement(ActionEvent actionEvent) {
-        for (Player player : players) {
-            Random random = new Random();
-            int movement = random.nextInt(allPossibleMoves.get(0).size());
-            player.setPosition(allPossibleMoves.get(0).get(movement).getDestination());
-            player.setPlayerAcceleration(allPossibleMoves.get(0).get(movement).acceleration());
-            //player.setPosition(allPossibleMoves.get(0).get(0).getDestination());
-            //player .setPlayerAcceleration(allPossibleMoves.get(0).get(0).acceleration());
-            if(matchController.checkIfPlayerWins(allPossibleMoves.get(0).get(0))) {
-                //game over
-                System.out.println("Player wins");
-                switchToWinScene();
-            }
-            allPossibleMoves.remove(allPossibleMoves.get(0));
-        }
-        mapTrack(raceTrack, players);
-        clearPreviousMoves();
-        nextTurnButton.setDisable(false);
-        moveButton.setDisable(true);
-    }
-
     private void switchToWinScene() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/winner.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/winner.fxml")));
             Stage stage = (Stage) trackGridPane.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
@@ -243,7 +190,7 @@ private void mapTrackMoves(RaceTrack raceTrack, List<Player> players, List<List<
 
     private void switchToGameOverScene() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/gameover.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/gameover.fxml")));
             Stage stage = (Stage) trackGridPane.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();

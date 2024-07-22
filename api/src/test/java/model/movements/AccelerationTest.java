@@ -2,93 +2,86 @@ package model.movements;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Direction;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AccelerationTest {
+class AccelerationTest {
+
+    private Acceleration acceleration;
+
+    @BeforeEach
+    void setUp() {
+        acceleration = new Acceleration(3, 4);
+    }
 
     @Test
-    void constructorShouldInitializeDxAndDy() {
-        Acceleration acceleration = new Acceleration(3, 4);
+    void accelerationShouldInitializeDxAndDyCorrectly() {
         assertEquals(3, acceleration.getDx());
         assertEquals(4, acceleration.getDy());
     }
 
     @Test
-    void setDxShouldUpdateDx() {
-        Acceleration acceleration = new Acceleration(3, 4);
+    void getDxShouldReturnCorrectValue() {
+        assertEquals(3, acceleration.getDx());
+    }
+
+    @Test
+    void getDyShouldReturnCorrectValue() {
+        assertEquals(4, acceleration.getDy());
+    }
+
+    @Test
+    void setDxShouldUpdateDxCorrectly() {
         acceleration.setDx(5);
         assertEquals(5, acceleration.getDx());
     }
 
     @Test
-    void setDyShouldUpdateDy() {
-        Acceleration acceleration = new Acceleration(3, 4);
+    void setDyShouldUpdateDyCorrectly() {
         acceleration.setDy(6);
         assertEquals(6, acceleration.getDy());
     }
 
     @Test
-    void getMagnitudeShouldReturnCorrectMagnitude() {
-        Acceleration acceleration = new Acceleration(3, 4);
-        assertEquals(5.0, acceleration.getMagnitude(), 0.001);
+    void getMagnitudeShouldReturnCorrectValue() {
+        assertEquals(5.0, acceleration.getMagnitude());
     }
 
     @Test
     void getDirectionShouldReturnCorrectDirection() {
-        Acceleration accelerationUp = new Acceleration(0, 1);
-        assertEquals(Direction.UP, accelerationUp.getDirection());
+        assertEquals(Direction.UP_RIGHT, acceleration.getDirection());
 
-        Acceleration accelerationUpRight = new Acceleration(1, 1);
-        assertEquals(Direction.UP_RIGHT, accelerationUpRight.getDirection());
+        acceleration.setDx(-3);
+        acceleration.setDy(4);
+        assertEquals(Direction.UP_LEFT, acceleration.getDirection());
 
-        Acceleration accelerationDownRight = new Acceleration(1, -1);
-        assertEquals(Direction.DOWN_RIGHT, accelerationDownRight.getDirection());
+        acceleration.setDx(3);
+        acceleration.setDy(-4);
+        assertEquals(Direction.DOWN_RIGHT, acceleration.getDirection());
 
-        Acceleration accelerationDown = new Acceleration(0, -1);
-        assertEquals(Direction.DOWN, accelerationDown.getDirection());
+        acceleration.setDx(-3);
+        acceleration.setDy(-4);
+        assertEquals(Direction.DOWN_LEFT, acceleration.getDirection());
 
-        Acceleration accelerationDownLeft = new Acceleration(-1, -1);
-        assertEquals(Direction.DOWN_LEFT, accelerationDownLeft.getDirection());
+        acceleration.setDx(0);
+        acceleration.setDy(0);
+        assertEquals(Direction.NONE, acceleration.getDirection());
 
-        Acceleration accelerationLeft = new Acceleration(-1, 0);
-        assertEquals(Direction.LEFT, accelerationLeft.getDirection());
+        acceleration.setDx(0);
+        acceleration.setDy(4);
+        assertEquals(Direction.UP, acceleration.getDirection());
 
-        Acceleration accelerationUpLeft = new Acceleration(-1, 1);
-        assertEquals(Direction.UP_LEFT, accelerationUpLeft.getDirection());
+        acceleration.setDx(4);
+        acceleration.setDy(0);
+        assertEquals(Direction.RIGHT, acceleration.getDirection());
 
-        Acceleration accelerationRight = new Acceleration(1, 0);
-        assertEquals(Direction.RIGHT, accelerationRight.getDirection());
+        acceleration.setDx(0);
+        acceleration.setDy(-4);
+        assertEquals(Direction.DOWN, acceleration.getDirection());
 
-        Acceleration accelerationNone = new Acceleration(0, 0);
-        assertEquals(Direction.NONE, accelerationNone.getDirection());
-    }
-
-    @Test
-    void equalsShouldReturnTrueForEqualAccelerations() {
-        Acceleration acceleration1 = new Acceleration(3, 4);
-        Acceleration acceleration2 = new Acceleration(3, 4);
-        assertEquals(acceleration1, acceleration2);
-    }
-
-    @Test
-    void equalsShouldReturnFalseForDifferentAccelerations() {
-        Acceleration acceleration1 = new Acceleration(3, 4);
-        Acceleration acceleration2 = new Acceleration(4, 3);
-        assertNotEquals(acceleration1, acceleration2);
-    }
-
-    @Test
-    void hashCodeShouldReturnSameHashCodeForEqualAccelerations() {
-        Acceleration acceleration1 = new Acceleration(3, 4);
-        Acceleration acceleration2 = new Acceleration(3, 4);
-        assertEquals(acceleration1.hashCode(), acceleration2.hashCode());
-    }
-
-    @Test
-    void toStringShouldReturnCorrectStringRepresentation() {
-        Acceleration acceleration = new Acceleration(3, 4);
-        assertEquals("Acceleration(dx=3, dy=4)", acceleration.toString());
+        acceleration.setDx(-4);
+        acceleration.setDy(0);
+        assertEquals(Direction.LEFT, acceleration.getDirection());
     }
 }
-

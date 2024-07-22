@@ -9,6 +9,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * This class is responsible for starting the graphical application.
+ *
+ * @version 1.0
+ * @since 2024-07-17
+ * @author Marta Musso
+ * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
+ */
 public class GraphicalApp extends Application {
 
     public static void main(String[] args) {

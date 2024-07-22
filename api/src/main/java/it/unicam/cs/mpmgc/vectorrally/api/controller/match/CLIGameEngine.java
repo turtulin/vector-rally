@@ -10,7 +10,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.RaceTrackBuilder;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMoveValidator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
-import it.unicam.cs.mpmgc.vectorrally.api.view.CLIIOController;
+import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ import java.util.List;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public class CLIGameEngine implements GameEngine {
-    private final CLIIOController ioController;
+    private final IOController ioController;
     private List<Player> players;
     private NeighborsGenerator neighborsGenerator;
     private RaceTrack raceTrack;
@@ -35,7 +35,7 @@ public class CLIGameEngine implements GameEngine {
      *
      * @param ioController the IO controller used for input/output operations
      */
-    public CLIGameEngine(CLIIOController ioController) {
+    public CLIGameEngine(IOController ioController) {
         this.ioController = ioController;
         RaceTrackBuilder raceTrackBuilder = new RaceTrackBuilder();
         this.setup = new CLIGameSetup(ioController, raceTrackBuilder);
@@ -77,7 +77,7 @@ public class CLIGameEngine implements GameEngine {
      * @param neighborsGenerator the generator for neighboring moves
      * @throws Exception if an error occurs during match initialization or execution
      */
-    private void startMatch(List<Player> players, RaceTrack raceTrack, NeighborsGenerator neighborsGenerator) throws Exception {
+    public void startMatch(List<Player> players, RaceTrack raceTrack, NeighborsGenerator neighborsGenerator) throws Exception {
         MatchController matchController = new CLIMatchController(ioController, new BasicMovesGenerator<>(neighborsGenerator, new BasicMoveValidator()));
         matchController.initializeMatch(players, raceTrack);
         matchController.startMatch();
@@ -88,7 +88,7 @@ public class CLIGameEngine implements GameEngine {
      *
      * @return true if the user wants to play another match, false otherwise
      */
-    private boolean endMatch() {
+    public boolean endMatch() {
         ioController.displayEndMatchMessage();
         return ioController.askToPlayAnotherMatch();
     }
