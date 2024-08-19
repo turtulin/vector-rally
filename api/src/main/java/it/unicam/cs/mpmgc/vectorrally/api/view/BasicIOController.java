@@ -14,5 +14,5 @@ public interface BasicIOController {
     /**
      * Asks the player to proceed to the next turn.
      */
-    void waitForNextTurn();
+    void goToNextTurn();
 }

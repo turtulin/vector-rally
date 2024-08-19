@@ -24,7 +24,7 @@ import java.util.List;
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-public class GUIGameSetup implements  GameSetup {
+public class GUIGameSetup implements GameSetup {
     private final String difficulty;
     private final String trackChosen;
     private final RaceTrackBuilder trackBuilder;

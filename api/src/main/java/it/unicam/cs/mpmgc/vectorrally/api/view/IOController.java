@@ -44,10 +44,11 @@ public interface IOController extends BasicIOController {
 
     /**
      * Asks the player to choose a move from the available moves.
-     * @param possibleMoves the list of possible moves.
-     * @return the index of the chosen move.
+     * @param possibleDestinations the list of possible moves.
      */
-    int chooseMove(List<Move> possibleMoves);
+    void displayMoves(List<Position> possibleDestinations);
+
+    Move chooseMove(List<Move> possibleMoves);
 
     /**
      * Asks the player to choose a starting position from the available positions.

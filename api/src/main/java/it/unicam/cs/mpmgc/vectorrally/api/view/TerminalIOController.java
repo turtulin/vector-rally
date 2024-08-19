@@ -154,11 +154,13 @@ public class TerminalIOController extends TrackPathController implements IOContr
     }
 
     @Override
-    public int chooseMove(List<Move> possibleMoves) {
+    public void displayMoves(List<Position> possibleDestinations) {
         Output.printlnMessage(messageProvider.getMoveChoiceMessage());
-        for (int i = 0; i < possibleMoves.size(); i++) {
-            Output.printlnMessage((i + 1) + ".");
-        }
+        for (int i = 0; i < possibleDestinations.size(); i++) Output.printlnMessage((i + 1) + ".");
+    }
+
+    @Override
+    public Move chooseMove(List<Move> possibleMoves) {
         int choice = scanner.nextInt();
         scanner.nextLine();
         while (choice < 1 || choice > possibleMoves.size()) {
@@ -166,7 +168,7 @@ public class TerminalIOController extends TrackPathController implements IOContr
             choice = scanner.nextInt();
             scanner.nextLine();
         }
-        return choice - 1;
+        return possibleMoves.get(choice - 1);
     }
 
     @Override
@@ -187,7 +189,7 @@ public class TerminalIOController extends TrackPathController implements IOContr
     }
 
     @Override
-    public void waitForNextTurn() {
+    public void goToNextTurn() {
         Output.printlnMessage(messageProvider.getNextTurnMessage());
         scanner.nextLine();
     }

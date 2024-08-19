@@ -1,4 +1,4 @@
-package it.unicam.cs.mpmgc.vectorrally.app.handler;
+package it.unicam.cs.mpmgc.vectorrally.app.javafxView;
 
 import it.unicam.cs.mpmgc.vectorrally.api.controller.match.*;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.GUIGameSetup;
@@ -11,6 +11,8 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMoveValidator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
+import it.unicam.cs.mpmgc.vectorrally.api.view.GUIGameView;
+import it.unicam.cs.mpmgc.vectorrally.api.view.GameView;
 import it.unicam.cs.mpmgc.vectorrally.api.view.GraphicalIOController;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -39,7 +41,7 @@ import java.util.Random;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public class RaceHandler {
-    private GUIMatchController matchController;
+    private MatchController matchController;
     @FXML
     public Button moveButton;
     @FXML
@@ -56,6 +58,7 @@ public class RaceHandler {
     private List<Player> players;
     private RaceTrack raceTrack;
     private List<List<Move>> allPossibleMoves;
+    private final GameView gameView = new GUIGameView();
 
     GraphicalIOController ioController = new GraphicalIOController();
     BasicMovesGenerator<NeighborsGenerator> movesGenerator = new BasicMovesGenerator<>(new FourNeighborsGenerator(), new BasicMoveValidator());
@@ -79,7 +82,7 @@ public class RaceHandler {
         allPossibleMoves.clear();
     }
 
-    public void nextTurn() {
+    public void nextTurn() throws Exception {
         clearPreviousMoves();
         List<Player> playersToEliminate = new ArrayList<>();
         for (Player player : players) {
@@ -104,7 +107,7 @@ public class RaceHandler {
             int movement = random.nextInt(allPossibleMoves.getFirst().size());
             player.setPosition(allPossibleMoves.getFirst().get(movement).getDestination());
             player.setPlayerAcceleration(allPossibleMoves.getFirst().get(movement).acceleration());
-            if(matchController.checkIfPlayerWins(allPossibleMoves.getFirst().getFirst())) switchToWinScene();
+            if(movesGenerator.isWinningMove(allPossibleMoves.getFirst().getFirst(), raceTrack)) switchToWinScene();
             allPossibleMoves.remove(allPossibleMoves.getFirst());
         }
         mapTrack(raceTrack, players);
@@ -136,8 +139,7 @@ public class RaceHandler {
         players = setup.initializePlayers(raceTrack);
         allPossibleMoves = new ArrayList<>();
         mapTrack(raceTrack, players);
-        matchController = new GUIMatchController(ioController, movesGenerator);
-        matchController.initializeMatch(players, raceTrack);
+        matchController = new BasicMatchController(gameView, movesGenerator, players, raceTrack);
     }
 
     private void mapTrack(RaceTrack raceTrack, List<Player> players) {

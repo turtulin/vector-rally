@@ -10,6 +10,8 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.RaceTrackBuilder;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMoveValidator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
+import it.unicam.cs.mpmgc.vectorrally.api.view.CLIGameView;
+import it.unicam.cs.mpmgc.vectorrally.api.view.GameView;
 import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
 
 import java.util.List;
@@ -24,6 +26,7 @@ import java.util.List;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public class CLIGameEngine implements GameEngine {
+    private final GameView gameView;
     private final IOController ioController;
     private List<Player> players;
     private NeighborsGenerator neighborsGenerator;
@@ -39,6 +42,7 @@ public class CLIGameEngine implements GameEngine {
         this.ioController = ioController;
         RaceTrackBuilder raceTrackBuilder = new RaceTrackBuilder();
         this.setup = new CLIGameSetup(ioController, raceTrackBuilder);
+        this.gameView = new CLIGameView(ioController);
     }
 
     @Override
@@ -78,8 +82,7 @@ public class CLIGameEngine implements GameEngine {
      * @throws Exception if an error occurs during match initialization or execution
      */
     public void startMatch(List<Player> players, RaceTrack raceTrack, NeighborsGenerator neighborsGenerator) throws Exception {
-        MatchController matchController = new CLIMatchController(ioController, new BasicMovesGenerator<>(neighborsGenerator, new BasicMoveValidator()));
-        matchController.initializeMatch(players, raceTrack);
+        MatchController matchController = new BasicMatchController(gameView, new BasicMovesGenerator<>(neighborsGenerator, new BasicMoveValidator()), players, raceTrack);
         matchController.startMatch();
     }
 

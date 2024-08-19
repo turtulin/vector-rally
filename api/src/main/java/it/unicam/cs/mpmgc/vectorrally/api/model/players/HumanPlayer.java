@@ -1,5 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.players;
 
+
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
 
 /**

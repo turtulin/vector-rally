@@ -1,3 +1,4 @@
+/*
 package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
 import it.unicam.cs.mpmgc.vectorrally.api.view.*;
@@ -17,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+*/
 /**
  * Manages the game match for the CLI-based interface, implementing the MatchController interface.
  *
@@ -24,7 +26,8 @@ import java.util.Queue;
  * @since 2024-07-11
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
- */
+ *//*
+
 public class CLIMatchController extends DefaultMatchController implements MatchController {
     private List<Player> players;
     private RaceTrack raceTrack;
@@ -41,12 +44,14 @@ public class CLIMatchController extends DefaultMatchController implements MatchC
     private Move pendingMove;
     private final BasicMoveValidator moveValidator;
 
-    /**
+    */
+/**
      * Constructs a CLIMatchController with the specified IO controller and move generator.
      *
      * @param ioController the IO controller for CLI input/output
      * @param moveGenerator the generator for possible moves
-     */
+     *//*
+
     public CLIMatchController(IOController ioController, BasicMovesGenerator<NeighborsGenerator> moveGenerator) {
         this.ioController = ioController;
         this.moveGenerator = moveGenerator;
@@ -69,9 +74,11 @@ public class CLIMatchController extends DefaultMatchController implements MatchC
         this.gameOver = false;
     }
 
-    /**
+    */
+/**
      * Proceeds to the next turn in the match.
-     */
+     *//*
+
     private void nextTurn() {
         if (isMovePending) {
             executePendingMove();
@@ -111,35 +118,41 @@ public class CLIMatchController extends DefaultMatchController implements MatchC
         }
     }
 
-    /**
+    */
+/**
      * Displays possible moves for a human player and sets up for the next turn.
      *
      * @param possibleMoves the list of possible moves for the human player
-     */
+     *//*
+
     private void showHumanPlayerMoves(List<Move> possibleMoves) {
         ioController.printRaceTrack(raceTrack, players, getPossibleDestinations(possibleMoves));
         pendingMove = possibleMoves.get(ioController.chooseMove(possibleMoves));
         isMovePending = true;
-        ioController.waitForNextTurn();
+        ioController.goToNextTurn();
     }
 
-    /**
+    */
+/**
      * Displays possible moves for a bot player and sets up for the next turn.
      *
      * @param botPlayer the bot player whose moves are being displayed
      * @param possibleMoves the list of possible moves for the bot player
-     */
+     *//*
+
     private void showBotMoves(BotPlayer botPlayer, List<Move> possibleMoves) {
         ioController.printRaceTrack(raceTrack, players, getPossibleDestinations(possibleMoves));
         DecisionStrategy strategy = botStrategyFactory.getStrategy(botPlayer.getStrategy());
         pendingMove = strategy.decideMove(botPlayer, possibleMoves);
         isMovePending = true;
-        ioController.waitForNextTurn();
+        ioController.goToNextTurn();
     }
 
-    /**
+    */
+/**
      * Executes the pending move for the current player.
-     */
+     *//*
+
     private void executePendingMove() {
         makeMove(currentPlayer, pendingMove);
         isMovePending = false;
@@ -151,13 +164,15 @@ public class CLIMatchController extends DefaultMatchController implements MatchC
         }
     }
 
-    /**
+    */
+/**
      * Checks if the move results in the player winning the match.
      *
      * @param move the move made by the player
      * @return true if the player wins, false otherwise
-     */
-    private boolean checkIfPlayerWins(Move move) {
+     *//*
+
+    public boolean checkIfPlayerWins(Move move) {
         Position end = move.getDestination();
         return raceTrack.getComponentAt(end.getX(), end.getY()) == TrackComponent.END_LINE ||
                 moveValidator.passesThroughComponent(raceTrack, move, TrackComponent.END_LINE);
@@ -165,3 +180,4 @@ public class CLIMatchController extends DefaultMatchController implements MatchC
 
 }
 
+*/

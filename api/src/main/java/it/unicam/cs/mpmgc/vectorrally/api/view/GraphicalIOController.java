@@ -12,7 +12,7 @@ import java.util.concurrent.CountDownLatch;
  */
 
 public class GraphicalIOController extends TrackPathController implements BasicIOController {
-    public void waitForNextTurn() {
+    public void goToNextTurn() {
         CountDownLatch latch = new CountDownLatch(1);
         try {
             latch.await();

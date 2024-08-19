@@ -10,7 +10,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.text.Font?>
-<TitledPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1142.0" text="Settings" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpmgc.vectorrally.app.handler.SettingsHandler">
+<TitledPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1142.0" text="Settings" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpmgc.vectorrally.app.javafxView.SettingsHandler">
    <content>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>

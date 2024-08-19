@@ -3,11 +3,14 @@ package it.unicam.cs.mpmgc.vectorrally.api.model.rules;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Generates possible moves for a player in the Vector Rally game using a specified
@@ -55,7 +58,17 @@ public class BasicMovesGenerator<T extends NeighborsGenerator> {
         return possibleMoves;
     }
 
+    public List<Position> getPossibleDestinations(List<Move> moves) {
+        return moves.stream().map(Move::getDestination).collect(Collectors.toList());
+    }
+
     public NeighborsGenerator getNeighborsGenerator() {
         return neighborsGenerator;
+    }
+
+    public boolean isWinningMove(Move move, RaceTrack track) {
+        Position end = move.getDestination();
+        return track.getComponentAt(end.getX(), end.getY()) == TrackComponent.END_LINE ||
+                moveValidator.passesThroughComponent(track, move, TrackComponent.END_LINE);
     }
 }

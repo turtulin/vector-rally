@@ -97,20 +97,6 @@ class CLIMatchControllerTest {
     }
 
     @Test
-    void chooseMove_ShouldReturnChosenMoveIndex_WhenInputIsValid() {
-        String input = "1\n";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-        ioController = new TerminalIOController();
-        Move move1 = new Move(new Acceleration(1, 1), new Position(1, 1));
-        Move move2 = new Move(new Acceleration(2, 2), new Position(2, 2));
-        List<Move> possibleMoves = List.of(move1, move2);
-
-        int result = ioController.chooseMove(possibleMoves);
-
-        assertEquals(0, result);
-    }
-
-    @Test
     void chooseStartingPosition_ShouldReturnChosenPosition_WhenInputIsValid() {
         String input = "1\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));

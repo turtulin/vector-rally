@@ -3,6 +3,7 @@ package it.unicam.cs.mpmgc.vectorrally.api.model.rules;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 
 import java.util.List;
 
@@ -29,4 +30,6 @@ public interface MoveValidator {
      * @return true if the move is valid, false otherwise.
      */
     boolean isValid(Move move, RaceTrack track, List<Player> allPlayers);
+
+    boolean passesThroughComponent(RaceTrack track, Move move, TrackComponent component);
 }

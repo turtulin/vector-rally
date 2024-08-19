@@ -1,3 +1,4 @@
+/*
 package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
@@ -66,3 +67,4 @@ public class GUIMatchController extends DefaultMatchController implements MatchC
                 moveValidator.passesThroughComponent(raceTrack, move, TrackComponent.END_LINE);
     }
 }
+*/

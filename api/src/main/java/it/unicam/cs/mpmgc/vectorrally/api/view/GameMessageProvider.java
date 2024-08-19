@@ -25,13 +25,13 @@ public final class GameMessageProvider implements MessageProvider {
 
     @Override
     public String getWinMessage(Player player) {
-        return "Player " + player.getPlayerCarColour() + " has crossed the finish line";
+        return "Player " + player.getName() + " has crossed the finish line";
     }
 
     @Override
     public String getEliminationMessage(Player player) {
-        return "Player " + player.getPlayerCarColour() + " has no more moves to perform\n" +
-                "Player " + player.getPlayerCarColour() + " LOSES!!!";
+        return "Player " + player.getName() + " has no more moves to perform\n" +
+                "Player " + player.getName() + " LOSES!!!";
     }
 
     @Override

@@ -1,4 +1,4 @@
-package it.unicam.cs.mpmgc.vectorrally.app.handler;
+package it.unicam.cs.mpmgc.vectorrally.app.javafxView;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.FourNeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.EightNeighborsGenerator;

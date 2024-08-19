@@ -1,5 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.players;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
@@ -66,4 +67,13 @@ public interface Player {
      * @param isRacing the new racing status of the player, true to set racing, false to stop.
      */
     void setRacing(boolean isRacing);
+
+    /**
+     * Retrieves the name of the player.
+     *
+     * @return the name of the player.
+     */
+    String getName();
+
+    void makeMove(Move move);
 }

@@ -1,4 +1,4 @@
-package it.unicam.cs.mpmgc.vectorrally.app.handler;
+package it.unicam.cs.mpmgc.vectorrally.app.javafxView;
 
 import it.unicam.cs.mpmgc.vectorrally.api.view.TrackPathController;
 import it.unicam.cs.mpmgc.vectorrally.api.view.GraphicalIOController;

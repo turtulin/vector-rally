@@ -1,4 +1,4 @@
-package it.unicam.cs.mpmgc.vectorrally.app.handler;
+package it.unicam.cs.mpmgc.vectorrally.app.javafxView;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
