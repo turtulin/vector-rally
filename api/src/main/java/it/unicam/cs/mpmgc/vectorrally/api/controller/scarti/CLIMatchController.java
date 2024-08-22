@@ -60,7 +60,7 @@ public class CLIMatchController extends DefaultMatchController implements MatchC
     }
 
     @Override
-    public void startMatch() {
+    public void initializeMatch() {
         while (!gameOver) {
             nextTurn();
         }

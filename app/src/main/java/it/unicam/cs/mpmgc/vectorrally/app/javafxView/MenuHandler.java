@@ -1,18 +1,11 @@
+/*
 package it.unicam.cs.mpmgc.vectorrally.app.javafxView;
 
-import it.unicam.cs.mpmgc.vectorrally.api.view.TrackPathController;
-import it.unicam.cs.mpmgc.vectorrally.api.view.GraphicalIOController;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
+import it.unicam.cs.mpmgc.vectorrally.api.view.MatchGameView;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.control.Button;
 
-import java.io.IOException;
-
+*/
 /**
  * This class is responsible for handling the menu screen.
  *
@@ -20,10 +13,16 @@ import java.io.IOException;
  * @since 2024-07-18
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
- */
+ *//*
+
 public class MenuHandler {
 
-    @FXML
+    public Button playButton;
+    public Button quitGameButton;
+    private MatchGameView guiGameView;
+
+   */
+/* @FXML
     private void handleStartButtonAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/settings.fxml"));
         TrackPathController IOController = new GraphicalIOController();
@@ -37,5 +36,22 @@ public class MenuHandler {
     @FXML
     private void handleQuitButtonAction(ActionEvent event) {
         Platform.exit();
+    }*//*
+
+
+    @FXML
+    public void initialize() {
+        this.guiGameView = new GUIMatchGameView();
+    }
+
+    @FXML
+    private void handleStartButtonAction() {
+        guiGameView.handlePlayAgain();
+    }
+
+    @FXML
+    private void handleQuitButtonAction() {
+        guiGameView.handleQuitGame();
     }
 }
+*/

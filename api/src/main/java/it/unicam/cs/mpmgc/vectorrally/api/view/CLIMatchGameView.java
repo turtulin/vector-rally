@@ -7,11 +7,11 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 
 import java.util.List;
 
-public class CLIGameView implements GameView {
+public class CLIMatchGameView implements MatchGameView {
     private final IOController ioController;
     private final GameMessageProvider messageProvider = new GameMessageProvider();
 
-    public CLIGameView(IOController ioController) {
+    public CLIMatchGameView(IOController ioController) {
         this.ioController = ioController;
     }
 

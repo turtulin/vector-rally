@@ -1,13 +1,16 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
+import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.BasicGameSetup;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.BotStrategyFactory;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.SetupResult;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.BotPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
-import it.unicam.cs.mpmgc.vectorrally.api.view.GameView;
+import it.unicam.cs.mpmgc.vectorrally.api.view.MatchGameView;
+import it.unicam.cs.mpmgc.vectorrally.api.view.SetupGameView;
 
 import java.util.List;
 
@@ -16,12 +19,12 @@ public class BasicMatchController implements MatchController {
     private boolean isGameEnded;
     private final List<Player> players;
     private final RaceTrack raceTrack;
-    private final GameView gameView;
+    private final MatchGameView gameView;
     private final BasicMovesGenerator<NeighborsGenerator> moveGenerator;
     private final BotStrategyFactory botStrategyFactory;
 
 
-    public BasicMatchController(GameView gameView, BasicMovesGenerator<NeighborsGenerator> moveGenerator, List<Player> players, RaceTrack raceTrack) {
+    public BasicMatchController(MatchGameView gameView, BasicMovesGenerator<NeighborsGenerator> moveGenerator, List<Player> players, RaceTrack raceTrack) {
         this.gameView = gameView;
         this.moveGenerator = moveGenerator;
         this.raceTrack = raceTrack;

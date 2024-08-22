@@ -1,3 +1,4 @@
+/*
 package it.unicam.cs.mpmgc.vectorrally.app.javafxView;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.FourNeighborsGenerator;
@@ -19,6 +20,7 @@ import javafx.scene.control.SplitMenuButton;
 import java.io.IOException;
 import java.util.List;
 
+*/
 /**
  * This class is responsible for handling the settings screen.
  *
@@ -26,7 +28,8 @@ import java.util.List;
  * @since 2024-07-18
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
- */
+ *//*
+
 public class SettingsHandler {
 
     private final TrackPathController IOController;
@@ -131,3 +134,4 @@ public class SettingsHandler {
     }
 
 }
+*/

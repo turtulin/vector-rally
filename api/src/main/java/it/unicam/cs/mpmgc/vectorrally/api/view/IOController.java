@@ -62,6 +62,7 @@ public interface IOController extends BasicIOController {
      * Displays the welcome message and the game rules.
      */
     void displayWelcomeAndRules();
+
     /**
      * Asks if the player knows the game rules.
      * @return true if the player knows the rules, false otherwise.
@@ -112,16 +113,6 @@ public interface IOController extends BasicIOController {
      * @return the chosen bot strategy difficulty.
      */
     BotStrategy chooseAllBotsStrategyDifficulty();
-    /**
-     * Asks if the player is satisfied with the configuration.
-     * @return true if the player is satisfied, false otherwise.
-     */
-    boolean askIfSatisfiedWithConfiguration(RaceTrack raceTrack, List<Player> players);
-
-    /**
-     * Prints the message of the end of the match.
-     */
-    void displayEndMatchMessage();
 
     /**
      * Initializes the shift algorithm chosen by the player.

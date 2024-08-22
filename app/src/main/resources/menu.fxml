@@ -15,8 +15,8 @@
                   <Image url="@images/backgroundMenu.jpg" />
                </image>
             </ImageView>
-            <Button layoutX="2016.0" layoutY="1189.0" mnemonicParsing="false" onAction="#handleStartButtonAction" prefHeight="45.0" prefWidth="139.0" text="Start Match" />
-            <Button layoutX="2016.0" layoutY="1255.0" mnemonicParsing="false" onAction="#handleQuitButtonAction" prefHeight="47.0" prefWidth="139.0" text="Quit Game" />
+            <Button fx:id="playButton" layoutX="2016.0" layoutY="1189.0" mnemonicParsing="false" onAction="#handleStartButtonAction" prefHeight="45.0" prefWidth="139.0" text="Start Match" />
+            <Button fx:id="quitGameButton" layoutX="2016.0" layoutY="1255.0" mnemonicParsing="false" onAction="#handleQuitButtonAction" prefHeight="47.0" prefWidth="139.0" text="Quit Game" />
          </children>
       </AnchorPane>
    </content>

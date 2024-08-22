@@ -1,5 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.view;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.BotPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
@@ -15,7 +16,7 @@ import java.util.List;
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-public class TerminalUtils implements CLIUtils {
+public class TerminalUtils {
 
     /**
      * Prints the racetrack along with the positions of the players.
@@ -70,6 +71,26 @@ public class TerminalUtils implements CLIUtils {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns the ANSI color code corresponding to the given car color.
+     *
+     * @param colour the color of the car
+     * @return the ANSI color code as a string
+     */
+    private String getCarColorCode(CarColour colour) {
+        return switch (colour) {
+            case RED -> "\033[31m";
+            case ORANGE -> "\033[38;5;208m";
+            case YELLOW -> "\033[33m";
+            case GREEN -> "\033[32m";
+            case BLUE -> "\033[34m";
+            case PURPLE -> "\033[35m";
+            case PINK -> "\033[38;5;205m";
+            case CYAN -> "\033[36m";
+            case BROWN -> "\033[38;5;94m";
+        };
     }
 
 }

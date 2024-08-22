@@ -21,7 +21,6 @@ public class GUIMatchController extends DefaultMatchController implements MatchC
     private final BasicMoveValidator moveValidator;
     private Player currentPlayer;
 
-
     public GUIMatchController(GraphicalIOController ioController, BasicMovesGenerator<NeighborsGenerator> moveGenerator) {
         this.moveGenerator = moveGenerator;
         this.moveValidator = new BasicMoveValidator();
@@ -34,7 +33,7 @@ public class GUIMatchController extends DefaultMatchController implements MatchC
     }
 
     @Override
-    public void startMatch() {
+    public void initializeMatch() {
         while (!gameOver) {
             nextTurn();
         }

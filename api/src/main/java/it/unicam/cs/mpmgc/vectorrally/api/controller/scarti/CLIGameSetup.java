@@ -1,3 +1,4 @@
+/*
 package it.unicam.cs.mpmgc.vectorrally.api.controller.setup;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
@@ -10,7 +11,9 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
+import it.unicam.cs.mpmgc.vectorrally.api.view.CLIMatchGameView;
 import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
+import it.unicam.cs.mpmgc.vectorrally.api.view.TerminalIOController;
 import it.unicam.cs.mpmgc.vectorrally.api.view.TerminalUtils;
 
 
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+*/
 /**
  * This class implements the GameSetup interface, handling the setup process for the game
  * through a command-line interface (CLI). It interacts with the user via the terminal to set up
@@ -27,20 +31,24 @@ import java.util.List;
  * @since 2024-07-11
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
- */
-public class CLIGameSetup implements GameSetup {
-    private final IOController ioController;
+ *//*
+
+public class CLIGameSetup extends BasicGameSetup {
+    private final CLIMatchGameView gameView;
+    private final IOController ioController = new TerminalIOController();
     private final RaceTrackBuilder trackBuilder;
     private final TerminalUtils terminalUtils = new TerminalUtils();
 
-    /**
+    */
+/**
      * Constructs a CLIGameSetup instance with the specified IO controller and track builder.
      *
-     * @param ioController the IO controller for interacting with the user.
      * @param trackBuilder the track builder for constructing the racetrack.
-     */
-    public CLIGameSetup(IOController ioController, RaceTrackBuilder trackBuilder) {
-        this.ioController = ioController;
+     *//*
+
+    public CLIGameSetup(CLIMatchGameView gameView, RaceTrackBuilder trackBuilder) {
+        super(gameView, trackBuilder);
+        this.gameView = gameView;
         this.trackBuilder = trackBuilder;
     }
 
@@ -63,13 +71,15 @@ public class CLIGameSetup implements GameSetup {
         return trackBuilder.buildTrack(trackFilePath);
     }
 
-    /**
+    */
+/**
      * Sets up the human players based on user input.
      *
      * @param numHumanPlayers the number of human players to set up.
      * @param players the list of players to which the human players will be added.
      * @param availableColors the list of available car colors.
-     */
+     *//*
+
     private void setupHumanPlayers(int numHumanPlayers, List<Player> players, List<CarColour> availableColors) {
         for (int i = 0; i < numHumanPlayers; i++) {
             CarColour chosenColor = ioController.chooseCarColor(availableColors);
@@ -80,14 +90,16 @@ public class CLIGameSetup implements GameSetup {
         }
     }
 
-    /**
+    */
+/**
      * Allows players to choose their starting positions on the racetrack.
      *
      * @param track the racetrack on which the players will race.
      * @param numHumanPlayers the number of human players.
      * @param players the list of players.
      * @param availablePositions the list of available starting positions.
-     */
+     *//*
+
     private void chooseStartingPositions(RaceTrack track, int numHumanPlayers, List<Player> players, List<Position> availablePositions) {
         terminalUtils.printRaceTrack(track, players, availablePositions);
         for (int i = 0; i < numHumanPlayers; i++) {
@@ -97,14 +109,16 @@ public class CLIGameSetup implements GameSetup {
         }
     }
 
-    /**
+    */
+/**
      * Sets up the bot players based on user input.
      *
      * @param remainingPositions the number of remaining positions for the bots.
      * @param players the list of players to which the bot players will be added.
      * @param availableColours the list of available car colors.
      * @param availablePositions the list of available starting positions.
-     */
+     *//*
+
     private void setupBotPlayers(int remainingPositions, List<Player> players, List<CarColour> availableColours, List<Position> availablePositions) {
         boolean chooseForEachBot = ioController.askToChooseForEachBot();
         if (chooseForEachBot) {
@@ -122,14 +136,16 @@ public class CLIGameSetup implements GameSetup {
         }
     }
 
-    /**
+    */
+/**
      * Adds a player to the list of players.
      *
      * @param players the list of players.
      * @param chosenColor the chosen color for the player's car.
      * @param difficulty the difficulty level for the bot player (null for human players).
      * @param position the starting position for the player.
-     */
+     *//*
+
     private void addPlayer(List<Player> players, CarColour chosenColor, BotStrategy difficulty, Position position) {
         Car car = new RaceCar(chosenColor);
         Player player = (difficulty == null) ? new HumanPlayer(car) : new BotPlayer(car, difficulty);
@@ -137,3 +153,4 @@ public class CLIGameSetup implements GameSetup {
         players.add(player);
     }
 }
+*/

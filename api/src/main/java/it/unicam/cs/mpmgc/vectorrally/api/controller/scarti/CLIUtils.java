@@ -1,7 +1,9 @@
+/*
 package it.unicam.cs.mpmgc.vectorrally.api.view;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 
+*/
 /**
  * Provides utility methods for handling CLI-specific tasks.
  *
@@ -9,15 +11,18 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
  * @since 2024-07-17
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
- */
+ *//*
+
 public interface CLIUtils {
 
-    /**
+    */
+/**
      * Returns the ANSI color code corresponding to the given car color.
      *
      * @param colour the color of the car
      * @return the ANSI color code as a string
-     */
+     *//*
+
     default String getCarColorCode(CarColour colour) {
         return switch (colour) {
             case RED -> "\033[31m";
@@ -32,3 +37,4 @@ public interface CLIUtils {
         };
     }
 }
+*/

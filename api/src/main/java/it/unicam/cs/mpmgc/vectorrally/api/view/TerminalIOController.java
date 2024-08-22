@@ -25,7 +25,7 @@ import java.util.stream.IntStream;
  */
 public class TerminalIOController extends TrackPathController implements IOController {
     private final Scanner scanner;
-    private final MessageProvider messageProvider = new GameMessageProvider();
+    private final GameMessageProvider messageProvider = new GameMessageProvider();
     private final TerminalUtils utils = new TerminalUtils();
 
     /**
@@ -125,24 +125,6 @@ public class TerminalIOController extends TrackPathController implements IOContr
     }
 
     @Override
-    public boolean askIfSatisfiedWithConfiguration(RaceTrack raceTrack, List<Player> players) {
-        utils.printRaceTrack(raceTrack, players);
-        Output.printlnMessage(messageProvider.getAskIfSatisfiedWithConfigurationMessage());
-        String answer = scanner.nextLine().trim().toLowerCase();
-        while (!answer.equals("yes") && !answer.equals("no")) {
-            Output.printlnMessage(messageProvider.getInvalidChoiceMessage());
-            answer = scanner.nextLine().trim().toLowerCase();
-        }
-        return answer.equals("yes");
-    }
-
-    @Override
-    public void displayEndMatchMessage() {
-        Output.printlnMessage(messageProvider.getEndMessage());
-    }
-
-
-    @Override
     public boolean askToPlayAnotherMatch() {
         Output.printlnMessage(messageProvider.getAskToPlayAgainMessage());
         String answer = scanner.nextLine().trim().toLowerCase();
@@ -211,8 +193,7 @@ public class TerminalIOController extends TrackPathController implements IOContr
     }
 
     private int chooseRaceTrack (List<String> trackFiles) {
-        Output.printlnMessage(messageProvider.getTrackChoiceMessage());
-        IntStream.range(0, trackFiles.size()).mapToObj(i -> (i + 1) + ". " + trackFiles.get(i)).forEach(Output::printlnMessage);
+        displayTracks(trackFiles);
         int choice = scanner.nextInt();
         scanner.nextLine();
         while (choice < 1 || choice > trackFiles.size()) {
@@ -221,6 +202,11 @@ public class TerminalIOController extends TrackPathController implements IOContr
             scanner.nextLine();
         }
         return choice;
+    }
+
+    public void displayTracks(List<String> trackFiles) {
+        Output.printlnMessage(messageProvider.getTrackChoiceMessage());
+        IntStream.range(0, trackFiles.size()).mapToObj(i -> (i + 1) + ". " + trackFiles.get(i)).forEach(Output::printlnMessage);
     }
 
     private BotStrategy getBotStrategyDifficulty(String message) {

@@ -1,5 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.setup;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 
@@ -20,9 +21,8 @@ public interface GameSetup {
      *
      * @param raceTrack the racetrack on which the players will race.
      * @return a list of initialized players.
-     * @throws Exception if an error occurs during initialization.
      */
-    List<Player> initializePlayers(RaceTrack raceTrack) throws Exception;
+    List<Player> initializePlayers(RaceTrack raceTrack);
 
     /**
      * Initializes and returns the racetrack for the game.
@@ -31,4 +31,8 @@ public interface GameSetup {
      * @throws Exception if an error occurs during initialization.
      */
     RaceTrack initializeTrack() throws Exception;
+
+    NeighborsGenerator initializeShiftAlgorithm();
+
+    int maxPlayers(RaceTrack raceTrack);
 }

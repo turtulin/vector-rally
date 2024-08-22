@@ -1,3 +1,4 @@
+/*
 package controller.setup;
 
 
@@ -51,4 +52,5 @@ class CLIGameSetupTest {
         return raceTrack;
     }
 }
+*/
 

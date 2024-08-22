@@ -13,7 +13,7 @@ import java.util.List;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
 */
 
-public abstract class TrackPathController {
+public class TrackPathController {
     public List<String> findTrack() {
         String directoryPath = checkRootPath();
         File directory = new File(directoryPath);

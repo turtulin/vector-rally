@@ -7,7 +7,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 
 import java.util.List;
 
-public interface GameView {
+public interface MatchGameView {
     void displayPossibleMoves(List<Player> players, RaceTrack raceTrack, List<Position> possibleDestinations);
     void displayWinner(Player winner);
     void displayGameOver();
