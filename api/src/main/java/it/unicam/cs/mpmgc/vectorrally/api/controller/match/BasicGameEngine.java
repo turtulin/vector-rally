@@ -42,7 +42,7 @@ public class BasicGameEngine implements GameEngine {
     public void startGame() throws Exception {
         SetupResult setupResult = setupMatch();
         initializeMatch(setupResult.players(), setupResult.raceTrack(), setupResult.generator());
-        while (endGame()) {
+        while (playGame()) {
             setupResult = setupMatch();
             initializeMatch(setupResult.players(), setupResult.raceTrack(), setupResult.generator());
         }
@@ -67,7 +67,7 @@ public class BasicGameEngine implements GameEngine {
      *
      * @return true if the user wants to play another match, false otherwise
      */
-    public boolean endGame() {
+    public boolean playGame() {
         return finishGameView.playAnotherMatch();
     }
 

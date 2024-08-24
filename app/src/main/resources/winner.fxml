@@ -8,28 +8,25 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="708.0" prefWidth="1078.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpmgc.vectorrally.app.javafxView.WinnerHandler">
-   <children>
-      <ImageView fitHeight="724.0" fitWidth="1100.0" layoutX="-1.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/backgroundCongratulations.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="playAgainButton" layoutX="28.0" layoutY="530.0" mnemonicParsing="false" onAction="#handlePlayAgainButtonAction" prefHeight="50.0" prefWidth="132.0" text="Play Again">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <Button fx:id="quitGameButton" layoutX="28.0" layoutY="596.0" mnemonicParsing="false" onAction="#handleQuitGameButtonAction" prefHeight="50.0" prefWidth="132.0" text="Quit Game">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff007751" height="62.0" layoutX="331.0" layoutY="82.0" stroke="WHITE" strokeType="INSIDE" width="733.0" />
-      <Label fx:id="playerNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="341.0" layoutY="99.0" prefHeight="29.0" prefWidth="713.0" text="Winner Name" textAlignment="CENTER" textFill="WHITE">
-         <font>
-            <Font name="Noto Sans ExtraBold" size="20.0" />
-         </font>
-      </Label>
-   </children>
+<AnchorPane prefHeight="708.0" prefWidth="1078.0" xmlns="http://javafx.com/javafx/22"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.unicam.cs.mpmgc.vectorrally.app.javafxView.WinnerHandler">
+   <ImageView fx:id="winImage" fitHeight="724.0" fitWidth="1100.0" layoutX="-1.0" layoutY="-5.0" pickOnBounds="true"
+              preserveRatio="true">
+      <Image url="@images/backgroundCongratulations.png"/>
+   </ImageView>
+   <Button fx:id="goToHomeButton" layoutX="27.0" layoutY="610.0" mnemonicParsing="false" onAction="#handleGoToHome"
+           prefHeight="50.0" prefWidth="132.0" text="Play Again">
+      <font>
+         <Font size="14.0"/>
+      </font>
+   </Button>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff007751" height="62.0" layoutX="331.0" layoutY="82.0"
+              stroke="WHITE" strokeType="INSIDE" width="733.0"/>
+   <Label fx:id="playerNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="341.0" layoutY="99.0"
+          prefHeight="29.0" prefWidth="713.0" text="Winner Name" textAlignment="CENTER" textFill="WHITE">
+      <font>
+         <Font name="Noto Sans ExtraBold" size="20.0"/>
+      </font>
+   </Label>
 </AnchorPane>

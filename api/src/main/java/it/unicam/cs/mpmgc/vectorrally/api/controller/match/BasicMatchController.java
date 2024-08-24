@@ -1,8 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
-import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.BasicGameSetup;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.BotStrategyFactory;
-import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.SetupResult;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.BotPlayer;
@@ -10,7 +8,6 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.view.MatchGameView;
-import it.unicam.cs.mpmgc.vectorrally.api.view.SetupGameView;
 
 import java.util.List;
 
@@ -34,7 +31,7 @@ public class BasicMatchController implements MatchController {
     }
 
     @Override
-    public void startMatch() throws Exception {
+    public void startMatch() {
         this.turnHandler = new BasicTurnHandler(players);
         while (!isGameEnded()) {
             handleTurn(turnHandler.getCurrentPlayer());
@@ -44,7 +41,7 @@ public class BasicMatchController implements MatchController {
     }
 
     @Override
-    public void handleTurn(Player player) throws Exception {
+    public void handleTurn(Player player) {
         turnHandler.startTurn();
         gameView.displayTurn(player, turnHandler.getTurnCounter());
         List<Move> possibleMoves = moveGenerator.generatePossibleMoves(player, raceTrack, turnHandler.getPlayers());
@@ -59,16 +56,16 @@ public class BasicMatchController implements MatchController {
     }
 
     @Override
-    public void handleElimination(Player player) throws Exception {
+    public void handleElimination(Player player) {
         gameView.displayElimination(player);
         turnHandler.removePlayer(player);
         if (turnHandler.getPlayers().isEmpty()) setGameEnded(true);
     }
 
     @Override
-    public void handleEndGame() throws Exception {
+    public void handleEndGame() {
         if (turnHandler.getPlayers().isEmpty()) gameView.displayGameOver();
-        else gameView.displayWinner(turnHandler.getCurrentPlayer());
+        else gameView.displayWinner(turnHandler.getPlayers().getLast());
     }
 
     @Override

@@ -28,7 +28,7 @@ public class BasicGameSetup implements GameSetup {
         List<Player> players = new ArrayList<>();
         List<CarColour> availableColors = new ArrayList<>(Arrays.asList(CarColour.values()));
         List<Position> availablePositions = raceTrack.getPositionsOfComponent(TrackComponent.START_POSITION);
-        int numHumanPlayers = setupGameView.getNumHumanPlayers(maxPlayers(raceTrack));
+        int numHumanPlayers = setupGameView.getNumHumanPlayers(availablePositions.size());
         setupHumanPlayers(numHumanPlayers, players, availableColors, availablePositions);
         setupBotPlayers(availablePositions.size(), players, availableColors, availablePositions);
         return players;
@@ -44,11 +44,6 @@ public class BasicGameSetup implements GameSetup {
     @Override
     public NeighborsGenerator initializeShiftAlgorithm() {
         return setupGameView.getShiftAlgorithm();
-    }
-
-    @Override
-    public int maxPlayers(RaceTrack raceTrack) {
-        return raceTrack.getPositionsOfComponent(TrackComponent.START_POSITION).size();
     }
 
     private void setupHumanPlayers(int numHumanPlayers, List<Player> players, List<CarColour> availableColors, List<Position> availablePositions) {

@@ -1,6 +1,5 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
-import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.GameSetup;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.SetupResult;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
@@ -50,5 +49,5 @@ public interface GameEngine {
      *
      * @return true if the user wants to play another match, false otherwise
      */
-    boolean endGame();
+    boolean playGame();
 }

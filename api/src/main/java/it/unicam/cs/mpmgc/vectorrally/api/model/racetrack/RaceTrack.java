@@ -64,5 +64,4 @@ public class RaceTrack implements Track {
     public int getLength() {
         return this.length;
     }
-
 }

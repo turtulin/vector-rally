@@ -18,7 +18,7 @@ import java.util.List;
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-public interface IOController extends BasicIOController {
+public interface IOController {
 
     /**
      * Displays the racetrack.
@@ -120,4 +120,9 @@ public interface IOController extends BasicIOController {
      * @return the neighbors generator initialized.
      */
     NeighborsGenerator initializeShiftAlgorithm();
+
+    /**
+     * Asks the player to proceed to the next turn.
+     */
+    void goToNextTurn();
 }

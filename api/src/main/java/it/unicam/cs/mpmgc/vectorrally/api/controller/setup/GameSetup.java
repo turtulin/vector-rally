@@ -34,5 +34,4 @@ public interface GameSetup {
 
     NeighborsGenerator initializeShiftAlgorithm();
 
-    int maxPlayers(RaceTrack raceTrack);
 }

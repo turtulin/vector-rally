@@ -4,19 +4,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class SceneManager {
     private static SceneManager instance;
     private Stage primaryStage;
-    private final Map<String, Scene> sceneCache = new HashMap<>();
 
     private SceneManager() {
-        // Private constructor to prevent instantiation
     }
 
     public static SceneManager getInstance() {
@@ -30,43 +30,25 @@ public class SceneManager {
         this.primaryStage = stage;
     }
 
+    public void switchToScene(String fxmlPath) {
+        switchToScene(fxmlPath, null, null);
+    }
+
     public void switchToScene(String fxmlPath, Consumer<Object> controllerConsumer) {
+        switchToScene(fxmlPath, null, controllerConsumer);
+    }
+
+    public void switchToScene(String fxmlPath, Function<Class<?>, Object> controllerFactory, Consumer<Object> controllerConsumer) {
         try {
-            Scene scene = sceneCache.get(fxmlPath);
-            if (scene == null) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-                Parent root = loader.load();
-                if (controllerConsumer != null) {
-                    controllerConsumer.accept(loader.getController());
-                }
-                scene = new Scene(root);
-                sceneCache.put(fxmlPath, scene);
-            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            if (controllerFactory != null) loader.setControllerFactory(controllerFactory::apply);
+            Parent root = loader.load();
+            if (controllerConsumer != null) controllerConsumer.accept(loader.getController());
+            Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public void switchToScene(String fxmlPath) {
-        switchToScene(fxmlPath, null);
-    }
-
-    public void clearCache() {
-        sceneCache.clear();
-    }
-
-    public void preloadScene(String fxmlPath) {
-        if (!sceneCache.containsKey(fxmlPath)) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-                Parent root = loader.load();
-                Scene scene = new Scene(root);
-                sceneCache.put(fxmlPath, scene);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
