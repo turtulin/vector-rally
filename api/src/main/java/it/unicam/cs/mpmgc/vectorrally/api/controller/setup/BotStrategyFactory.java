@@ -23,7 +23,7 @@ public class BotStrategyFactory {
      * Constructs a BotStrategyFactory with the specified neighbors' generator.
      * Initializes the strategies for EASY, MEDIUM, and HARD difficulties.
      *
-     * @param neighborsGenerator the generator used to produce possible accelerations for the A* algorithm.
+     * @param neighborsGenerator the {@link NeighborsGenerator} used to produce possible accelerations for the A* algorithm.
      */
     public BotStrategyFactory(NeighborsGenerator neighborsGenerator) {
         strategyMap.put(BotStrategy.EASY, new EasyBotStrategy());
@@ -36,8 +36,8 @@ public class BotStrategyFactory {
     /**
      * Retrieves the decision strategy for the specified bot strategy.
      *
-     * @param botStrategy the bot strategy for which to retrieve the decision strategy.
-     * @return the corresponding decision strategy.
+     * @param botStrategy the {@link BotStrategy} for which to retrieve the decision strategy.
+     * @return the corresponding {@link DecisionStrategy}.
      */
     public DecisionStrategy getStrategy(BotStrategy botStrategy) {
         return strategyMap.get(botStrategy);

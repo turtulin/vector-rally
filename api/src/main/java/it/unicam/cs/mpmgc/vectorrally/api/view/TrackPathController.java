@@ -14,6 +14,12 @@ import java.util.List;
 */
 
 public class TrackPathController {
+
+    /**
+     * Finds all track files in the specified directory.
+     *
+     * @return a {@link List} of track file names with a ".txt" extension, or {@code null} if the directory or files are not found.
+     */
     public List<String> findTrack() {
         String directoryPath = checkRootPath();
         File directory = new File(directoryPath);
@@ -29,6 +35,12 @@ public class TrackPathController {
         return trackFiles;
     }
 
+    /**
+     * Checks and returns the root path where track files are stored.
+     * Adjusts the path based on the current working directory.
+     *
+     * @return the root path for the track files as a {@link String}.
+     */
     public static String checkRootPath() {
         String currentWorkingDir = System.getProperty("user.dir");
         String directoryPath;
@@ -40,10 +52,22 @@ public class TrackPathController {
         return directoryPath;
     }
 
+    /**
+     * Checks if the given file directory exists and is a directory.
+     *
+     * @param directory the {@link File} directory to check.
+     * @return {@code true} if the directory exists and is valid, {@code false} otherwise.
+     */
     public boolean doesDirectoryExist(File directory) {
         return directory.exists() && directory.isDirectory();
     }
 
+    /**
+     * Checks if the specified array of files is not null and contains at least one file.
+     *
+     * @param files the array of {@link File} to check.
+     * @return {@code true} if the files array is valid, {@code false} otherwise.
+     */
     public boolean doFilesExist(File[] files) {
         return files != null && files.length > 0;
     }

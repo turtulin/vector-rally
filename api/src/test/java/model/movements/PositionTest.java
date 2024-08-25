@@ -1,5 +1,6 @@
 package model.movements;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Coordinates;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PositionTest {
 
-    private Position position;
+    private Coordinates position;
 
     @BeforeEach
     void setUp() {

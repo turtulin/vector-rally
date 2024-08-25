@@ -1,9 +1,11 @@
 package model.cars;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.RaceCar;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Vector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RaceCarTest {
 
-    private RaceCar raceCar;
+    private Car raceCar;
 
     @BeforeEach
     void setUp() {
@@ -47,7 +49,7 @@ class RaceCarTest {
         assertEquals(CarColour.RED, raceCar.getCarColour());
     }
 
-    private boolean compareAccelerations(Acceleration a1, Acceleration a2) {
+    private boolean compareAccelerations(Vector a1, Vector a2) {
         return a1.getDx() == a2.getDx() && a1.getDy() == a2.getDy();
     }
 }

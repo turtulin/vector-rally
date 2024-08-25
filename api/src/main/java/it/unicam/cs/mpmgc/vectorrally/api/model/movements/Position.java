@@ -13,12 +13,6 @@ public class Position implements Coordinates {
     private int x;
     private int y;
 
-    /**
-     * Constructs a Position with specified x and y values.
-     *
-     * @param x the x value.
-     * @param y the y value.
-     */
     public Position(int x, int y) {
         this.x = x;
         this.y = y;

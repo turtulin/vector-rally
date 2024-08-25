@@ -1,13 +1,7 @@
 package it.unicam.cs.mpmgc.vectorrally.app.javafxView;
 
-import it.unicam.cs.mpmgc.vectorrally.api.view.FinishGameView;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.util.Objects;
 
 /**
  * This class is responsible for handling the winner screen.
@@ -22,12 +16,6 @@ public class WinnerHandler {
 
     @FXML
     private Label playerNameLabel;
-
-    @FXML
-    private ImageView winImage;
-
-    @FXML
-    private Button goToHomeButton;
 
     @FXML
     public void initialize() {

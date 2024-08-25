@@ -7,9 +7,23 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * This class implements the {@link TurnHandler} interface to manage the turns in a basic, round-robin style game.
+ * The {@code BasicTurnHandler} class is responsible for cycling through the list of active players,
+ * keeping track of the current turn, and handling player removal when necessary.
+ * <p>
+ * The class uses a {@link Queue} to maintain the order of players, allowing it to easily move to the next player
+ * at the end of each turn. When a player's turn is completed, they are moved to the back of the queue.
+ * The class also tracks the number of turns taken and the number of players still active in the game.
+ *
+ * @version 1.0
+ * @since 2024-08-21
+ * @author Marta Musso
+ * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
+ */
 public class BasicTurnHandler implements TurnHandler {
     private final Queue<Player> activePlayers;
-    private int turnCounter = 0;
+    private int turnCounter = 1;
     private int playerCounter = 0;
 
     public BasicTurnHandler(List<Player> players) {
@@ -18,7 +32,11 @@ public class BasicTurnHandler implements TurnHandler {
 
     @Override
     public void startTurn() {
-        if(playerCounter++ >= activePlayers.size()) ++turnCounter;
+        if (playerCounter++ >= activePlayers.size())
+        {
+            turnCounter++;
+            playerCounter = 0;
+        }
     }
 
     @Override
@@ -34,11 +52,6 @@ public class BasicTurnHandler implements TurnHandler {
     @Override
     public int getTurnCounter() {
         return turnCounter;
-    }
-
-    @Override
-    public int getPlayerCounter() {
-        return playerCounter;
     }
 
     @Override

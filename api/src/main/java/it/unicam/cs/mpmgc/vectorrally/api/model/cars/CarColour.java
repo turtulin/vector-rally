@@ -18,5 +18,5 @@ public enum CarColour {
     PURPLE,
     PINK,
     CYAN,
-    BROWN;
+    BROWN
 }

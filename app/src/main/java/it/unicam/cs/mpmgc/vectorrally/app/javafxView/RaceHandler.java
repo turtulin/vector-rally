@@ -5,10 +5,12 @@ import it.unicam.cs.mpmgc.vectorrally.api.controller.match.MatchController;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.SetupResult;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Coordinates;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
+import it.unicam.cs.mpmgc.vectorrally.api.model.players.HumanPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
-import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.Track;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMoveValidator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.view.*;
@@ -41,22 +43,18 @@ public class RaceHandler implements MatchGameView {
     private CountDownLatch nextTurnLatch;
     private MatchController matchController;
 
-    public RaceHandler() {
-
-    }
-
     @FXML
     public void initialize() {
         nextTurnButton.setOnAction(event -> goToNextTurn());
         turnLabel.setText("Preparing game...");
     }
 
-    public void initializeRace(SetupResult setupResult) throws Exception {
+    public void initializeRace(SetupResult setupResult) {
         BasicMovesGenerator<NeighborsGenerator> movesGenerator = new BasicMovesGenerator<>(setupResult.generator(), new BasicMoveValidator());
         matchController = new BasicMatchController(this, movesGenerator, setupResult.players(), setupResult.raceTrack());
         Task<Void> matchTask = new Task<>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 matchController.startMatch();
                 return null;
             }
@@ -69,7 +67,10 @@ public class RaceHandler implements MatchGameView {
     }
 
     @Override
-    public void displayPossibleMoves(List<Player> players, RaceTrack raceTrack, List<Position> possibleDestinations) {
+    public void displayPossibleMoves(List<Player> players, Track raceTrack, List<Coordinates> possibleDestinations) {
+        if (matchController.getTurnHandler().getCurrentPlayer() instanceof HumanPlayer) {
+            nextTurnButton.setDisable(true);
+        }
         Platform.runLater(() -> {
             trackGridPane.getChildren().clear();
             int cellSize = 20;
@@ -77,7 +78,6 @@ public class RaceHandler implements MatchGameView {
                 for (int y = 0; y < raceTrack.getWidth(); y++) {
                     Rectangle rect = new Rectangle(cellSize, cellSize);
                     Position currentPosition = new Position(x, y);
-
                     if (possibleDestinations.contains(currentPosition)) {
                         rect.setFill(Color.GREY);
                         rect.setOnMouseClicked(event -> handleGridClick(currentPosition));
@@ -93,7 +93,7 @@ public class RaceHandler implements MatchGameView {
                 }
             }
             for (Player player : players) {
-                Position playerPosition = player.getPosition();
+                Coordinates playerPosition = player.getPosition();
                 Rectangle playerRect = new Rectangle(cellSize, cellSize, getColourForCar(player.getPlayerCarColour()));
                 trackGridPane.add(playerRect, playerPosition.getY(), playerPosition.getX());
             }
@@ -108,24 +108,21 @@ public class RaceHandler implements MatchGameView {
                 break;
             }
         }
+        nextTurnButton.setDisable(false);
     }
 
     @Override
     public void displayWinner(Player winner) {
-        Platform.runLater(() -> {
-            SceneManager.getInstance().switchToScene("/winner.fxml", controller -> {
-                if (controller instanceof WinnerHandler winnerHandler) {
-                    winnerHandler.setWinner(winner.getName());
-                }
-            });
-        });
+        Platform.runLater(() -> SceneManager.getInstance().switchToScene("/winner.fxml", controller -> {
+            if (controller instanceof WinnerHandler winnerHandler) {
+                winnerHandler.setWinner(winner.getName());
+            }
+        }));
     }
 
     @Override
     public void displayGameOver() {
-        Platform.runLater(() -> {
-            SceneManager.getInstance().switchToScene("/gameover.fxml");
-        });
+        Platform.runLater(() -> SceneManager.getInstance().switchToScene("/gameOver.fxml"));
     }
 
     @Override
@@ -148,13 +145,11 @@ public class RaceHandler implements MatchGameView {
         this.possibleMoves = possibleMoves;
         selectedMove = null;
         moveSelectedLatch = new CountDownLatch(1);
-
         try {
             moveSelectedLatch.await();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         return selectedMove;
     }
 

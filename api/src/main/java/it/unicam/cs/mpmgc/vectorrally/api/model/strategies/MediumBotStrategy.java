@@ -1,7 +1,7 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.strategies;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Coordinates;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class MediumBotStrategy implements DecisionStrategy {
         Move bestMove = possibleMoves.getFirst();
         double maxDistance = 0;
         for (Move move : possibleMoves) {
-            double distance = distance(move.position(), move.getDestination());
+            double distance = calculateDistance(move.position(), move.getDestination());
             if (distance > maxDistance) {
                 maxDistance = distance;
                 bestMove = move;
@@ -31,14 +31,7 @@ public class MediumBotStrategy implements DecisionStrategy {
         return bestMove;
     }
 
-    /**
-     * Calculates the Euclidean distance between two positions.
-     *
-     * @param position the starting position.
-     * @param destination the destination position.
-     * @return the Euclidean distance between the two positions.
-     */
-    private double distance(Position position, Position destination) {
+    private double calculateDistance(Coordinates position, Coordinates destination) {
         return Math.sqrt(Math.pow(destination.getX() - position.getX(), 2) + Math.pow(destination.getY() - position.getY(), 2));
     }
 }

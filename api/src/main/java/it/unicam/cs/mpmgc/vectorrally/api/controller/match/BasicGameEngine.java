@@ -1,10 +1,9 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
-
 import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.*;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
-import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.Track;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMoveValidator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.rules.BasicMovesGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.view.FinishGameView;
@@ -13,12 +12,17 @@ import it.unicam.cs.mpmgc.vectorrally.api.view.SetupGameView;
 
 import java.util.List;
 
+
 /**
- * Represents the game engine for the vector rally game using a command-line interface.
- * Manages the game loop and overall game logic.
+ * The {@code BasicGameEngine} class is responsible for managing the overall flow of the Vector Rally game,
+ * including initializing the game setup, running matches, and determining if the player wishes to play again.
+ * <p>
+ * This class orchestrates the game's lifecycle by interacting with various components such as the {@link GameSetup}
+ * for initializing game settings, the {@link MatchGameView} for managing the match interface, and the {@link FinishGameView}
+ * to prompt the player for replaying the game.
  *
  * @version 1.0
- * @since 2024-07-11
+ * @since 2024-08-10
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
@@ -27,11 +31,6 @@ public class BasicGameEngine implements GameEngine {
     private final FinishGameView finishGameView;
     private final GameSetup setup;
 
-    /**
-     * Constructs a BasicGameEngine with the specified IO controller.
-     *
-     * @param matchGameView the IO controller used for input/output operations
-     */
     public BasicGameEngine(MatchGameView matchGameView, FinishGameView finishGameView, SetupGameView setupGameView) {
         this.matchGameView = matchGameView;
         this.finishGameView = finishGameView;
@@ -42,7 +41,7 @@ public class BasicGameEngine implements GameEngine {
     public void startGame() throws Exception {
         SetupResult setupResult = setupMatch();
         initializeMatch(setupResult.players(), setupResult.raceTrack(), setupResult.generator());
-        while (playGame()) {
+        while (playAgain()) {
             setupResult = setupMatch();
             initializeMatch(setupResult.players(), setupResult.raceTrack(), setupResult.generator());
         }
@@ -51,24 +50,19 @@ public class BasicGameEngine implements GameEngine {
     @Override
     public SetupResult setupMatch() throws Exception {
         NeighborsGenerator neighborsGenerator = this.setup.initializeShiftAlgorithm();
-        RaceTrack raceTrack = this.setup.initializeTrack();
+        Track raceTrack = this.setup.initializeTrack();
         List<Player> players = this.setup.initializePlayers(raceTrack);
         return new SetupResult(neighborsGenerator, raceTrack, players);
     }
 
     @Override
-    public void initializeMatch(List<Player> players, RaceTrack raceTrack, NeighborsGenerator neighborsGenerator) throws Exception {
+    public void initializeMatch(List<Player> players, Track raceTrack, NeighborsGenerator neighborsGenerator) {
         MatchController matchController = new BasicMatchController(matchGameView, new BasicMovesGenerator<>(neighborsGenerator, new BasicMoveValidator()), players, raceTrack);
         matchController.startMatch();
     }
 
-    /**
-     * Handles the end of the match, displaying an end message and asking the user if they want to play another match.
-     *
-     * @return true if the user wants to play another match, false otherwise
-     */
-    public boolean playGame() {
+    @Override
+    public boolean playAgain() {
         return finishGameView.playAnotherMatch();
     }
-
 }

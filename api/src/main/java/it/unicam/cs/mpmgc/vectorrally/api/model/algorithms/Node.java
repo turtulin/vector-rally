@@ -1,6 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.algorithms;
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Coordinates;
 
 /**
  * Represents a node in the A* algorithm. Each node corresponds to a position on the racetrack
@@ -12,7 +12,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public class Node implements Comparable<Node>{
-    private final Position position;
+    private final Coordinates position;
     private double gCost;
     private double hCost;
     private Node parent;
@@ -20,9 +20,9 @@ public class Node implements Comparable<Node>{
     /**
      * Constructs a Node with the specified position.
      *
-     * @param position the position represented by this node.
+     * @param position the {@link Coordinates} represented by this node.
      */
-    public Node(Position position) {
+    public Node(Coordinates position) {
         this.position = position;
         this.gCost = Double.MAX_VALUE;
         this.hCost = 0;
@@ -31,9 +31,9 @@ public class Node implements Comparable<Node>{
     /**
      * Retrieves the position represented by this node.
      *
-     * @return the position.
+     * @return the {@link Coordinates}.
      */
-    public Position getPosition() {
+    public Coordinates getPosition() {
         return position;
     }
 
@@ -85,7 +85,7 @@ public class Node implements Comparable<Node>{
     /**
      * Retrieves the parent node, which is the previous node on the path from the start node.
      *
-     * @return the parent node.
+     * @return the parent {@link Node}.
      */
     public Node getParent() {
         return parent;
@@ -94,7 +94,7 @@ public class Node implements Comparable<Node>{
     /**
      * Sets the parent node, which is the previous node on the path from the start node.
      *
-     * @param parent the parent node to set.
+     * @param parent the parent {@link Node} to set.
      */
     public void setParent(Node parent) {
         this.parent = parent;
@@ -103,7 +103,7 @@ public class Node implements Comparable<Node>{
     /**
      * Compares this node to another node based on their F costs.
      *
-     * @param other the other node to compare to.
+     * @param other the other {@link Node} to compare to.
      * @return a negative integer, zero, or a positive integer as this node's F cost is less than, equal to, or greater than the other node's F cost.
      */
     @Override

@@ -13,12 +13,6 @@ public class Acceleration implements Vector {
     private int dx;
     private int dy;
 
-    /**
-     * Constructs an Acceleration with specified dx and dy values.
-     *
-     * @param dx the dx value, representing the change in the x direction.
-     * @param dy the dy value, representing the change in the y direction.
-     */
     public Acceleration(int dx, int dy) {
         this.dx = dx;
         this.dy = dy;

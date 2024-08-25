@@ -3,12 +3,13 @@ package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.SetupResult;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
-import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.Track;
 
 import java.util.List;
 
 /**
- * This interface defines methods for controlling the game engine.
+ * This interface defines the contract for a game engine that controls the
+ * initialization, execution, and conclusion of a game match.
  *
  * @version 1.0
  * @since 2024-07-11
@@ -18,7 +19,8 @@ import java.util.List;
 public interface GameEngine {
 
     /**
-     * Starts the game application.
+     * Starts the game application, initializing necessary components and
+     * beginning the main game loop.
      *
      * @throws Exception if an error occurs while starting the game.
      */
@@ -26,28 +28,33 @@ public interface GameEngine {
 
     /**
      * Sets up the match by initializing the track, players, and shift algorithm.
-     * Repeats the setup process until the user confirms the configuration.
+     * This method is responsible for preparing all necessary elements of the game
+     * before the match begins. The setup process may be repeated until the
+     * configuration is confirmed by the user.
      *
-     * @return the result of the setup containing the neighbors generator, racetrack, and players
-     * @throws Exception if an error occurs during setup
+     * @return a {@link SetupResult} object containing the configured neighbors generator,
+     *         racetrack, and players.
+     * @throws Exception if an error occurs during setup.
      */
     SetupResult setupMatch() throws Exception;
 
+    /**
+     * Initializes the match with the provided players, racetrack, and neighbors generator.
+     * This method prepares the game state and environment for the match to proceed.
+     *
+     * @param players the {@link List} of {@link Player} objects participating in the match.
+     * @param raceTrack the {@link Track} on which the match is played.
+     * @param neighborsGenerator the {@link NeighborsGenerator} used to determine possible moves
+     *                           based on neighboring positions.
+     */
+    void initializeMatch(List<Player> players, Track raceTrack, NeighborsGenerator neighborsGenerator);
 
     /**
-     * Starts the match with the given players, racetrack, and neighbors generator.
+     * Handles the end of the match, determining whether the game should
+     * continue or conclude. This method typically includes user interaction to
+     * decide if a new match should be started.
      *
-     * @param players the list of players participating in the match
-     * @param raceTrack the racetrack on which the match is played
-     * @param neighborsGenerator the generator for neighboring moves
-     * @throws Exception if an error occurs during match initialization or execution
+     * @return {@code true} if the user wants to play another match, {@code false} otherwise.
      */
-    void initializeMatch(List<Player> players, RaceTrack raceTrack, NeighborsGenerator neighborsGenerator) throws Exception;
-
-    /**
-     * Handles the end of the match, displaying an end message and asking the user if they want to play another match.
-     *
-     * @return true if the user wants to play another match, false otherwise
-     */
-    boolean playGame();
+    boolean playAgain();
 }

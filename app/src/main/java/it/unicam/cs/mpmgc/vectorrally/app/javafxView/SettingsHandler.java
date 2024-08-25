@@ -8,7 +8,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.SetupResult;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.FourNeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.EightNeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
-import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.Track;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 
@@ -34,7 +34,6 @@ public class SettingsHandler implements SetupGameView {
     private final TrackPathController IOController;
     private final GameEngine gameEngine;
     private final GameSetup setup;
-    private RaceTrack raceTrack;
 
     @FXML
     private Spinner<Integer> numHumanPlayers;
@@ -87,7 +86,7 @@ public class SettingsHandler implements SetupGameView {
     }
 
     private void setupPlayerSpinner() throws Exception {
-        raceTrack = setup.initializeTrack();
+        Track raceTrack = setup.initializeTrack();
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, raceTrack.getPositionsOfComponent(TrackComponent.START_POSITION).size() , 0);
         numHumanPlayers.setValueFactory(valueFactory);
     }
@@ -126,32 +125,6 @@ public class SettingsHandler implements SetupGameView {
                 numHumanPlayers.getValue() >= 0;
         setupButton.setDisable(!isReady);
     }
-
-/*
-    @FXML
-    private void handleSetupButtonAction(ActionEvent event) throws IOException {
-        // not so useful given that we have the methods: getChosenTrack, getNumHumanPlayers, chooseStrategyDifficulty, getShiftAlgorithm
-        String selectedTrack = trackMenuButton.getText();
-        String selectedDifficulty = difficultyMenuButton.getText();
-        String selectedShiftRule = shiftRuleMenuButton.getText();
-
-        // here we have to use SceneManager instead of the following code:
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/race.fxml"));
-        Parent raceRoot = loader.load();
-
-        RaceHandler raceHandler = loader.getController();
-
-        // I do not know if this is necessary, we have to remember that we have the SetupGameView methods to initialize things
-        raceHandler.setTrack(selectedTrack);
-        raceHandler.setDifficulty(selectedDifficulty);
-        raceHandler.setShiftRule(selectedShiftRule);
-
-        // always SceneManger instead of this
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(raceRoot));
-        stage.show();
-    }
-*/
 
     @FXML
     private void handleSetupButtonAction() {

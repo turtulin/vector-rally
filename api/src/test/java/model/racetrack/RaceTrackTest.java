@@ -1,6 +1,8 @@
 package model.racetrack;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Coordinates;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.Track;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +13,7 @@ import java.util.List;
 
 public class RaceTrackTest {
 
-    private RaceTrack raceTrack;
+    private Track raceTrack;
 
     @BeforeEach
     void setUp() {
@@ -58,8 +60,8 @@ public class RaceTrackTest {
 
     @Test
     void getPositionsOfComponentShouldReturnCorrectPositions() {
-        List<Position> startLinePositions = raceTrack.getPositionsOfComponent(TrackComponent.START_LINE);
-        List<Position> endLinePositions = raceTrack.getPositionsOfComponent(TrackComponent.END_LINE);
+        List<Coordinates> startLinePositions = raceTrack.getPositionsOfComponent(TrackComponent.START_LINE);
+        List<Coordinates> endLinePositions = raceTrack.getPositionsOfComponent(TrackComponent.END_LINE);
 
         assertEquals(1, startLinePositions.size());
         assertEquals(new Position(0, 1), startLinePositions.getFirst());

@@ -10,5 +10,7 @@ package it.unicam.cs.mpmgc.vectorrally.api.model.strategies;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public enum BotStrategy {
-    EASY, MEDIUM, HARD;
+    EASY,
+    MEDIUM,
+    HARD
 }

@@ -1,6 +1,7 @@
 package model.rules;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Coordinates;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
@@ -106,7 +107,7 @@ class BasicMoveValidatorTest {
         Acceleration acceleration = new Acceleration(2, 2);
         Move move = new Move(acceleration, startPosition);
 
-        List<Position> positions = validator.getPositionsBetween(move);
+        List<Coordinates> positions = validator.getPositionsBetween(move);
 
         assertEquals(3, positions.size());
         assertEquals(new Position(0, 0), positions.get(0));

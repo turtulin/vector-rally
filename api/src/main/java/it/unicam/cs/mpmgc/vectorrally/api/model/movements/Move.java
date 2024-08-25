@@ -9,14 +9,14 @@ package it.unicam.cs.mpmgc.vectorrally.api.model.movements;
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-public record Move(Acceleration acceleration, Position position) implements Shift {
+public record Move(Vector acceleration, Coordinates position) implements Shift {
 
     /**
      * Calculates the destination position based on the starting position and the acceleration.
      *
-     * @return the destination position.
+     * @return the destination {@link Coordinates}.
      */
-    public Position getDestination() {
+    public Coordinates getDestination() {
         int destX = this.position.getX() + this.acceleration.getDx();
         int destY = this.position.getY() + this.acceleration.getDy();
         return new Position(destX, destY);

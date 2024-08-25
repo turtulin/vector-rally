@@ -2,9 +2,10 @@ package it.unicam.cs.mpmgc.vectorrally.api.model.players;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Coordinates;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Vector;
 
 /**
  * Abstract implementation of the {@link Player} interface. This class provides the basic
@@ -19,7 +20,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 public abstract class DefaultPlayer implements Player {
     protected final String name;
     protected final Car playerCar;
-    protected Position position;
+    protected Coordinates position;
     protected boolean isRacing;
 
     /**
@@ -37,12 +38,12 @@ public abstract class DefaultPlayer implements Player {
     }
 
     @Override
-    public Acceleration getPlayerAcceleration() {
+    public Vector getPlayerAcceleration() {
         return this.playerCar.getAcceleration();
     }
 
     @Override
-    public void setPlayerAcceleration(Acceleration acceleration) {
+    public void setPlayerAcceleration(Vector acceleration) {
         if (acceleration == null) throw new NullPointerException("Player acceleration cannot be null");
         this.playerCar.setAcceleration(acceleration);
     }
@@ -53,12 +54,12 @@ public abstract class DefaultPlayer implements Player {
     }
 
     @Override
-    public Position getPosition() {
+    public Coordinates getPosition() {
         return this.position;
     }
 
     @Override
-    public void setPosition(Position position) {
+    public void setPosition(Coordinates position) {
         if (position == null) throw new NullPointerException("Player position cannot be null");
         this.position = position;
     }

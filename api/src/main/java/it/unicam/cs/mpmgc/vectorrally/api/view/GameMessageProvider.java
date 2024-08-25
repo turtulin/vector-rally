@@ -1,10 +1,9 @@
 package it.unicam.cs.mpmgc.vectorrally.api.view;
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 
 /**
- * Provides messages for the game, implementing the MessageProvider interface.
+ * Provides messages for the game.
  *
  * @version 1.0
  * @since 2024-07-11
@@ -49,32 +48,12 @@ public final class GameMessageProvider {
         return "Do you want to play again? (yes/no)";
     }
 
-    public String getAskIfSatisfiedWithConfigurationMessage() {
-        return "Are you satisfied with the current configuration? (yes/no)";
-    }
-
-    public String getAskToChooseForEachBotMessage() {
-        return "Do you want to choose the strategy for each bot? (yes/no)";
-    }
-
-    public String getCarColourChoiceMessage() {
-        return "Choose a car color:";
-    }
-
     public String getAskNumberOfHumanPlayersMessage(int maxPlayers) {
         return "Enter the number of human players(max " + maxPlayers + "):";
     }
 
-    public String getChooseEachBotStrategyDifficultyMessage(CarColour carColour) {
-        return "Choose the " + carColour + " bot strategy difficulty:";
-    }
-
     public String getChooseAllBotStrategyDifficultyMessage() {
         return "Choose the bot strategy difficulty:";
-    }
-
-    public String getChooseStartingPositionMessage(CarColour carColour) {
-        return carColour + ", choose your starting position:";
     }
 
     public String getNextTurnMessage() {
