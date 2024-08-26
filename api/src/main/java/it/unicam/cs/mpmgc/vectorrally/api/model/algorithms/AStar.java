@@ -39,12 +39,9 @@ public class AStar {
     public List<Coordinates> findPath(Coordinates start, Coordinates goal, Vector initialAcceleration) {
         PriorityQueue<Node> openList = new PriorityQueue<>(100, (a, b) -> (int) (a.getFCost() - b.getFCost()));
         initialize(start, goal, openList);
-
         while (!openList.isEmpty()) {
             Node currentNode = openList.poll();
-            if (currentNode.getPosition().equals(goal)) {
-                return reconstructPath(currentNode);
-            }
+            if (currentNode.getPosition().equals(goal)) return reconstructPath(currentNode);
             exploreNeighbors(currentNode, goal, initialAcceleration, openList);
         }
 
@@ -92,9 +89,7 @@ public class AStar {
             double tentativeGCost = currentNode.getGCost() + calculateDistance(currentNode.getPosition(), neighbor.getPosition());
             if (tentativeGCost < neighbor.getGCost()) {
                 updateNeighbor(neighbor, currentNode, tentativeGCost, goal);
-                if (!openList.contains(neighbor)) {
-                    openList.add(neighbor);
-                }
+                if (!openList.contains(neighbor)) openList.add(neighbor);
             }
         }
     }

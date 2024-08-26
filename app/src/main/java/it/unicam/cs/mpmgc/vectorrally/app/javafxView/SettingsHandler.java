@@ -13,7 +13,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 
 import it.unicam.cs.mpmgc.vectorrally.api.view.SetupGameView;
-import it.unicam.cs.mpmgc.vectorrally.api.view.TrackPathController;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.builders.TrackPathBuilder;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -31,7 +31,7 @@ import java.util.List;
 
 public class SettingsHandler implements SetupGameView {
 
-    private final TrackPathController IOController;
+    private final TrackPathBuilder IOController;
     private final GameEngine gameEngine;
     private final GameSetup setup;
 
@@ -51,7 +51,7 @@ public class SettingsHandler implements SetupGameView {
     private Button setupButton;
 
     public SettingsHandler() {
-        this.IOController = new TrackPathController();
+        this.IOController = new TrackPathBuilder();
         RaceHandler raceHandler = new RaceHandler();
         this.gameEngine = new BasicGameEngine(raceHandler, null, this);
         this.setup = new BasicGameSetup(this);
@@ -69,7 +69,7 @@ public class SettingsHandler implements SetupGameView {
 
     public void loadTrackNames() {
         List<String> trackNames = IOController.findTrack();
-        for (String track : trackNames) {
+        for(String track : trackNames) {
             MenuItem menuItem = new MenuItem(track);
             menuItem.setOnAction(event -> {
                 trackMenuButton.setText(track);
@@ -92,7 +92,7 @@ public class SettingsHandler implements SetupGameView {
     }
 
     private void loadDifficultyMenu() {
-        for (BotStrategy strategy : BotStrategy.values()) {
+        for(BotStrategy strategy : BotStrategy.values()) {
             MenuItem menuItem = new MenuItem(strategy.name());
             menuItem.setOnAction(event -> {
                 difficultyMenuButton.setText(strategy.name());
@@ -131,10 +131,10 @@ public class SettingsHandler implements SetupGameView {
         try {
             SetupResult setupResult = gameEngine.setupMatch();
             SceneManager.getInstance().switchToScene("/race.fxml", controller -> {
-                if (controller instanceof RaceHandler raceHandler) {
+                if(controller instanceof RaceHandler raceHandler) {
                     try {
                         raceHandler.initializeRace(setupResult);
-                    } catch (Exception e) {
+                    } catch(Exception e) {
                         throw new RuntimeException(e);
                     }
                 }
@@ -146,7 +146,7 @@ public class SettingsHandler implements SetupGameView {
 
     @Override
     public String getChosenTrack() {
-        return TrackPathController.checkRootPath() + "/" + trackMenuButton.getText();
+        return TrackPathBuilder.checkRootPath() + "/" + trackMenuButton.getText();
     }
 
     @Override
@@ -163,7 +163,7 @@ public class SettingsHandler implements SetupGameView {
     @Override
     public NeighborsGenerator getShiftAlgorithm() {
         String selectedShiftRule = shiftRuleMenuButton.getText();
-        if (selectedShiftRule.contains("Four")) return new FourNeighborsGenerator();
+        if(selectedShiftRule.contains("Four")) return new FourNeighborsGenerator();
         else return new EightNeighborsGenerator();
     }
 }

@@ -1,4 +1,4 @@
-package it.unicam.cs.mpmgc.vectorrally.api.view;
+package it.unicam.cs.mpmgc.vectorrally.api.controller.builders;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.List;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
 */
 
-public class TrackPathController {
+public class TrackPathBuilder {
 
     /**
      * Finds all track files in the specified directory.

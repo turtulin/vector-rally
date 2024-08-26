@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class CLIMatchGameView implements MatchGameView {
     private final IOController ioController;
-    private final GameMessageProvider messageProvider = new GameMessageProvider();
 
     public CLIMatchGameView(IOController ioController) {
         this.ioController = ioController;
@@ -28,38 +27,38 @@ public class CLIMatchGameView implements MatchGameView {
     @Override
     public void displayPossibleMoves(List<Player> players, Track raceTrack, List<Coordinates> possibleDestinations) {
         ioController.printRaceTrack(raceTrack, players, possibleDestinations);
-        ioController.displayMoves(possibleDestinations);
+        ioController.displayMoves(possibleDestinations.size());
     }
 
     @Override
     public void displayWinner(Player winner) {
-        ioController.displayMessage(messageProvider.getWinMessage(winner));
-        ioController.displayMessage(messageProvider.getCongratulationsMessage());
+        ioController.displayWinningMessage(winner);
     }
 
     @Override
     public void displayGameOver() {
-        ioController.displayMessage(messageProvider.getGameOverMessage());
+        ioController.displayGameOver();
     }
 
     @Override
     public void displayTurn(Player player, int counter) {
-        ioController.displayMessage(messageProvider.getTurnMessage(counter, player));
+        ioController.displayTurn(player, counter);
     }
 
     @Override
     public void displayElimination(Player player) {
-        ioController.displayMessage(messageProvider.getEliminationMessage(player));
+        ioController.displayElimination(player);
     }
 
     @Override
     public Move getMoveChoice(List<Move> possibleMoves) {
-        return ioController.chooseMove(possibleMoves);
+        return ioController.getChosenMove(possibleMoves);
     }
 
     @Override
     public void goToNextTurn() {
-        ioController.goToNextTurn();
+        ioController.displayGoToNextTurn();
+        ioController.getGoToNextTurn();
     }
 
 }

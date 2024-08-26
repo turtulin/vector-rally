@@ -7,6 +7,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Coordinates;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.BotPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.HumanPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.builders.RaceTrackBuilder;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.Track;
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
@@ -57,7 +58,7 @@ public class BasicGameSetup implements GameSetup {
     }
 
     private void setupHumanPlayers(int numHumanPlayers, List<Player> players, List<CarColour> availableColors, List<Coordinates> availablePositions) {
-        for (int i = 0; i < numHumanPlayers; i++) {
+        for(int i = 0; i < numHumanPlayers; i++) {
             Player humanPlayer = new HumanPlayer(new RaceCar(availableColors.getFirst()));
             availableColors.remove(availableColors.getFirst());
             humanPlayer.setPosition(availablePositions.getFirst());
@@ -68,7 +69,7 @@ public class BasicGameSetup implements GameSetup {
 
     private void setupBotPlayers(int remainingPositions, List<Player> players, List<CarColour> availableColours, List<Coordinates> availablePositions) {
         BotStrategy difficulty = setupGameView.chooseStrategyDifficulty();
-        for (int i = 0; i < remainingPositions; i++) {
+        for(int i = 0; i < remainingPositions; i++) {
             Player botPlayer = new BotPlayer(new RaceCar(availableColours.get(i)), difficulty);
             botPlayer.setPosition(availablePositions.get(i));
             players.add(botPlayer);

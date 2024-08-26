@@ -32,7 +32,7 @@ public class BasicTurnHandler implements TurnHandler {
 
     @Override
     public void startTurn() {
-        if (playerCounter++ >= activePlayers.size())
+        if(playerCounter++ >= activePlayers.size())
         {
             turnCounter++;
             playerCounter = 0;

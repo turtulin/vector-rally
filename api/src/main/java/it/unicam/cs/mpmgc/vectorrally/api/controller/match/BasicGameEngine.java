@@ -22,7 +22,7 @@ import java.util.List;
  * to prompt the player for replaying the game.
  *
  * @version 1.0
- * @since 2024-08-10
+ * @since 2024-08-21
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
@@ -41,7 +41,7 @@ public class BasicGameEngine implements GameEngine {
     public void startGame() throws Exception {
         SetupResult setupResult = setupMatch();
         initializeMatch(setupResult.players(), setupResult.raceTrack(), setupResult.generator());
-        while (playAgain()) {
+        while(playAgain()) {
             setupResult = setupMatch();
             initializeMatch(setupResult.players(), setupResult.raceTrack(), setupResult.generator());
         }

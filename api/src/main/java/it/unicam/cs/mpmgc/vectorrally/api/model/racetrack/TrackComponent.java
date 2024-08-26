@@ -34,11 +34,8 @@ public enum TrackComponent {
      * @throws IllegalArgumentException if the character does not match any component.
      */
     public static TrackComponent fromChar(char c) {
-        for (TrackComponent component : values()) {
-            if (component.symbol == c) {
-                return component;
-            }
-        }
+        for (TrackComponent component : values())
+            if (component.symbol == c) return component;
         throw new IllegalArgumentException("Unknown track component: " + c);
     }
 }

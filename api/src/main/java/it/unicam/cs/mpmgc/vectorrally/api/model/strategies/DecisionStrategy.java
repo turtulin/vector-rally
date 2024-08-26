@@ -21,7 +21,7 @@ public interface DecisionStrategy {
      *
      * @param player the {@link Player} for whom to decide the next move.
      * @param possibleMoves a {@link List} of possible {@link Move} the player can make.
-     * @return the chosen move.
+     * @return the chosen {@link Move}.
      */
     Move decideMove(Player player, List<Move> possibleMoves);
 }

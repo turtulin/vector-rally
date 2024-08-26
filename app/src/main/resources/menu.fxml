@@ -16,9 +16,9 @@
                  AnchorPane.rightAnchor="1521.0" AnchorPane.topAnchor="973.0">
          <Image url="@images/backgroundMenu.jpg"/>
       </ImageView>
-      <Button fx:id="playButton" layoutX="2016.0" layoutY="1189.0" mnemonicParsing="false"
+      <Button layoutX="2016.0" layoutY="1189.0" mnemonicParsing="false"
               onAction="#handleStartButtonAction" prefHeight="45.0" prefWidth="139.0" text="Start Match"/>
-      <Button fx:id="quitGameButton" layoutX="2016.0" layoutY="1255.0" mnemonicParsing="false"
+      <Button layoutX="2016.0" layoutY="1255.0" mnemonicParsing="false"
               onAction="#handleQuitButtonAction" prefHeight="47.0" prefWidth="139.0" text="Quit Game"/>
    </AnchorPane>
 </TitledPane>

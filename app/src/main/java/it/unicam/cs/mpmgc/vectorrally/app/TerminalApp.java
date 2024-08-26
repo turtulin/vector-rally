@@ -4,10 +4,14 @@
 package it.unicam.cs.mpmgc.vectorrally.app;
 
 
+import com.sun.tools.javac.Main;
 import it.unicam.cs.mpmgc.vectorrally.api.controller.match.BasicGameEngine;
 import it.unicam.cs.mpmgc.vectorrally.api.view.*;
 
 import it.unicam.cs.mpmgc.vectorrally.api.controller.match.GameEngine;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class is responsible for starting the terminal application.
@@ -18,6 +22,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.controller.match.GameEngine;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public class TerminalApp {
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) {
         try {
             IOController ioController = new TerminalIOController();
@@ -25,10 +30,11 @@ public class TerminalApp {
             SetupGameView setupGameView = new CLISetupGameView(ioController);
             FinishGameView finishGameView = new CLIFinishGameView(ioController);
             GameEngine gameController = new BasicGameEngine(matchGameView, finishGameView, setupGameView);
-            ioController.displayWelcomeAndRules();
+            ioController.displayWelcome();
+            if(ioController.getAskIfPlayerIgnoresRules()) ioController.displayGameRules();
             gameController.startGame();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "An error occurred while starting the game", e);
         }
     }
 }

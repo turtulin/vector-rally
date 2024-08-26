@@ -1,6 +1,6 @@
 package controller.setup;
 
-import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.RaceTrackBuilder;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.builders.RaceTrackBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

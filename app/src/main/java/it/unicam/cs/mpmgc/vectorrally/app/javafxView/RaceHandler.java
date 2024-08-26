@@ -42,11 +42,12 @@ public class RaceHandler implements MatchGameView {
     private CountDownLatch moveSelectedLatch;
     private CountDownLatch nextTurnLatch;
     private MatchController matchController;
+    private final GameMessageProvider messageProvider = new GameMessageProvider();
 
     @FXML
     public void initialize() {
         nextTurnButton.setOnAction(event -> goToNextTurn());
-        turnLabel.setText("Preparing game...");
+        turnLabel.setText(messageProvider.getPreparationMessage());
     }
 
     public void initializeRace(SetupResult setupResult) {
@@ -115,7 +116,7 @@ public class RaceHandler implements MatchGameView {
     public void displayWinner(Player winner) {
         Platform.runLater(() -> SceneManager.getInstance().switchToScene("/winner.fxml", controller -> {
             if (controller instanceof WinnerHandler winnerHandler) {
-                winnerHandler.setWinner(winner.getName());
+                winnerHandler.setWinner(winner);
             }
         }));
     }
@@ -127,15 +128,15 @@ public class RaceHandler implements MatchGameView {
 
     @Override
     public void displayTurn(Player player, int counter) {
-        Platform.runLater(() -> turnLabel.setText("Turn " + counter + ": " + player.getName() + "'s turn"));
+        Platform.runLater(() -> turnLabel.setText(messageProvider.getTurnMessage(counter, player)));
     }
 
     @Override
     public void displayElimination(Player player) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Player Eliminated");
-            alert.setHeaderText(player.getName() + " has been eliminated.");
+            alert.setTitle(messageProvider.getEliminationTitle());
+            alert.setHeaderText(messageProvider.getEliminationMessage(player));
             alert.showAndWait();
         });
     }
@@ -157,9 +158,7 @@ public class RaceHandler implements MatchGameView {
     public void goToNextTurn() {
         nextTurnLatch = new CountDownLatch(1);
         nextTurnButton.setOnAction(event -> {
-            if (nextTurnLatch != null) {
-                nextTurnLatch.countDown();
-            }
+            if (nextTurnLatch != null) nextTurnLatch.countDown();
         });
         try {
             nextTurnLatch.await();

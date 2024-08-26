@@ -1,4 +1,4 @@
-package it.unicam.cs.mpmgc.vectorrally.api.controller.setup;
+package it.unicam.cs.mpmgc.vectorrally.api.controller.builders;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.AStar;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
@@ -28,9 +28,7 @@ public class BotStrategyFactory {
     public BotStrategyFactory(NeighborsGenerator neighborsGenerator) {
         strategyMap.put(BotStrategy.EASY, new EasyBotStrategy());
         strategyMap.put(BotStrategy.MEDIUM, new MediumBotStrategy());
-        strategyMap.put(BotStrategy.HARD, new HardBotStrategy(
-                new AStar(AStar::calculateHeuristic, neighborsGenerator)
-        ));
+        strategyMap.put(BotStrategy.HARD, new HardBotStrategy(new AStar(AStar::calculateHeuristic, neighborsGenerator)));
     }
 
     /**

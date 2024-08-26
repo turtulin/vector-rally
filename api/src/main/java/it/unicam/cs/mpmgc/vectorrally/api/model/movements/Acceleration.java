@@ -45,7 +45,7 @@ public class Acceleration implements Vector {
 
     @Override
     public Direction getDirection() {
-        return switch (Integer.signum(dx) + 3 * Integer.signum(dy)) {
+        return switch(Integer.signum(dx) + 3 * Integer.signum(dy)) {
             case 3 -> Direction.UP;
             case 4 -> Direction.UP_RIGHT;
             case -2 -> Direction.DOWN_RIGHT;

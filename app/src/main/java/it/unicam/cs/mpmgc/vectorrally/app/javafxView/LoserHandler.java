@@ -15,10 +15,6 @@ import javafx.fxml.FXML;
 public class LoserHandler {
 
     @FXML
-    public void initialize() {
-    }
-
-    @FXML
     private void handleGoToHome() {
         SceneManager.getInstance().switchToScene("/menu.fxml");
     }

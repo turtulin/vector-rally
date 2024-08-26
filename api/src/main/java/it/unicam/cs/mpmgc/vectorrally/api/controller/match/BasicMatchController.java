@@ -1,6 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
-import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.BotStrategyFactory;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.builders.BotStrategyFactory;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.BotPlayer;
@@ -46,7 +46,7 @@ public class BasicMatchController implements MatchController {
     @Override
     public void startMatch() {
         this.turnHandler = new BasicTurnHandler(players);
-        while (isGameOn()) {
+        while(isGameOn()) {
             handleTurn(turnHandler.getCurrentPlayer());
             gameView.goToNextTurn();
         }
@@ -58,11 +58,11 @@ public class BasicMatchController implements MatchController {
         turnHandler.startTurn();
         gameView.displayTurn(player, turnHandler.getTurnCounter());
         List<Move> possibleMoves = moveGenerator.generatePossibleMoves(player, raceTrack, turnHandler.getPlayers());
-        if (!possibleMoves.isEmpty()) {
+        if(!possibleMoves.isEmpty()) {
             gameView.displayPossibleMoves(turnHandler.getPlayers(), raceTrack, moveGenerator.getPossibleDestinations(possibleMoves));
             Move chosenMove = findMove(player, possibleMoves);
             player.makeMove(chosenMove);
-            if (moveGenerator.isWinningMove(chosenMove, raceTrack)) setGameOn(false);
+            if(moveGenerator.isWinningMove(chosenMove, raceTrack)) setGameOn(false);
             turnHandler.endTurn();
         }
         else handleElimination(player);
@@ -72,12 +72,12 @@ public class BasicMatchController implements MatchController {
     public void handleElimination(Player player) {
         gameView.displayElimination(player);
         turnHandler.removePlayer(player);
-        if (turnHandler.getPlayers().isEmpty()) setGameOn(false);
+        if(turnHandler.getPlayers().isEmpty()) setGameOn(false);
     }
 
     @Override
     public void handleEndGame() {
-        if (turnHandler.getPlayers().isEmpty()) gameView.displayGameOver();
+        if(turnHandler.getPlayers().isEmpty()) gameView.displayGameOver();
         else gameView.displayWinner(turnHandler.getPlayers().getLast());
     }
 
@@ -93,7 +93,8 @@ public class BasicMatchController implements MatchController {
 
     @Override
     public Move findMove(Player player, List<Move> possibleMoves) {
-        if (player instanceof BotPlayer botPlayer) return botStrategyFactory.getStrategy(botPlayer.getStrategy()).decideMove(botPlayer, possibleMoves);
+        if(player instanceof BotPlayer botPlayer)
+            return botStrategyFactory.getStrategy(botPlayer.getStrategy()).decideMove(botPlayer, possibleMoves);
         else return gameView.getMoveChoice(possibleMoves);
     }
 
