@@ -27,7 +27,16 @@ import javafx.scene.shape.Rectangle;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
+/**
+ * This class is responsible for handling the match screen and management.
+ *
+ * @version 1.0
+ * @since 2024-07-17
+ * @author Marta Musso
+ * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
+ */
 public class RaceHandler implements MatchGameView {
+
     @FXML
     private Label turnLabel;
 
@@ -42,13 +51,18 @@ public class RaceHandler implements MatchGameView {
     private CountDownLatch moveSelectedLatch;
     private CountDownLatch nextTurnLatch;
     private MatchController matchController;
+    private final GameMessageProvider messageProvider = new GameMessageProvider();
 
     @FXML
     public void initialize() {
         nextTurnButton.setOnAction(event -> goToNextTurn());
-        turnLabel.setText("Preparing game...");
+        turnLabel.setText(messageProvider.getPreparationMessage());
     }
 
+    /**
+     * Initializes the race with the given setup result, creating a match controller and starting the match.
+     * @param setupResult the setup result containing the players
+     */
     public void initializeRace(SetupResult setupResult) {
         BasicMovesGenerator<NeighborsGenerator> movesGenerator = new BasicMovesGenerator<>(setupResult.generator(), new BasicMoveValidator());
         matchController = new BasicMatchController(this, movesGenerator, setupResult.players(), setupResult.raceTrack());
@@ -68,54 +82,21 @@ public class RaceHandler implements MatchGameView {
 
     @Override
     public void displayPossibleMoves(List<Player> players, Track raceTrack, List<Coordinates> possibleDestinations) {
-        if (matchController.getTurnHandler().getCurrentPlayer() instanceof HumanPlayer) {
+        if (matchController.getTurnHandler().getCurrentPlayer() instanceof HumanPlayer)
             nextTurnButton.setDisable(true);
-        }
         Platform.runLater(() -> {
             trackGridPane.getChildren().clear();
             int cellSize = 20;
-            for (int x = 0; x < raceTrack.getLength(); x++) {
-                for (int y = 0; y < raceTrack.getWidth(); y++) {
-                    Rectangle rect = new Rectangle(cellSize, cellSize);
-                    Position currentPosition = new Position(x, y);
-                    if (possibleDestinations.contains(currentPosition)) {
-                        rect.setFill(Color.GREY);
-                        rect.setOnMouseClicked(event -> handleGridClick(currentPosition));
-                    } else {
-                        switch (raceTrack.getComponentAt(x, y)) {
-                            case WALL -> rect.setFill(Color.BLACK);
-                            case ROAD -> rect.setFill(new Color(1, 1, 1, 0));
-                            case START_LINE -> rect.setFill(Color.WHITE);
-                            case END_LINE -> rect.setFill(Color.RED);
-                        }
-                    }
-                    trackGridPane.add(rect, y, x);
-                }
-            }
-            for (Player player : players) {
-                Coordinates playerPosition = player.getPosition();
-                Rectangle playerRect = new Rectangle(cellSize, cellSize, getColourForCar(player.getPlayerCarColour()));
-                trackGridPane.add(playerRect, playerPosition.getY(), playerPosition.getX());
-            }
+            displayComponents(raceTrack, possibleDestinations, cellSize);
+            displayPlayers(players, cellSize);
         });
-    }
-
-    private void handleGridClick(Position position) {
-        for (Move move : possibleMoves) {
-            if (move.getDestination().equals(position)) {
-                selectedMove = move;
-                moveSelectedLatch.countDown();
-                break;
-            }
-        }
-        nextTurnButton.setDisable(false);
     }
 
     @Override
     public void displayWinner(Player winner) {
         Platform.runLater(() -> SceneManager.getInstance().switchToScene("/winner.fxml", controller -> {
             if (controller instanceof WinnerHandler winnerHandler) {
-                winnerHandler.setWinner(winner.getName());
+                winnerHandler.setWinner(winner);
             }
         }));
     }
@@ -127,15 +108,15 @@ public class RaceHandler implements MatchGameView {
 
     @Override
     public void displayTurn(Player player, int counter) {
-        Platform.runLater(() -> turnLabel.setText("Turn " + counter + ": " + player.getName() + "'s turn"));
+        Platform.runLater(() -> turnLabel.setText(messageProvider.getTurnMessage(counter, player)));
     }
 
     @Override
     public void displayElimination(Player player) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Player Eliminated");
-            alert.setHeaderText(player.getName() + " has been eliminated.");
+            alert.setTitle(messageProvider.getEliminationTitle());
+            alert.setHeaderText(messageProvider.getEliminationMessage(player));
             alert.showAndWait();
         });
     }
@@ -157,9 +138,7 @@ public class RaceHandler implements MatchGameView {
     public void goToNextTurn() {
         nextTurnLatch = new CountDownLatch(1);
         nextTurnButton.setOnAction(event -> {
-            if (nextTurnLatch != null) {
-                nextTurnLatch.countDown();
-            }
+            if (nextTurnLatch != null) nextTurnLatch.countDown();
         });
         try {
             nextTurnLatch.await();
@@ -180,5 +159,45 @@ public class RaceHandler implements MatchGameView {
             case CYAN -> Color.CYAN;
             default -> Color.BROWN;
         };
+    }
+
+    private void handleGridClick(Position position) {
+        for (Move move : possibleMoves) {
+            if (move.getDestination().equals(position)) {
+                selectedMove = move;
+                moveSelectedLatch.countDown();
+                break;
+            }
+        }
+        nextTurnButton.setDisable(false);
+    }
+
+    private void displayComponents(Track raceTrack, List<Coordinates> possibleDestinations, int cellSize) {
+        for (int x = 0; x < raceTrack.getLength(); x++) {
+            for (int y = 0; y < raceTrack.getWidth(); y++) {
+                Rectangle rect = new Rectangle(cellSize, cellSize);
+                Position currentPosition = new Position(x, y);
+                if (possibleDestinations.contains(currentPosition)) {
+                    rect.setFill(Color.GREY);
+                    rect.setOnMouseClicked(event -> handleGridClick(currentPosition));
+                } else {
+                    switch (raceTrack.getComponentAt(x, y)) {
+                        case WALL -> rect.setFill(Color.BLACK);
+                        case ROAD -> rect.setFill(new Color(1, 1, 1, 0));
+                        case START_LINE -> rect.setFill(Color.WHITE);
+                        case END_LINE -> rect.setFill(Color.RED);
+                    }
+                }
+                trackGridPane.add(rect, y, x);
+            }
+        }
+    }
+
+    private void displayPlayers(List<Player> players, int cellSize) {
+        for (Player player : players) {
+            Coordinates playerPosition = player.getPosition();
+            Rectangle playerRect = new Rectangle(cellSize, cellSize, getColourForCar(player.getPlayerCarColour()));
+            trackGridPane.add(playerRect, playerPosition.getY(), playerPosition.getX());
+        }
     }
 }

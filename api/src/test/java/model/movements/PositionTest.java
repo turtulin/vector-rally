@@ -47,13 +47,13 @@ class PositionTest {
     @Test
     void equalsShouldReturnTrueForEqualPositions() {
         Position otherPosition = new Position(10, 15);
-        assertTrue(position.equals(otherPosition));
+        assertEquals(position, otherPosition);
     }
 
     @Test
     void equalsShouldReturnFalseForDifferentPositions() {
         Position otherPosition = new Position(20, 25);
-        assertFalse(position.equals(otherPosition));
+        assertNotEquals(position, otherPosition);
     }
 
     @Test

@@ -73,5 +73,10 @@ public interface Player {
      */
     String getName();
 
+    /**
+     * Executes a move in the game, updating the player's position and acceleration.
+     *
+     * @param move the {@link Move} to be executed by the player.
+     */
     void makeMove(Move move);
 }

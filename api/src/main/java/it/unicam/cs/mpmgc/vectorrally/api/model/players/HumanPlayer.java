@@ -13,13 +13,6 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.cars.Car;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public class HumanPlayer extends DefaultPlayer {
-
-    /**
-     * Constructs a HumanPlayer with the specified car.
-     *
-     * @param playerCar the car associated with the player.
-     * @throws NullPointerException if the playerCar is null.
-     */
     public HumanPlayer(Car playerCar) {
         super(playerCar);
     }

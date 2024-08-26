@@ -43,9 +43,7 @@ public class BasicMovesGenerator<T extends NeighborsGenerator> {
         List<Vector> shifts = neighborsGenerator.generateShifts(player.getPlayerAcceleration());
         for (Vector shift : shifts) {
             Move move = new Move(new Acceleration(shift.getDx(), shift.getDy()), player.getPosition());
-            if (moveValidator.isValid(move, track, allPlayers)) {
-                possibleMoves.add(move);
-            }
+            if (moveValidator.isValid(move, track, allPlayers)) possibleMoves.add(move);
         }
         return possibleMoves;
     }

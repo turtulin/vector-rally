@@ -1,4 +1,4 @@
-package it.unicam.cs.mpmgc.vectorrally.api.controller.setup;
+package it.unicam.cs.mpmgc.vectorrally.api.controller.builders;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.Track;
 
@@ -18,7 +18,7 @@ import java.io.IOException;
 public interface TrackBuilder {
 
     /**
-     * Builds a {@link Track} from the specified file.
+     * Builds a racetrack from the specified file.
      *
      * @param filename the name of the file containing the racetrack.
      * @return the constructed {@link Track}.

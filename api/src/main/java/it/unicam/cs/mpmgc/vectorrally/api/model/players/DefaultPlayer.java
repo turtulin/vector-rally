@@ -23,14 +23,8 @@ public abstract class DefaultPlayer implements Player {
     protected Coordinates position;
     protected boolean isRacing;
 
-    /**
-     * Constructs a DefaultPlayer with the specified car.
-     *
-     * @param playerCar the car associated with the player.
-     * @throws NullPointerException if the playerCar is null.
-     */
     public DefaultPlayer(Car playerCar) {
-        if (playerCar == null) throw new NullPointerException("Cannot create a player without a car");
+        if(playerCar == null) throw new NullPointerException("Cannot create a player without a car");
         this.name = playerCar.getCarColour().toString();
         this.playerCar = playerCar;
         this.position = new Position(0, 0);
@@ -44,7 +38,7 @@ public abstract class DefaultPlayer implements Player {
 
     @Override
     public void setPlayerAcceleration(Vector acceleration) {
-        if (acceleration == null) throw new NullPointerException("Player acceleration cannot be null");
+        if(acceleration == null) throw new NullPointerException("Player acceleration cannot be null");
         this.playerCar.setAcceleration(acceleration);
     }
 
@@ -60,7 +54,7 @@ public abstract class DefaultPlayer implements Player {
 
     @Override
     public void setPosition(Coordinates position) {
-        if (position == null) throw new NullPointerException("Player position cannot be null");
+        if(position == null) throw new NullPointerException("Player position cannot be null");
         this.position = position;
     }
 

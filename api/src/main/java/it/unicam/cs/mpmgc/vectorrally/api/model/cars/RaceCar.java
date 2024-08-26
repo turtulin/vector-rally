@@ -13,7 +13,6 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Vector;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public class RaceCar implements Car {
-
     private final Vector acceleration;
     private final CarColour carColour;
 

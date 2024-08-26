@@ -1,7 +1,10 @@
 package it.unicam.cs.mpmgc.vectorrally.api.view;
 
+import it.unicam.cs.mpmgc.vectorrally.api.controller.builders.TrackPathBuilder;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
+
+import java.util.List;
 
 /**
  * This class implements the {@link SetupGameView} interface for a command-line interface (CLI) environment.
@@ -14,7 +17,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public class CLISetupGameView implements SetupGameView {
-    IOController ioController;
+    private final IOController ioController;
 
     public CLISetupGameView(IOController ioController) {
         this.ioController = ioController;
@@ -22,22 +25,27 @@ public class CLISetupGameView implements SetupGameView {
 
     @Override
     public String getChosenTrack() {
-        TrackPathController trackPathController = new TrackPathController();
-        return ioController.pickTrack(trackPathController.findTrack());
+        TrackPathBuilder trackPathBuilder = new TrackPathBuilder();
+        List<String> trackPaths = trackPathBuilder.findTrack();
+        ioController.displayTracks(trackPaths);
+        return ioController.getTrack(trackPathBuilder.findTrack());
     }
 
     @Override
     public int getNumHumanPlayers(int maxPlayers) {
-        return ioController.askNumberOfHumanPlayers(maxPlayers);
+        ioController.displayChooseNumHumanPlayers(maxPlayers);
+        return ioController.getNumberOfHumanPlayers(maxPlayers);
     }
 
     @Override
     public BotStrategy chooseStrategyDifficulty() {
-        return ioController.chooseAllBotsStrategyDifficulty();
+        ioController.displayBotStrategyDifficulty();
+        return ioController.getBotsStrategyDifficulty();
     }
 
     @Override
     public NeighborsGenerator getShiftAlgorithm() {
-        return ioController.initializeShiftAlgorithm();
+        ioController.displayShiftRuleType();
+        return ioController.getRuleType();
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
  * initialization, execution, and conclusion of a game match.
  *
  * @version 1.0
- * @since 2024-07-11
+ * @since 2024-08-20
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */

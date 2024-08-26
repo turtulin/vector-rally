@@ -1,5 +1,7 @@
 package it.unicam.cs.mpmgc.vectorrally.app.javafxView;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
+import it.unicam.cs.mpmgc.vectorrally.api.view.GameMessageProvider;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -17,18 +19,14 @@ public class WinnerHandler {
     @FXML
     private Label playerNameLabel;
 
-    @FXML
-    public void initialize() {
-    }
+    private final GameMessageProvider messageProvider = new GameMessageProvider();
 
 /**
      * Sets the winner's name to be displayed on the screen.
-     *
-     * @param winnerName the name of the player who won the game
+     * @param winner the name of the player who won the game
      */
-
-    public void setWinner(String winnerName) {
-        playerNameLabel.setText("Congratulations " + winnerName + "!");
+    public void setWinner(Player winner) {
+        playerNameLabel.setText(messageProvider.getWinMessage(winner));
     }
 
     @FXML

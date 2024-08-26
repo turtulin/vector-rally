@@ -13,7 +13,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.TrackComponent;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 
 import it.unicam.cs.mpmgc.vectorrally.api.view.SetupGameView;
-import it.unicam.cs.mpmgc.vectorrally.api.view.TrackPathController;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.builders.TrackPathBuilder;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -31,10 +31,6 @@ import java.util.List;
 
 public class SettingsHandler implements SetupGameView {
 
-    private final TrackPathController IOController;
-    private final GameEngine gameEngine;
-    private final GameSetup setup;
-
     @FXML
     private Spinner<Integer> numHumanPlayers;
 
@@ -50,8 +46,12 @@ public class SettingsHandler implements SetupGameView {
     @FXML
     private Button setupButton;
 
+    private final TrackPathBuilder IOController;
+    private final GameEngine gameEngine;
+    private final GameSetup setup;
+
     public SettingsHandler() {
-        this.IOController = new TrackPathController();
+        this.IOController = new TrackPathBuilder();
         RaceHandler raceHandler = new RaceHandler();
         this.gameEngine = new BasicGameEngine(raceHandler, null, this);
         this.setup = new BasicGameSetup(this);
@@ -66,8 +66,7 @@ public class SettingsHandler implements SetupGameView {
         loadShiftRuleMenu();
     }
 
-
-    public void loadTrackNames() {
+    private void loadTrackNames() {
         List<String> trackNames = IOController.findTrack();
         for (String track : trackNames) {
             MenuItem menuItem = new MenuItem(track);
@@ -134,7 +133,7 @@ public class SettingsHandler implements SetupGameView {
                 if (controller instanceof RaceHandler raceHandler) {
                     try {
                         raceHandler.initializeRace(setupResult);
-                    } catch (Exception e) {
+                    } catch(Exception e) {
                         throw new RuntimeException(e);
                     }
                 }
@@ -146,7 +145,7 @@ public class SettingsHandler implements SetupGameView {
 
     @Override
     public String getChosenTrack() {
-        return TrackPathController.checkRootPath() + "/" + trackMenuButton.getText();
+        return TrackPathBuilder.checkRootPath() + "/" + trackMenuButton.getText();
     }
 
     @Override

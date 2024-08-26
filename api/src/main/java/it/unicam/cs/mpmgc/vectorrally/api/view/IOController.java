@@ -20,6 +20,83 @@ import java.util.List;
 public interface IOController {
 
     /**
+     * Displays the welcome message and the game rules.
+     */
+    void displayWelcome();
+
+    /**
+     * Asks if the player knows the game rules.
+     * @return {@code true} if the player knows the rules, {@code false} otherwise.
+     */
+    boolean getAskIfPlayerIgnoresRules();
+
+    /**
+     * Displays the rules of the game.
+     */
+    void displayGameRules();
+
+    /**
+     * Displays the shift rule types.
+     */
+    void displayShiftRuleType();
+
+    /**
+     * Asks the player to choose a rule type.
+     * @return the chosen rule type.
+     */
+    NeighborsGenerator getRuleType();
+
+    /**
+     * Displays the tracks available.
+     * @param trackFiles the {@link List} of track files.
+     */
+    void displayTracks(List<String> trackFiles);
+
+    /**
+     * Choose the track files available.
+     * @param trackFiles the {@link List} of track files.
+     * @return the chosen track file name.
+     */
+    String getTrack(List<String> trackFiles);
+
+    /**
+     * Displays the number of human players that can be chosen.
+     * @param maxPlayers the maximum number of players allowed.
+     */
+    void displayChooseNumHumanPlayers(int maxPlayers);
+
+    /**
+     * Asks for the number of human players.
+     * @param maxPlayers the maximum number of players allowed.
+     * @return the number of human players.
+     */
+    int getNumberOfHumanPlayers(int maxPlayers);
+
+    /**
+     * Displays the message asking if the player wants to play another match.
+     */
+    void displayAskIfPlayerWantsToPlayAnotherMatch();
+
+    /**
+     * Asks if the player wants to play another match.
+     * @return {@code true} if the player wants to play another match, {@code false} otherwise.
+     */
+    boolean getAskToPlayAnotherMatch();
+
+    /**
+     * Asks the player to choose a move from the available moves.
+     * @param numMoves the number of possible moves.
+     */
+    void displayMoves(int numMoves);
+
+    /**
+     * Asks the player to choose a move from the available moves.
+     * @param possibleMoves the {@link List} of possible {@link Move} objects.
+     * @return the chosen {@link Move} .
+     */
+    Move getChosenMove(List<Move> possibleMoves);
+
+    /**
      * Displays the racetrack.
      *
      * @param raceTrack the {@link Track} to display.
@@ -29,83 +106,47 @@ public interface IOController {
     void printRaceTrack(Track raceTrack, List<Player> players, List<Coordinates> destinations);
 
     /**
-     * Displays a message.
-     *
-     * @param message the message to display
+     * Displays the message that the player can proceed to the next turn.
      */
-    void displayMessage(String message);
+    void displayGoToNextTurn();
 
     /**
-     * Asks if the player wants to play another match.
-     * @return {@code true} if the player wants to play another match, {@code false} otherwise.
+     * Asks the player to proceed to the next turn.
      */
-    boolean askToPlayAnotherMatch();
+    void getGoToNextTurn();
 
     /**
-     * Asks the player to choose a move from the available moves.
-     * @param possibleDestinations the {@link List} of possible {@link Coordinates} destinations.
+     * Displays the game over message.
      */
-    void displayMoves(List<Coordinates> possibleDestinations);
+    void displayGameOver();
 
     /**
-     * Asks the player to choose a move from the available moves.
-     * @param possibleMoves the {@link List} of possible {@link Move} objects.
-     * @return the chosen {@link Move} .
+     * Displays the winner of the game.
+     * @param winner the {@link Player} who won the game.
      */
-    Move chooseMove(List<Move> possibleMoves);
+    void displayTurn(Player winner, int counter);
 
     /**
-     * Displays the welcome message and the game rules.
+     * Displays the elimination of a player.
+     * @param player the {@link Player} who was eliminated.
      */
-    void displayWelcomeAndRules();
+    void displayElimination(Player player);
 
     /**
-     * Asks if the player knows the game rules.
-     * @return {@code true} if the player knows the rules, {@code false} otherwise.
+     * Displays the winning message.
+     * @param winner the {@link Player} who won the game.
      */
-    boolean askIfPlayerKnowsRules();
+    void displayWinningMessage(Player winner);
 
     /**
-     * Asks the player to choose a rule type.
-     * @return the chosen rule type.
+     * Displays the bot strategies difficulty.
      */
-    int chooseRuleType();
-
-    /**
-     * Choose the track files available.
-     * @param trackFiles the {@link List} of track files.
-     * @return the chosen track file name.
-     */
-    String pickTrack(List<String> trackFiles);
-
-    /**
-     * Asks for the number of human players.
-     * @param maxPlayers the maximum number of players allowed.
-     * @return the number of human players.
-     */
-    int askNumberOfHumanPlayers(int maxPlayers);
+    void displayBotStrategyDifficulty();
 
     /**
      * Asks the player to choose a bot strategy difficulty for all bots.
      * @return the chosen {@link BotStrategy} difficulty.
      */
-    BotStrategy chooseAllBotsStrategyDifficulty();
+    BotStrategy getBotsStrategyDifficulty();
 
-    /**
-     * Initializes the shift algorithm chosen by the player.
-     *
-     * @return the {@link NeighborsGenerator}  initialized.
-     */
-    NeighborsGenerator initializeShiftAlgorithm();
-
-    /**
-     * Asks the player to proceed to the next turn.
-     */
-    void goToNextTurn();
-
-    /**
-     * Displays the tracks available.
-     * @param trackFiles the {@link List} of track files.
-     */
-    void displayTracks(List<String> trackFiles);
 }

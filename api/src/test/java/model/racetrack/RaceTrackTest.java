@@ -62,10 +62,8 @@ public class RaceTrackTest {
     void getPositionsOfComponentShouldReturnCorrectPositions() {
         List<Coordinates> startLinePositions = raceTrack.getPositionsOfComponent(TrackComponent.START_LINE);
         List<Coordinates> endLinePositions = raceTrack.getPositionsOfComponent(TrackComponent.END_LINE);
-
         assertEquals(1, startLinePositions.size());
         assertEquals(new Position(0, 1), startLinePositions.getFirst());
-
         assertEquals(1, endLinePositions.size());
         assertEquals(new Position(1, 0), endLinePositions.getFirst());
     }

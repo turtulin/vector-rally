@@ -5,7 +5,7 @@ package it.unicam.cs.mpmgc.vectorrally.api.view;
  * It allows the user to decide whether to play another match after the current one ends.
  *
  * @version 1.0
- * @since 2024-07-17
+ * @since 2024-08-20
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */

@@ -40,20 +40,17 @@ public class BasicMoveValidator implements MoveValidator {
     @Override
     public boolean passesThroughComponent(Track track, Move move, TrackComponent component) {
         List<Coordinates> positions = getPositionsBetween(move);
-        for (Coordinates position : positions) {
+        for (Coordinates position : positions)
             if (track.getComponentAt(position.getX(), position.getY()) == component) return true;
-        }
         return false;
     }
 
     @Override
     public boolean passesThroughPlayers(Move move, List<Player> allPlayers) {
         List<Coordinates> positions = getPositionsBetween(move);
-        for (Coordinates position : positions) {
-            for (Player player : allPlayers) {
+        for (Coordinates position : positions)
+            for (Player player : allPlayers)
                 if (player.getPosition().equals(position) && !(move.position().equals(player.getPosition()))) return true;
-            }
-        }
         return false;
     }
 
@@ -78,7 +75,7 @@ public class BasicMoveValidator implements MoveValidator {
     private boolean isValidDirection(Direction direction, Track track) {
         Coordinates startLinePosition = track.getPositionsOfComponent(TrackComponent.START_LINE).getFirst();
         Coordinates endLinePosition = track.getPositionsOfComponent(TrackComponent.END_LINE).getFirst();
-        return switch (getIllegalDirection(startLinePosition, endLinePosition)) {
+        return switch(getIllegalDirection(startLinePosition, endLinePosition)) {
             case RIGHT -> direction != Direction.LEFT && direction != Direction.UP_LEFT && direction != Direction.DOWN_LEFT;
             case LEFT -> direction != Direction.RIGHT && direction != Direction.UP_RIGHT && direction != Direction.DOWN_RIGHT;
             case UP -> direction != Direction.DOWN && direction != Direction.DOWN_LEFT && direction != Direction.DOWN_RIGHT;
@@ -95,9 +92,8 @@ public class BasicMoveValidator implements MoveValidator {
     }
 
     private boolean isPositionOccupied(Coordinates end, List<Player> allPlayers) {
-        for (Player player : allPlayers) {
+        for (Player player : allPlayers)
             if (player.getPosition().equals(end)) return true;
-        }
         return false;
     }
 }

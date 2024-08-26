@@ -42,9 +42,7 @@ class BasicMovesGeneratorTest {
         when(neighborsGenerator.generateShifts(any())).thenReturn(Collections.singletonList(new Acceleration(1, 1)));
         when(moveValidator.isValid(any(), any(), any())).thenReturn(false);
         when(player.getPosition()).thenReturn(new Position(0, 0));
-
         List<Move> possibleMoves = movesGenerator.generatePossibleMoves(player, raceTrack, Collections.singletonList(player));
-
         assertTrue(possibleMoves.isEmpty());
     }
 
@@ -57,9 +55,7 @@ class BasicMovesGeneratorTest {
         ));
         when(moveValidator.isValid(any(), any(), any())).thenReturn(true);
         when(player.getPosition()).thenReturn(new Position(0, 0));
-
         List<Move> possibleMoves = movesGenerator.generatePossibleMoves(player, raceTrack, Collections.singletonList(player));
-
         assertEquals(2, possibleMoves.size());
     }
 
@@ -72,9 +68,7 @@ class BasicMovesGeneratorTest {
         ));
         when(moveValidator.isValid(any(Move.class), any(RaceTrack.class), anyList())).thenReturn(true).thenReturn(false);
         when(player.getPosition()).thenReturn(new Position(0, 0));
-
         List<Move> possibleMoves = movesGenerator.generatePossibleMoves(player, raceTrack, Collections.singletonList(player));
-
         assertEquals(1, possibleMoves.size());
     }
 
@@ -84,9 +78,7 @@ class BasicMovesGeneratorTest {
         when(neighborsGenerator.generateShifts(any())).thenReturn(Collections.singletonList(new Acceleration(1, 1)));
         when(moveValidator.isValid(any(), any(), any())).thenReturn(true);
         when(player.getPosition()).thenReturn(new Position(0, 0));
-
         movesGenerator.generatePossibleMoves(player, raceTrack, Collections.singletonList(player));
-
         verify(neighborsGenerator).generateShifts(any());
     }
 
@@ -96,9 +88,7 @@ class BasicMovesGeneratorTest {
         when(neighborsGenerator.generateShifts(any())).thenReturn(Collections.singletonList(new Acceleration(1, 1)));
         when(moveValidator.isValid(any(), any(), any())).thenReturn(true);
         when(player.getPosition()).thenReturn(new Position(0, 0));
-
         movesGenerator.generatePossibleMoves(player, raceTrack, Collections.singletonList(player));
-
         verify(moveValidator).isValid(any(Move.class), any(RaceTrack.class), anyList());
     }
 }

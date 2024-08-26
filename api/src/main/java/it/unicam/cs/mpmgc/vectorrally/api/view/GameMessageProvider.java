@@ -16,12 +16,12 @@ public final class GameMessageProvider {
     }
 
     public String getWinMessage(Player player) {
-        return "Player " + player.getName() + " has crossed the finish line";
+        return "Player " + player.getName() + " has crossed the finish line...";
     }
 
     public String getEliminationMessage(Player player) {
-        return "Player " + player.getName() + " has no more moves to perform\n" +
-                "Player " + player.getName() + " LOSES!!!";
+        return "Player " + player.getName() + " has no more moves to perform...\n" +
+                "YOU LOSE!!!";
     }
 
     public String getInvalidChoiceMessage() {
@@ -44,15 +44,23 @@ public final class GameMessageProvider {
         return "Choose a move:";
     }
 
+    public String getEliminationTitle() {
+        return "Player Eliminated";
+    }
+
     public String getAskToPlayAgainMessage() {
         return "Do you want to play again? (yes/no)";
+    }
+
+    public String getPreparationMessage() {
+        return "Preparing game...";
     }
 
     public String getAskNumberOfHumanPlayersMessage(int maxPlayers) {
         return "Enter the number of human players(max " + maxPlayers + "):";
     }
 
-    public String getChooseAllBotStrategyDifficultyMessage() {
+    public String getChooseBotStrategyDifficultyMessage() {
         return "Choose the bot strategy difficulty:";
     }
 

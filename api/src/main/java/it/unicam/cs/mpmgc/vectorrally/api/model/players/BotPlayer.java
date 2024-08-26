@@ -15,13 +15,6 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 public class BotPlayer extends DefaultPlayer {
     private final BotStrategy strategy;
 
-    /**
-     * Constructs a BotPlayer with the specified car and strategy.
-     *
-     * @param playerCar the car associated with the player.
-     * @param strategy the strategy that the bot will use to make decisions.
-     * @throws NullPointerException if the playerCar or strategy is null.
-     */
     public BotPlayer(Car playerCar, BotStrategy strategy) {
         super(playerCar);
         if (strategy == null) throw new NullPointerException("Strategy cannot be null");

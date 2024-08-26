@@ -3,7 +3,6 @@ package it.unicam.cs.mpmgc.vectorrally.app.javafxView;
 import it.unicam.cs.mpmgc.vectorrally.api.view.FinishGameView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 
 /**
  * This class is responsible for handling the menu screen.
@@ -13,12 +12,7 @@ import javafx.scene.control.Button;
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
 */
-
-
 public class MenuHandler implements FinishGameView {
-    public Button playButton;
-    public Button quitGameButton;
-
 
     @FXML
     private void handleStartButtonAction() {

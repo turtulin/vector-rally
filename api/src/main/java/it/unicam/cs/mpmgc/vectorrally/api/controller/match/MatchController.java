@@ -11,7 +11,7 @@ import java.util.List;
  * and determining when the game ends.
  *
  * @version 1.0
- * @since 2024-08-10
+ * @since 2024-08-20
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */

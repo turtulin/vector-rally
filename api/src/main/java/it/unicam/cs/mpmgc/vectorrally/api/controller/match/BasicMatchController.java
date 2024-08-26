@@ -1,6 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.controller.match;
 
-import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.BotStrategyFactory;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.builders.BotStrategyFactory;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.BotPlayer;
@@ -93,7 +93,8 @@ public class BasicMatchController implements MatchController {
 
     @Override
     public Move findMove(Player player, List<Move> possibleMoves) {
-        if (player instanceof BotPlayer botPlayer) return botStrategyFactory.getStrategy(botPlayer.getStrategy()).decideMove(botPlayer, possibleMoves);
+        if (player instanceof BotPlayer botPlayer)
+            return botStrategyFactory.getStrategy(botPlayer.getStrategy()).decideMove(botPlayer, possibleMoves);
         else return gameView.getMoveChoice(possibleMoves);
     }
 

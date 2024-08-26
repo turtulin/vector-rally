@@ -1,19 +1,15 @@
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-wwwwwwwww                 esp                   wwwwwwwww
-wwwwwwww                  esp                    wwwwwwww
-wwwwwww                   esp                     wwwwwww
-wwwwww                    wwwww                    wwwwww
-wwwww                    wwwwww                     wwwww
-wwww                    wwwwwww                      wwww
-www  w                 wwwwwwww                       www
-ww                    wwwwwwwww                        ww
-w                    wwwwwwwwww                         w
-ww                    wwwwwwwww                        ww
-www                    wwwwwwww               w       www
-wwww                    wwwwwww                      wwww
-wwwww                    wwwwww                     wwwww
-wwwwww                    wwwww                    wwwwww
-wwwwwww                                           wwwwwww
-wwwwwwww                                         wwwwwwww
-wwwwwwwww                                       wwwwwwwww
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+wwwwwwwww       esp       wwwwwwwww
+wwwwwwww        esp        wwwwwwww
+wwwwwww         esp         wwwwwww
+wwwwww        wwwww          wwwwww
+wwwww        wwwwww           wwwww
+wwww        wwwwwww            wwww
+wwww        wwwwwww            wwww
+wwww        wwwwwww            wwww
+wwwww        wwwwww           wwwww
+wwwwww        wwwww          wwwwww
+wwwwwww                     wwwwwww
+wwwwwwww                   wwwwwwww
+wwwwwwwww                 wwwwwwwww
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww

@@ -1,5 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.view;
 
+import it.unicam.cs.mpmgc.vectorrally.api.controller.builders.TrackPathBuilder;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.EightNeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.FourNeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
@@ -29,30 +30,35 @@ public class TerminalIOController implements IOController {
     private final Scanner scanner;
     private final GameMessageProvider messageProvider = new GameMessageProvider();
 
-    /**
-     * Constructs a TerminalIOController with a new Scanner for input.
-     */
     public TerminalIOController() {
         this.scanner = new Scanner(System.in);
     }
 
     @Override
-    public void displayWelcomeAndRules() {
+    public void displayWelcome() {
         System.out.println(messageProvider.getWelcomeMessage());
-        if (!askIfPlayerKnowsRules()) System.out.println(messageProvider.getGameRules());
-    }
-    
-    @Override
-    public boolean askIfPlayerKnowsRules() {
         System.out.println(messageProvider.getAskIfPlayerKnowsRulesMessage());
-        return getBooleanInput();
     }
 
     @Override
-    public int chooseRuleType() {
+    public boolean getAskIfPlayerIgnoresRules() {
+        return !getBooleanInput();
+    }
+
+    @Override
+    public void displayGameRules() {
+        System.out.println(messageProvider.getGameRules());
+    }
+
+    @Override
+    public void displayShiftRuleType() {
         System.out.println(messageProvider.getRuleTypeChoiceMessage());
         System.out.println("1. Four Neighbors Rule");
         System.out.println("2. Eight Neighbors Rule");
+    }
+
+    @Override
+    public NeighborsGenerator getRuleType() {
         int choice = scanner.nextInt();
         scanner.nextLine();
         while (choice != 1 && choice != 2) {
@@ -60,23 +66,37 @@ public class TerminalIOController implements IOController {
             choice = scanner.nextInt();
             scanner.nextLine();
         }
-        return choice;
+        return choice == 1 ? new FourNeighborsGenerator() : new EightNeighborsGenerator();
     }
 
     @Override
-    public String pickTrack(List<String> trackFiles) {
-        String directoryPath = TrackPathController.checkRootPath();
-        int choice = chooseRaceTrack(trackFiles);
+    public void displayTracks(List<String> trackFiles) {
+        System.out.println(messageProvider.getTrackChoiceMessage());
+        IntStream.range(0, trackFiles.size()).mapToObj(i -> (i + 1) + ". " + trackFiles.get(i)).forEach(System.out::println);
+    }
+
+    @Override
+    public String getTrack(List<String> trackFiles) {
+        String directoryPath = TrackPathBuilder.checkRootPath();
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        while (choice < 1 || choice > trackFiles.size()) {
+            choice = scanner.nextInt();
+            scanner.nextLine();
+        }
         return directoryPath + "/" + trackFiles.get(choice - 1);
     }
 
     @Override
-    public int askNumberOfHumanPlayers(int maxPlayers) {
+    public void displayChooseNumHumanPlayers(int maxPlayers) {
         System.out.println(messageProvider.getAskNumberOfHumanPlayersMessage(maxPlayers));
+    }
+
+    @Override
+    public int getNumberOfHumanPlayers(int maxPlayers) {
         int numPlayers = scanner.nextInt();
         scanner.nextLine();
         while (numPlayers < 0 || numPlayers > maxPlayers) {
-            System.out.println(messageProvider.getInvalidChoiceMessage());
             numPlayers = scanner.nextInt();
             scanner.nextLine();
         }
@@ -84,28 +104,26 @@ public class TerminalIOController implements IOController {
     }
 
     @Override
-    public BotStrategy chooseAllBotsStrategyDifficulty() {
-        return getBotStrategyDifficulty(messageProvider.getChooseAllBotStrategyDifficultyMessage());
+    public void displayAskIfPlayerWantsToPlayAnotherMatch() {
+        System.out.println(messageProvider.getAskToPlayAgainMessage());
     }
 
     @Override
-    public boolean askToPlayAnotherMatch() {
-        System.out.println(messageProvider.getAskToPlayAgainMessage());
+    public boolean getAskToPlayAnotherMatch() {
         return getBooleanInput();
     }
 
     @Override
-    public void displayMoves(List<Coordinates> possibleDestinations) {
+    public void displayMoves(int numMoves) {
         System.out.println(messageProvider.getMoveChoiceMessage());
-        for (int i = 0; i < possibleDestinations.size(); i++) System.out.println((i + 1) + ".");
+        for (int i = 0; i < numMoves; i++) System.out.println((i + 1) + ".");
     }
 
     @Override
-    public Move chooseMove(List<Move> possibleMoves) {
+    public Move getChosenMove(List<Move> possibleMoves) {
         int choice = scanner.nextInt();
         scanner.nextLine();
         while (choice < 1 || choice > possibleMoves.size()) {
-            System.out.println(messageProvider.getInvalidChoiceMessage());
             choice = scanner.nextInt();
             scanner.nextLine();
         }
@@ -121,9 +139,7 @@ public class TerminalIOController implements IOController {
                     if (destinations != null && destinations.contains(position)) {
                         int index = destinations.indexOf(position) + 1;
                         System.out.print(index);
-                    } else {
-                        System.out.print(raceTrack.getComponentAt(x, y).getSymbol());
-                    }
+                    } else System.out.print(raceTrack.getComponentAt(x, y).getSymbol());
                 }
             }
             System.out.println();
@@ -131,33 +147,46 @@ public class TerminalIOController implements IOController {
     }
 
     @Override
-    public void displayMessage(String message) {
-        System.out.println(message);
-    }
-
-    @Override
-    public NeighborsGenerator initializeShiftAlgorithm() {
-        int ruleType = chooseRuleType();
-        return ruleType == 1 ? new FourNeighborsGenerator() : new EightNeighborsGenerator();
-    }
-
-    @Override
-    public void goToNextTurn() {
+    public void displayGoToNextTurn() {
         System.out.println(messageProvider.getNextTurnMessage());
+    }
+
+    @Override
+    public void getGoToNextTurn() {
         scanner.nextLine();
     }
 
     @Override
-    public void displayTracks(List<String> trackFiles) {
-        System.out.println(messageProvider.getTrackChoiceMessage());
-        IntStream.range(0, trackFiles.size()).mapToObj(i -> (i + 1) + ". " + trackFiles.get(i)).forEach(System.out::println);
+    public void displayGameOver() {
+        System.out.println(messageProvider.getGameOverMessage());
     }
 
-    private BotStrategy getBotStrategyDifficulty(String message) {
-        System.out.println(message);
+    @Override
+    public void displayTurn(Player winner, int counter) {
+        System.out.println(messageProvider.getTurnMessage(counter, winner));
+    }
+
+    @Override
+    public void displayElimination(Player player) {
+        System.out.println(messageProvider.getEliminationMessage(player));
+    }
+
+    @Override
+    public void displayWinningMessage(Player winner) {
+        System.out.println(messageProvider.getWinMessage(winner));
+        System.out.println(messageProvider.getCongratulationsMessage());
+    }
+
+    @Override
+    public void displayBotStrategyDifficulty() {
+        System.out.println(messageProvider.getChooseBotStrategyDifficultyMessage());
         System.out.println("1. Easy");
         System.out.println("2. Medium");
         System.out.println("3. Hard");
+    }
+
+    @Override
+    public BotStrategy getBotsStrategyDifficulty() {
         int choice = scanner.nextInt();
         scanner.nextLine();
         return switch (choice) {
@@ -165,18 +194,6 @@ public class TerminalIOController implements IOController {
             case 3 -> BotStrategy.HARD;
             default -> BotStrategy.EASY;
         };
-    }
-
-    private int chooseRaceTrack (List<String> trackFiles) {
-        displayTracks(trackFiles);
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-        while (choice < 1 || choice > trackFiles.size()) {
-            System.out.println(messageProvider.getInvalidChoiceMessage());
-            choice = scanner.nextInt();
-            scanner.nextLine();
-        }
-        return choice;
     }
 
     private boolean printPlayer(Coordinates position, List<Player> players) {
@@ -215,5 +232,4 @@ public class TerminalIOController implements IOController {
         }
         return answer.equals("yes");
     }
-
 }

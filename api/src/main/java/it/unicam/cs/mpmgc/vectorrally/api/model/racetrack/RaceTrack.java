@@ -20,12 +20,6 @@ public class RaceTrack implements Track {
     private final int width;
     private final int length;
 
-    /**
-     * Constructs a RaceTrack with the given track matrix.
-     *
-     * @param track the track matrix.
-     * @throws IllegalArgumentException if the track matrix is null or empty.
-     */
     public RaceTrack(TrackComponent[][] track) {
         if (track == null || track.length == 0 || track[0].length == 0) throw new IllegalArgumentException("Invalid track matrix");
         this.track = track;
@@ -46,13 +40,9 @@ public class RaceTrack implements Track {
     @Override
     public List<Coordinates> getPositionsOfComponent(TrackComponent component) {
         List<Coordinates> positions = new ArrayList<>();
-        for (int x = 0; x < length; x++) {
-            for (int y = 0; y < width; y++) {
-                if (track[x][y] == component) {
-                    positions.add(new Position(x, y));
-                }
-            }
-        }
+        for (int x = 0; x < length; x++)
+            for (int y = 0; y < width; y++)
+                if (track[x][y] == component) positions.add(new Position(x, y));
         return positions;
     }
 

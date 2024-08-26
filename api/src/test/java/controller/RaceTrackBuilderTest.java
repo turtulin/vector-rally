@@ -1,6 +1,6 @@
-package controller.setup;
+package controller;
 
-import it.unicam.cs.mpmgc.vectorrally.api.controller.setup.RaceTrackBuilder;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.builders.RaceTrackBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,9 +22,7 @@ class RaceTrackBuilderTest {
 
     @Test
     void buildTrackShouldThrowIOExceptionForInvalidFile() {
-        assertThrows(IOException.class, () -> {
-            raceTrackBuilder.buildTrack(String.valueOf(new BufferedReader(new StringReader("invalid-file"))));
-        });
+        assertThrows(IOException.class, () -> raceTrackBuilder.buildTrack(String.valueOf(new BufferedReader(new StringReader("invalid-file")))));
     }
 }
 
