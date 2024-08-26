@@ -1,5 +1,6 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.racetrack;
 
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Coordinates;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 
 import java.util.ArrayList;
@@ -43,8 +44,8 @@ public class RaceTrack implements Track {
     }
 
     @Override
-    public List<Position> getPositionsOfComponent(TrackComponent component) {
-        List<Position> positions = new ArrayList<>();
+    public List<Coordinates> getPositionsOfComponent(TrackComponent component) {
+        List<Coordinates> positions = new ArrayList<>();
         for (int x = 0; x < length; x++) {
             for (int y = 0; y < width; y++) {
                 if (track[x][y] == component) {
@@ -64,5 +65,4 @@ public class RaceTrack implements Track {
     public int getLength() {
         return this.length;
     }
-
 }

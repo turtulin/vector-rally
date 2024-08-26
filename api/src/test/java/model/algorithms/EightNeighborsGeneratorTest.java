@@ -1,6 +1,7 @@
 package model.algorithms;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.EightNeighborsGenerator;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Vector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,8 +20,8 @@ class EightNeighborsGeneratorTest {
 
     @Test
     void generateShiftsShouldReturnCorrectAccelerations() {
-        Acceleration initialSpeed = new Acceleration(2, 3);
-        List<Acceleration> expectedShifts = List.of(
+        Vector initialSpeed = new Acceleration(2, 3);
+        List<Vector> expectedShifts = List.of(
                 new Acceleration(1, 2),  // Up-Left
                 new Acceleration(1, 3),  // Left
                 new Acceleration(1, 4),  // Down-Left
@@ -32,12 +33,12 @@ class EightNeighborsGeneratorTest {
                 new Acceleration(2, 3)   // No change
         );
 
-        List<Acceleration> generatedShifts = generator.generateShifts(initialSpeed);
+        List<Vector> generatedShifts = generator.generateShifts(initialSpeed);
 
         assertEquals(expectedShifts.size(), generatedShifts.size());
 
         for (int i = 0; i < expectedShifts.size(); i++) {
-            assertTrue(compareAccelerations(expectedShifts.get(i), generatedShifts.get(i)));
+            assertTrue(compareAccelerations((Acceleration) expectedShifts.get(i), (Acceleration) generatedShifts.get(i)));
         }
     }
 

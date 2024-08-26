@@ -18,35 +18,29 @@ import static org.junit.jupiter.api.Assertions.*;
 class BotStrategyFactoryTest {
 
     private BotStrategyFactory factory;
-    private NeighborsGenerator neighborsGenerator;
 
     @BeforeEach
     void setUp() {
-        neighborsGenerator = new NeighborsGenerator() {
-            @Override
-            public List<Acceleration> generateShifts(Acceleration speed) {
-                return List.of(new Acceleration(1, 0), new Acceleration(0, 1));
-            }
-        };
+        NeighborsGenerator neighborsGenerator = speed -> List.of(new Acceleration(1, 0), new Acceleration(0, 1));
         factory = new BotStrategyFactory(neighborsGenerator);
     }
 
     @Test
     void getStrategyShouldReturnEasyBotStrategy() {
         DecisionStrategy strategy = factory.getStrategy(BotStrategy.EASY);
-        assertTrue(strategy instanceof EasyBotStrategy);
+        assertInstanceOf(EasyBotStrategy.class, strategy);
     }
 
     @Test
     void getStrategyShouldReturnMediumBotStrategy() {
         DecisionStrategy strategy = factory.getStrategy(BotStrategy.MEDIUM);
-        assertTrue(strategy instanceof MediumBotStrategy);
+        assertInstanceOf(MediumBotStrategy.class, strategy);
     }
 
     @Test
     void getStrategyShouldReturnHardBotStrategy() {
         DecisionStrategy strategy = factory.getStrategy(BotStrategy.HARD);
-        assertTrue(strategy instanceof HardBotStrategy);
+        assertInstanceOf(HardBotStrategy.class, strategy);
     }
 
     @Test

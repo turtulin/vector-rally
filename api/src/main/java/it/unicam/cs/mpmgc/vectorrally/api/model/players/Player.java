@@ -1,8 +1,7 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.players;
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.*;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 
 /**
  * Represents a player in the Vector Rally game. This interface provides essential functionalities
@@ -19,51 +18,60 @@ public interface Player {
     /**
      * Retrieves the current acceleration of the player.
      *
-     * @return the current acceleration.
+     * @return the current {@link Vector} representing the player's acceleration.
      */
-    Acceleration getPlayerAcceleration();
+    Vector getPlayerAcceleration();
 
     /**
      * Updates the player's acceleration.
      *
-     * @param acceleration the new acceleration to be set.
-     * @throws NullPointerException if the new acceleration is null, to ensure player always has valid data.
+     * @param acceleration the new {@link Vector} representing the player's acceleration.
+     * @throws NullPointerException if the new acceleration is {@code null}, to ensure the player always has valid data.
      */
-    void setPlayerAcceleration(Acceleration acceleration);
+    void setPlayerAcceleration(Vector acceleration);
 
     /**
      * Retrieves the colour of the player's car.
      *
-     * @return the car colour.
+     * @return the {@link CarColour} of the player's car.
      */
     CarColour getPlayerCarColour();
 
     /**
      * Retrieves the current position of the player on the game board.
      *
-     * @return the current position.
+     * @return the current {@link Coordinates} representing the player's position.
      */
-    Position getPosition();
+    Coordinates getPosition();
 
     /**
      * Updates the player's position on the game board.
      *
-     * @param position the new position to be set.
-     * @throws NullPointerException if the position is null, ensuring all players have a valid location.
+     * @param position the new {@link Coordinates} to be set as the player's position.
+     * @throws NullPointerException if the position is {@code null}, ensuring all players have a valid location.
      */
-    void setPosition(Position position);
+    void setPosition(Coordinates position);
 
     /**
      * Checks whether the player is currently participating in the race.
      *
-     * @return true if the player is actively racing, false if not.
+     * @return {@code true} if the player is actively racing, {@code false} if not.
      */
     boolean isRacing();
 
     /**
      * Updates the racing status of the player.
      *
-     * @param isRacing the new racing status of the player, true to set racing, false to stop.
+     * @param isRacing the new racing status of the player, {@code true} to set racing, {@code false} to stop.
      */
     void setRacing(boolean isRacing);
+
+    /**
+     * Retrieves the name of the player.
+     *
+     * @return the name of the player.
+     */
+    String getName();
+
+    void makeMove(Move move);
 }

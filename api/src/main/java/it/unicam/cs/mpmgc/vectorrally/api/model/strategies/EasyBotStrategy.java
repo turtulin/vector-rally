@@ -18,9 +18,6 @@ import java.util.Random;
 public class EasyBotStrategy implements DecisionStrategy {
     private final Random random;
 
-    /**
-     * Constructs an EasyBotStrategy with a new random number generator.
-     */
     public EasyBotStrategy() {
         this.random = new Random();
     }

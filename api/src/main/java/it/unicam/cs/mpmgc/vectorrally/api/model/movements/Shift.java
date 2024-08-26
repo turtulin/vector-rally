@@ -14,14 +14,14 @@ public interface Shift {
     /**
      * Retrieves the acceleration of the shift.
      *
-     * @return the acceleration.
+     * @return the {@link Vector}.
      */
-    Acceleration acceleration();
+    Vector acceleration();
 
     /**
      * Retrieves the position of the shift.
      *
-     * @return the position.
+     * @return the {@link Coordinates}.
      */
     Coordinates position();
 }

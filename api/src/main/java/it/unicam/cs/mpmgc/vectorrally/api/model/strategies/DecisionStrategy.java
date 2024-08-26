@@ -15,11 +15,12 @@ import java.util.List;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
 public interface DecisionStrategy {
+
     /**
      * Decides the next move for the player based on the strategy.
      *
-     * @param player the player for whom to decide the next move.
-     * @param possibleMoves a list of possible moves the player can make.
+     * @param player the {@link Player} for whom to decide the next move.
+     * @param possibleMoves a {@link List} of possible {@link Move} the player can make.
      * @return the chosen move.
      */
     Move decideMove(Player player, List<Move> possibleMoves);

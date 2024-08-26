@@ -5,6 +5,7 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.RaceCar;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Vector;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.DefaultPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,8 +35,8 @@ class DefaultPlayerTest {
         Acceleration acceleration = new Acceleration(1, 1);
         testCar.setAcceleration(acceleration);
 
-        Acceleration playerAcceleration = player.getPlayerAcceleration();
-        assertTrue(compareAccelerations(acceleration, playerAcceleration));
+        Vector playerAcceleration = player.getPlayerAcceleration();
+        assertTrue(compareAccelerations(acceleration, (Acceleration) playerAcceleration));
     }
 
     @Test
@@ -43,8 +44,8 @@ class DefaultPlayerTest {
         Acceleration acceleration = new Acceleration(1, 1);
         player.setPlayerAcceleration(acceleration);
 
-        Acceleration carAcceleration = testCar.getAcceleration();
-        assertTrue(compareAccelerations(acceleration, carAcceleration));
+        Vector carAcceleration = testCar.getAcceleration();
+        assertTrue(compareAccelerations(acceleration, (Acceleration) carAcceleration));
     }
 
     @Test
@@ -60,7 +61,7 @@ class DefaultPlayerTest {
     @Test
     void getPositionShouldReturnInitialPosition() {
         Position initialPosition = new Position(0, 0);
-        assertTrue(comparePositions(initialPosition, player.getPosition()));
+        assertTrue(comparePositions(initialPosition, (Position) player.getPosition()));
     }
 
     @Test
@@ -68,7 +69,7 @@ class DefaultPlayerTest {
         Position newPosition = new Position(5, 5);
         player.setPosition(newPosition);
 
-        assertTrue(comparePositions(newPosition, player.getPosition()));
+        assertTrue(comparePositions(newPosition, (Position) player.getPosition()));
     }
 
     @Test

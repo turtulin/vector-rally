@@ -4,11 +4,10 @@
 package it.unicam.cs.mpmgc.vectorrally.app;
 
 
-import it.unicam.cs.mpmgc.vectorrally.api.view.IOController;
+import it.unicam.cs.mpmgc.vectorrally.api.controller.match.BasicGameEngine;
+import it.unicam.cs.mpmgc.vectorrally.api.view.*;
 
 import it.unicam.cs.mpmgc.vectorrally.api.controller.match.GameEngine;
-import it.unicam.cs.mpmgc.vectorrally.api.controller.match.CLIGameEngine;
-import it.unicam.cs.mpmgc.vectorrally.api.view.TerminalIOController;
 
 /**
  * This class is responsible for starting the terminal application.
@@ -22,7 +21,10 @@ public class TerminalApp {
     public static void main(String[] args) {
         try {
             IOController ioController = new TerminalIOController();
-            GameEngine gameController = new CLIGameEngine(ioController);
+            MatchGameView matchGameView = new CLIMatchGameView(ioController);
+            SetupGameView setupGameView = new CLISetupGameView(ioController);
+            FinishGameView finishGameView = new CLIFinishGameView(ioController);
+            GameEngine gameController = new BasicGameEngine(matchGameView, finishGameView, setupGameView);
             ioController.displayWelcomeAndRules();
             gameController.startGame();
         } catch (Exception e) {

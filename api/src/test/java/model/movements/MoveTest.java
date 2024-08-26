@@ -1,6 +1,7 @@
 package model.movements;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Coordinates;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +35,7 @@ class MoveTest {
     @Test
     void getDestinationShouldReturnCorrectPosition() {
         Position expectedDestination = new Position(13, 19);
-        Position actualDestination = move.getDestination();
+        Coordinates actualDestination = move.getDestination();
 
         assertEquals(expectedDestination.getX(), actualDestination.getX());
         assertEquals(expectedDestination.getY(), actualDestination.getY());
@@ -46,7 +47,7 @@ class MoveTest {
         Move negativeMove = new Move(negativeAcceleration, position);
 
         Position expectedDestination = new Position(7, 11);
-        Position actualDestination = negativeMove.getDestination();
+        Coordinates actualDestination = negativeMove.getDestination();
 
         assertEquals(expectedDestination.getX(), actualDestination.getX());
         assertEquals(expectedDestination.getY(), actualDestination.getY());
@@ -58,7 +59,7 @@ class MoveTest {
         Move zeroMove = new Move(zeroAcceleration, position);
 
         Position expectedDestination = new Position(10, 15);
-        Position actualDestination = zeroMove.getDestination();
+        Coordinates actualDestination = zeroMove.getDestination();
 
         assertEquals(expectedDestination.getX(), actualDestination.getX());
         assertEquals(expectedDestination.getY(), actualDestination.getY());

@@ -2,13 +2,14 @@ package model.movements;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Direction;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Vector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccelerationTest {
 
-    private Acceleration acceleration;
+    private Vector acceleration;
 
     @BeforeEach
     void setUp() {

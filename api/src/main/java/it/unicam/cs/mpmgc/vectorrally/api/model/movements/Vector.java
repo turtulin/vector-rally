@@ -51,7 +51,7 @@ public interface Vector {
     /**
      * Retrieves the direction of the vector.
      *
-     * @return the direction of the vector.
+     * @return the {@link Direction} of the vector.
      * @throws IllegalStateException if the direction is not valid.
      */
     Direction getDirection();

@@ -1,6 +1,7 @@
 package it.unicam.cs.mpmgc.vectorrally.api.model.cars;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Acceleration;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Vector;
 
 /**
  * Represents a car in the Vector Rally game. This interface provides methods to manage
@@ -16,22 +17,22 @@ public interface Car {
     /**
      * Retrieves the current acceleration of the car.
      *
-     * @return the current acceleration.
+     * @return the current {@link Vector}.
      */
-    Acceleration getAcceleration();
+    Vector getAcceleration();
 
     /**
      * Updates the acceleration of the car.
      *
-     * @param acceleration the new acceleration to be set.
+     * @param acceleration the new {@link Vector} to be set.
      * @throws NullPointerException if the new acceleration is null.
      */
-    void setAcceleration(Acceleration acceleration);
+    void setAcceleration(Vector acceleration);
 
     /**
      * Retrieves the colour of the car.
      *
-     * @return the car colour.
+     * @return the {@link CarColour}.
      */
     CarColour getCarColour();
 }

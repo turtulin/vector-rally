@@ -1,115 +1,65 @@
 package it.unicam.cs.mpmgc.vectorrally.api.view;
 
-import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
-import it.unicam.cs.mpmgc.vectorrally.api.model.players.HumanPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 
 /**
- * Provides messages for the game, implementing the MessageProvider interface.
+ * Provides messages for the game.
  *
  * @version 1.0
  * @since 2024-07-11
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-public final class GameMessageProvider implements MessageProvider {
-    @Override
+public final class GameMessageProvider {
     public String getTurnMessage(int turn, Player player) {
-        String playerColorCode = getCarColorCode(player.getPlayerCarColour());
-        if (player instanceof HumanPlayer) {
-            return "TURN " + turn + " for player " + playerColorCode + "P" + "\033[0m";
-        } else {
-            return "TURN " + turn + " for player " + playerColorCode + "B" + "\033[0m";
-        }
+        return "TURN " + turn + " for player " + player.getName();
     }
 
-    @Override
     public String getWinMessage(Player player) {
-        return "Player " + player.getPlayerCarColour() + " has crossed the finish line";
+        return "Player " + player.getName() + " has crossed the finish line";
     }
 
-    @Override
     public String getEliminationMessage(Player player) {
-        return "Player " + player.getPlayerCarColour() + " has no more moves to perform\n" +
-                "Player " + player.getPlayerCarColour() + " LOSES!!!";
+        return "Player " + player.getName() + " has no more moves to perform\n" +
+                "Player " + player.getName() + " LOSES!!!";
     }
 
-    @Override
-    public String getEndMessage() {
-        return "The match has ended. Thank you for playing!";
-    }
-
-    @Override
     public String getInvalidChoiceMessage() {
         return "Invalid choice.";
     }
 
-    @Override
     public String getAskIfPlayerKnowsRulesMessage() {
         return "Do you know the rules of the game? (yes/no)";
     }
 
-    @Override
     public String getRuleTypeChoiceMessage() {
         return "Choose the rule type:";
     }
 
-    @Override
     public String getTrackChoiceMessage() {
         return "Choose a track from the available tracks:";
     }
 
-    @Override
     public String getMoveChoiceMessage() {
         return "Choose a move:";
     }
 
-    @Override
     public String getAskToPlayAgainMessage() {
         return "Do you want to play again? (yes/no)";
     }
 
-    @Override
-    public String getAskIfSatisfiedWithConfigurationMessage() {
-        return "Are you satisfied with the current configuration? (yes/no)";
-    }
-
-    @Override
-    public String getAskToChooseForEachBotMessage() {
-        return "Do you want to choose the strategy for each bot? (yes/no)";
-    }
-
-    @Override
-    public String getCarColourChoiceMessage() {
-        return "Choose a car color:";
-    }
-
-    @Override
     public String getAskNumberOfHumanPlayersMessage(int maxPlayers) {
         return "Enter the number of human players(max " + maxPlayers + "):";
     }
 
-    @Override
-    public String getChooseEachBotStrategyDifficultyMessage(CarColour carColour) {
-        return "Choose the " + carColour + " bot strategy difficulty:";
-    }
-
-    @Override
     public String getChooseAllBotStrategyDifficultyMessage() {
         return "Choose the bot strategy difficulty:";
     }
 
-    @Override
-    public String getChooseStartingPositionMessage(CarColour carColour) {
-        return carColour + ", choose your starting position:";
-    }
-
-    @Override
     public String getNextTurnMessage() {
-        return "Press enter to continue to the next turn...";
+        return "[Enter] for next turn";
     }
 
-    @Override
     public String getGameRules() {
         return """
         \u001B[0m
@@ -151,7 +101,6 @@ public final class GameMessageProvider implements MessageProvider {
             """;
     }
 
-    @Override
     public String getCongratulationsMessage() {
         return """
                   \u001B[33m\u001B[1m
@@ -164,7 +113,6 @@ public final class GameMessageProvider implements MessageProvider {
                  \u001B[0m""";
     }
 
-    @Override
     public String getGameOverMessage() {
         return """
                 \u001B[31m\u001B[1m
@@ -182,7 +130,6 @@ public final class GameMessageProvider implements MessageProvider {
                 \u001B[0m""";
     }
 
-    @Override
     public String getWelcomeMessage() {
         return """
                 \u001B[32m\u001B[1m

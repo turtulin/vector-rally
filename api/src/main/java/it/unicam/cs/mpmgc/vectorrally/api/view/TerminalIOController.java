@@ -4,10 +4,12 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.EightNeighborsGenerat
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.FourNeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
 import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Coordinates;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
+import it.unicam.cs.mpmgc.vectorrally.api.model.players.BotPlayer;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
-import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.Track;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 
 import java.util.List;
@@ -23,10 +25,9 @@ import java.util.stream.IntStream;
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-public class TerminalIOController extends TrackPathController implements IOController {
+public class TerminalIOController implements IOController {
     private final Scanner scanner;
-    private final MessageProvider messageProvider = new GameMessageProvider();
-    private final TerminalUtils utils = new TerminalUtils();
+    private final GameMessageProvider messageProvider = new GameMessageProvider();
 
     /**
      * Constructs a TerminalIOController with a new Scanner for input.
@@ -37,30 +38,25 @@ public class TerminalIOController extends TrackPathController implements IOContr
 
     @Override
     public void displayWelcomeAndRules() {
-        Output.printlnMessage(messageProvider.getWelcomeMessage());
-        if (!askIfPlayerKnowsRules()) Output.printlnMessage(messageProvider.getGameRules());
+        System.out.println(messageProvider.getWelcomeMessage());
+        if (!askIfPlayerKnowsRules()) System.out.println(messageProvider.getGameRules());
     }
     
     @Override
     public boolean askIfPlayerKnowsRules() {
-        Output.printlnMessage(messageProvider.getAskIfPlayerKnowsRulesMessage());
-        String answer = scanner.nextLine().trim().toLowerCase();
-        while (!answer.equals("yes") && !answer.equals("no")) {
-            Output.printlnMessage(messageProvider.getInvalidChoiceMessage());
-            answer = scanner.nextLine().trim().toLowerCase();
-        }
-        return answer.equals("yes");
+        System.out.println(messageProvider.getAskIfPlayerKnowsRulesMessage());
+        return getBooleanInput();
     }
 
     @Override
     public int chooseRuleType() {
-        Output.printlnMessage(messageProvider.getRuleTypeChoiceMessage());
-        Output.printlnMessage("1. Four Neighbors Rule");
-        Output.printlnMessage("2. Eight Neighbors Rule");
+        System.out.println(messageProvider.getRuleTypeChoiceMessage());
+        System.out.println("1. Four Neighbors Rule");
+        System.out.println("2. Eight Neighbors Rule");
         int choice = scanner.nextInt();
         scanner.nextLine();
         while (choice != 1 && choice != 2) {
-            Output.printlnMessage(messageProvider.getInvalidChoiceMessage());
+            System.out.println(messageProvider.getInvalidChoiceMessage());
             choice = scanner.nextInt();
             scanner.nextLine();
         }
@@ -69,54 +65,22 @@ public class TerminalIOController extends TrackPathController implements IOContr
 
     @Override
     public String pickTrack(List<String> trackFiles) {
-        String directoryPath = checkRootPath();
+        String directoryPath = TrackPathController.checkRootPath();
         int choice = chooseRaceTrack(trackFiles);
         return directoryPath + "/" + trackFiles.get(choice - 1);
     }
 
     @Override
     public int askNumberOfHumanPlayers(int maxPlayers) {
-        Output.printlnMessage(messageProvider.getAskNumberOfHumanPlayersMessage(maxPlayers));
+        System.out.println(messageProvider.getAskNumberOfHumanPlayersMessage(maxPlayers));
         int numPlayers = scanner.nextInt();
         scanner.nextLine();
         while (numPlayers < 0 || numPlayers > maxPlayers) {
-            Output.printlnMessage(messageProvider.getInvalidChoiceMessage());
+            System.out.println(messageProvider.getInvalidChoiceMessage());
             numPlayers = scanner.nextInt();
             scanner.nextLine();
         }
         return numPlayers;
-    }
-
-    @Override
-    public CarColour chooseCarColor(List<CarColour> availableColors) {
-        Output.printlnMessage(messageProvider.getCarColourChoiceMessage());
-        for (int i = 0; i < availableColors.size(); i++) {
-            Output.printlnMessage((i + 1) + ". " + availableColors.get(i));
-        }
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-        while (choice < 1 || choice > availableColors.size()) {
-            Output.printlnMessage(messageProvider.getInvalidChoiceMessage());
-            choice = scanner.nextInt();
-            scanner.nextLine();
-        }
-        return availableColors.get(choice - 1);
-    }
-
-    @Override
-    public boolean askToChooseForEachBot() {
-        Output.printlnMessage(messageProvider.getAskToChooseForEachBotMessage());
-        String response = scanner.nextLine();
-        while (!response.equalsIgnoreCase("yes") && !response.equalsIgnoreCase("no")) {
-            Output.printlnMessage(messageProvider.getInvalidChoiceMessage());
-            response = scanner.nextLine();
-        }
-        return response.equalsIgnoreCase("yes");
-    }
-    
-    @Override
-    public BotStrategy chooseEachBotStrategyDifficulty(CarColour carColour) {
-        return getBotStrategyDifficulty(messageProvider.getChooseEachBotStrategyDifficultyMessage(carColour));
     }
 
     @Override
@@ -125,81 +89,50 @@ public class TerminalIOController extends TrackPathController implements IOContr
     }
 
     @Override
-    public boolean askIfSatisfiedWithConfiguration(RaceTrack raceTrack, List<Player> players) {
-        utils.printRaceTrack(raceTrack, players);
-        Output.printlnMessage(messageProvider.getAskIfSatisfiedWithConfigurationMessage());
-        String answer = scanner.nextLine().trim().toLowerCase();
-        while (!answer.equals("yes") && !answer.equals("no")) {
-            Output.printlnMessage(messageProvider.getInvalidChoiceMessage());
-            answer = scanner.nextLine().trim().toLowerCase();
-        }
-        return answer.equals("yes");
-    }
-
-    @Override
-    public void displayEndMatchMessage() {
-        Output.printlnMessage(messageProvider.getEndMessage());
-    }
-
-
-    @Override
     public boolean askToPlayAnotherMatch() {
-        Output.printlnMessage(messageProvider.getAskToPlayAgainMessage());
-        String answer = scanner.nextLine().trim().toLowerCase();
-        while (!answer.equals("yes") && !answer.equals("no")) {
-            Output.printlnMessage(messageProvider.getInvalidChoiceMessage());
-            answer = scanner.nextLine().trim().toLowerCase();
-        }
-        return answer.equals("yes");
+        System.out.println(messageProvider.getAskToPlayAgainMessage());
+        return getBooleanInput();
     }
 
     @Override
-    public int chooseMove(List<Move> possibleMoves) {
-        Output.printlnMessage(messageProvider.getMoveChoiceMessage());
-        for (int i = 0; i < possibleMoves.size(); i++) {
-            Output.printlnMessage((i + 1) + ".");
-        }
+    public void displayMoves(List<Coordinates> possibleDestinations) {
+        System.out.println(messageProvider.getMoveChoiceMessage());
+        for (int i = 0; i < possibleDestinations.size(); i++) System.out.println((i + 1) + ".");
+    }
+
+    @Override
+    public Move chooseMove(List<Move> possibleMoves) {
         int choice = scanner.nextInt();
         scanner.nextLine();
         while (choice < 1 || choice > possibleMoves.size()) {
-            Output.printlnMessage(messageProvider.getInvalidChoiceMessage());
+            System.out.println(messageProvider.getInvalidChoiceMessage());
             choice = scanner.nextInt();
             scanner.nextLine();
         }
-        return choice - 1;
+        return possibleMoves.get(choice - 1);
     }
 
     @Override
-    public Position chooseStartingPosition(Player player, List<Position> availablePositions) {
-        Output.printlnMessage(messageProvider.getChooseStartingPositionMessage(player.getPlayerCarColour()));
-        for (int i = 0; i < availablePositions.size(); i++) {
-            Position pos = availablePositions.get(i);
-            Output.printlnMessage((i + 1) + ". (" + pos.getX() + ", " + pos.getY() + ")");
+    public void printRaceTrack(Track raceTrack, List<Player> players, List<Coordinates> destinations) {
+        for (int x = 0; x < raceTrack.getLength(); x++) {
+            for (int y = 0; y < raceTrack.getWidth(); y++) {
+                Coordinates position = new Position(x, y);
+                if (!printPlayer(position, players)) {
+                    if (destinations != null && destinations.contains(position)) {
+                        int index = destinations.indexOf(position) + 1;
+                        System.out.print(index);
+                    } else {
+                        System.out.print(raceTrack.getComponentAt(x, y).getSymbol());
+                    }
+                }
+            }
+            System.out.println();
         }
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-        while (choice < 1 || choice > availablePositions.size()) {
-            Output.printlnMessage(messageProvider.getInvalidChoiceMessage());
-            choice = scanner.nextInt();
-            scanner.nextLine();
-        }
-        return availablePositions.get(choice - 1);
-    }
-
-    @Override
-    public void waitForNextTurn() {
-        Output.printlnMessage(messageProvider.getNextTurnMessage());
-        scanner.nextLine();
-    }
-
-    @Override
-    public void printRaceTrack(RaceTrack raceTrack, List<Player> players, List<Position> destinations) {
-        utils.printRaceTrack(raceTrack, players, destinations);
     }
 
     @Override
     public void displayMessage(String message) {
-        Output.printlnMessage(message);
+        System.out.println(message);
     }
 
     @Override
@@ -208,24 +141,23 @@ public class TerminalIOController extends TrackPathController implements IOContr
         return ruleType == 1 ? new FourNeighborsGenerator() : new EightNeighborsGenerator();
     }
 
-    private int chooseRaceTrack (List<String> trackFiles) {
-        Output.printlnMessage(messageProvider.getTrackChoiceMessage());
-        IntStream.range(0, trackFiles.size()).mapToObj(i -> (i + 1) + ". " + trackFiles.get(i)).forEach(Output::printlnMessage);
-        int choice = scanner.nextInt();
+    @Override
+    public void goToNextTurn() {
+        System.out.println(messageProvider.getNextTurnMessage());
         scanner.nextLine();
-        while (choice < 1 || choice > trackFiles.size()) {
-            Output.printlnMessage(messageProvider.getInvalidChoiceMessage());
-            choice = scanner.nextInt();
-            scanner.nextLine();
-        }
-        return choice;
+    }
+
+    @Override
+    public void displayTracks(List<String> trackFiles) {
+        System.out.println(messageProvider.getTrackChoiceMessage());
+        IntStream.range(0, trackFiles.size()).mapToObj(i -> (i + 1) + ". " + trackFiles.get(i)).forEach(System.out::println);
     }
 
     private BotStrategy getBotStrategyDifficulty(String message) {
-        Output.printlnMessage(message);
-        Output.printlnMessage("1. Easy");
-        Output.printlnMessage("2. Medium");
-        Output.printlnMessage("3. Hard");
+        System.out.println(message);
+        System.out.println("1. Easy");
+        System.out.println("2. Medium");
+        System.out.println("3. Hard");
         int choice = scanner.nextInt();
         scanner.nextLine();
         return switch (choice) {
@@ -234,4 +166,54 @@ public class TerminalIOController extends TrackPathController implements IOContr
             default -> BotStrategy.EASY;
         };
     }
+
+    private int chooseRaceTrack (List<String> trackFiles) {
+        displayTracks(trackFiles);
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        while (choice < 1 || choice > trackFiles.size()) {
+            System.out.println(messageProvider.getInvalidChoiceMessage());
+            choice = scanner.nextInt();
+            scanner.nextLine();
+        }
+        return choice;
+    }
+
+    private boolean printPlayer(Coordinates position, List<Player> players) {
+        for (Player player : players) {
+            if (player.getPosition().equals(position) &&
+                    player.getPosition().getX() != 0 && player.getPosition().getY() != 0) {
+                String code = getCarColorCode(player.getPlayerCarColour());
+                String reset = "\033[0m";
+                String toPrint = player instanceof BotPlayer ? code + 'B' + reset : code + 'P' + reset;
+                System.out.print(toPrint);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String getCarColorCode(CarColour colour) {
+        return switch (colour) {
+            case RED -> "\033[31m";
+            case ORANGE -> "\033[38;5;208m";
+            case YELLOW -> "\033[33m";
+            case GREEN -> "\033[32m";
+            case BLUE -> "\033[34m";
+            case PURPLE -> "\033[35m";
+            case PINK -> "\033[38;5;205m";
+            case CYAN -> "\033[36m";
+            case BROWN -> "\033[38;5;94m";
+        };
+    }
+
+    private boolean getBooleanInput() {
+        String answer = scanner.nextLine().trim().toLowerCase();
+        while (!answer.equals("yes") && !answer.equals("no")) {
+            System.out.println(messageProvider.getInvalidChoiceMessage());
+            answer = scanner.nextLine().trim().toLowerCase();
+        }
+        return answer.equals("yes");
+    }
+
 }

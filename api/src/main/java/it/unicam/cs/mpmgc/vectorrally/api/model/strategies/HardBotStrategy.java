@@ -6,7 +6,6 @@ import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
 
 import java.util.List;
 
-
 /**
  * Implements the {@link DecisionStrategy} interface for the hard difficulty level.
  * This strategy uses the A* algorithm to choose the best move from the list of possible moves.
@@ -19,11 +18,6 @@ import java.util.List;
 public class HardBotStrategy implements DecisionStrategy {
     private final AStar aStar;
 
-    /**
-     * Constructs a HardBotStrategy with the specified A* algorithm implementation.
-     *
-     * @param aStar the A* algorithm implementation used to evaluate moves.
-     */
     public HardBotStrategy(AStar aStar) {
         this.aStar = aStar;
     }

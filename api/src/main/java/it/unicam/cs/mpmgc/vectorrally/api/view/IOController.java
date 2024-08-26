@@ -1,11 +1,10 @@
 package it.unicam.cs.mpmgc.vectorrally.api.view;
 
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;
-import it.unicam.cs.mpmgc.vectorrally.api.model.cars.CarColour;
+import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Coordinates;
 import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Move;
-import it.unicam.cs.mpmgc.vectorrally.api.model.movements.Position;
 import it.unicam.cs.mpmgc.vectorrally.api.model.players.Player;
-import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.RaceTrack;
+import it.unicam.cs.mpmgc.vectorrally.api.model.racetrack.Track;
 import it.unicam.cs.mpmgc.vectorrally.api.model.strategies.BotStrategy;
 
 import java.util.List;
@@ -18,16 +17,16 @@ import java.util.List;
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  */
-public interface IOController extends BasicIOController {
+public interface IOController {
 
     /**
      * Displays the racetrack.
      *
-     * @param raceTrack the racetrack to display.
-     * @param players the list of players.
-     * @param destinations the list of destinations.
+     * @param raceTrack the {@link Track} to display.
+     * @param players the {@link List} of {@link Player} .
+     * @param destinations the {@link List} of {@link Coordinates} destinations.
      */
-    void printRaceTrack(RaceTrack raceTrack, List<Player> players, List<Position> destinations);
+    void printRaceTrack(Track raceTrack, List<Player> players, List<Coordinates> destinations);
 
     /**
      * Displays a message.
@@ -38,32 +37,31 @@ public interface IOController extends BasicIOController {
 
     /**
      * Asks if the player wants to play another match.
-     * @return true if the player wants to play another match, false otherwise.
+     * @return {@code true} if the player wants to play another match, {@code false} otherwise.
      */
     boolean askToPlayAnotherMatch();
 
     /**
      * Asks the player to choose a move from the available moves.
-     * @param possibleMoves the list of possible moves.
-     * @return the index of the chosen move.
+     * @param possibleDestinations the {@link List} of possible {@link Coordinates} destinations.
      */
-    int chooseMove(List<Move> possibleMoves);
+    void displayMoves(List<Coordinates> possibleDestinations);
 
     /**
-     * Asks the player to choose a starting position from the available positions.
-     * @param player the player that has to choose the starting position.
-     * @param availablePositions the list of available positions.
-     * @return the chosen starting position.
+     * Asks the player to choose a move from the available moves.
+     * @param possibleMoves the {@link List} of possible {@link Move} objects.
+     * @return the chosen {@link Move} .
      */
-    Position chooseStartingPosition(Player player, List<Position> availablePositions);
+    Move chooseMove(List<Move> possibleMoves);
 
     /**
      * Displays the welcome message and the game rules.
      */
     void displayWelcomeAndRules();
+
     /**
      * Asks if the player knows the game rules.
-     * @return true if the player knows the rules, false otherwise.
+     * @return {@code true} if the player knows the rules, {@code false} otherwise.
      */
     boolean askIfPlayerKnowsRules();
 
@@ -75,6 +73,7 @@ public interface IOController extends BasicIOController {
 
     /**
      * Choose the track files available.
+     * @param trackFiles the {@link List} of track files.
      * @return the chosen track file name.
      */
     String pickTrack(List<String> trackFiles);
@@ -87,45 +86,26 @@ public interface IOController extends BasicIOController {
     int askNumberOfHumanPlayers(int maxPlayers);
 
     /**
-     * Asks the player to choose a car color.
-     * @param availableColors the list of available colors.
-     * @return the chosen car color.
-     */
-    CarColour chooseCarColor(List<CarColour> availableColors);
-
-    /**
-     * Asks the player to choose the difficulty for each bot.
-     * @return true if the player wants to choose the difficulty for each bot, false otherwise.
-     */
-    boolean askToChooseForEachBot();
-
-    /**
-     * Asks the player to choose a bot strategy difficulty.
-     * @param carColour the car color of the bot.
-     * @return the chosen bot strategy difficulty.
-     */
-    BotStrategy chooseEachBotStrategyDifficulty(CarColour carColour);
-
-    /**
      * Asks the player to choose a bot strategy difficulty for all bots.
-     * @return the chosen bot strategy difficulty.
+     * @return the chosen {@link BotStrategy} difficulty.
      */
     BotStrategy chooseAllBotsStrategyDifficulty();
-    /**
-     * Asks if the player is satisfied with the configuration.
-     * @return true if the player is satisfied, false otherwise.
-     */
-    boolean askIfSatisfiedWithConfiguration(RaceTrack raceTrack, List<Player> players);
-
-    /**
-     * Prints the message of the end of the match.
-     */
-    void displayEndMatchMessage();
 
     /**
      * Initializes the shift algorithm chosen by the player.
      *
-     * @return the neighbors generator initialized.
+     * @return the {@link NeighborsGenerator}  initialized.
      */
     NeighborsGenerator initializeShiftAlgorithm();
+
+    /**
+     * Asks the player to proceed to the next turn.
+     */
+    void goToNextTurn();
+
+    /**
+     * Displays the tracks available.
+     * @param trackFiles the {@link List} of track files.
+     */
+    void displayTracks(List<String> trackFiles);
 }
