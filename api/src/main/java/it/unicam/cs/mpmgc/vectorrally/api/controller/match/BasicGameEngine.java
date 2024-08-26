@@ -41,7 +41,7 @@ public class BasicGameEngine implements GameEngine {
     public void startGame() throws Exception {
         SetupResult setupResult = setupMatch();
         initializeMatch(setupResult.players(), setupResult.raceTrack(), setupResult.generator());
-        while(playAgain()) {
+        while (playAgain()) {
             setupResult = setupMatch();
             initializeMatch(setupResult.players(), setupResult.raceTrack(), setupResult.generator());
         }

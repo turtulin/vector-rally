@@ -31,20 +31,16 @@ class AStarTest {
         Coordinates start = new Position(0, 0);
         Coordinates goal = new Position(3, 3);
         Vector initialAcceleration = new Acceleration(0, 0);
-
         List<Position> expectedPath = List.of(
                 new Position(0, 0),
                 new Position(1, 1),
                 new Position(2, 2),
                 new Position(3, 3)
         );
-
         List<Coordinates> actualPath = aStar.findPath(start, goal, initialAcceleration);
-
         assertEquals(expectedPath.size(), actualPath.size());
-        for (int i = 0; i < expectedPath.size(); i++) {
+        for (int i = 0; i < expectedPath.size(); i++)
             assertEquals(expectedPath.get(i), actualPath.get(i));
-        }
     }
 
     @Test
@@ -52,10 +48,8 @@ class AStarTest {
         Coordinates start = new Position(0, 0);
         Coordinates goal = new Position(3, 3);
         Vector initialAcceleration = new Acceleration(0, 0);
-
         double expectedCost = 3.0;
         double actualCost = aStar.calculateCost(start, goal, initialAcceleration);
-
         assertEquals(expectedCost, actualCost);
     }
 }

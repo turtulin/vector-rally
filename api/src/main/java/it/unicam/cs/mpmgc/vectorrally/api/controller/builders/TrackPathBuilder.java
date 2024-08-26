@@ -24,14 +24,10 @@ public class TrackPathBuilder {
         String directoryPath = checkRootPath();
         File directory = new File(directoryPath);
         File[] files = directory.listFiles((dir, name) -> name.endsWith(".txt"));
-        if (!doesDirectoryExist(directory) || !doFilesExist(files)) {
-            return null;
-        }
+        if (!doesDirectoryExist(directory) || !doFilesExist(files)) return null;
         List<String> trackFiles = new ArrayList<>();
         assert files != null;
-        for (File file : files) {
-            trackFiles.add(file.getName());
-        }
+        for (File file : files) trackFiles.add(file.getName());
         return trackFiles;
     }
 
@@ -44,11 +40,8 @@ public class TrackPathBuilder {
     public static String checkRootPath() {
         String currentWorkingDir = System.getProperty("user.dir");
         String directoryPath;
-        if (currentWorkingDir.endsWith("app")) {
-            directoryPath = "../api/src/main/resources/racetracks";
-        } else {
-            directoryPath = "api/src/main/resources/racetracks";
-        }
+        if (currentWorkingDir.endsWith("app")) directoryPath = "../api/src/main/resources/racetracks";
+        else directoryPath = "api/src/main/resources/racetracks";
         return directoryPath;
     }
 

@@ -17,7 +17,7 @@ public class RaceCar implements Car {
     private final CarColour carColour;
 
     public RaceCar(CarColour carColour) {
-        if(carColour == null) throw new NullPointerException("Cannot create a car without a colour");
+        if (carColour == null) throw new NullPointerException("Cannot create a car without a colour");
         this.acceleration = new Acceleration(0,0);
         this.carColour = carColour;
     }
@@ -29,7 +29,7 @@ public class RaceCar implements Car {
 
     @Override
     public void setAcceleration(Vector acceleration) {
-        if(acceleration == null) throw new NullPointerException("Car acceleration cannot be null");
+        if (acceleration == null) throw new NullPointerException("Car acceleration cannot be null");
         this.acceleration.setDx(acceleration.getDx());
         this.acceleration.setDy(acceleration.getDy());
     }

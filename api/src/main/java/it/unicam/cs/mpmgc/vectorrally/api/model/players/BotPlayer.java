@@ -17,7 +17,7 @@ public class BotPlayer extends DefaultPlayer {
 
     public BotPlayer(Car playerCar, BotStrategy strategy) {
         super(playerCar);
-        if(strategy == null) throw new NullPointerException("Strategy cannot be null");
+        if (strategy == null) throw new NullPointerException("Strategy cannot be null");
         this.strategy = strategy;
     }
 

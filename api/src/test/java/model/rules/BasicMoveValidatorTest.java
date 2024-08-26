@@ -35,11 +35,8 @@ class BasicMoveValidatorTest {
         Position startPosition = new Position(0, 0);
         Acceleration acceleration = new Acceleration(1, 1);
         Move move = new Move(acceleration, startPosition);
-
         when(raceTrack.isInBounds(anyInt(), anyInt())).thenReturn(false);
-
         boolean result = validator.isValid(move, raceTrack, Collections.emptyList());
-
         assertFalse(result);
         verify(raceTrack).isInBounds(1, 1);
     }
@@ -49,12 +46,9 @@ class BasicMoveValidatorTest {
         Position startPosition = new Position(0, 0);
         Acceleration acceleration = new Acceleration(2, 2);
         Move move = new Move(acceleration, startPosition);
-
         when(raceTrack.isInBounds(anyInt(), anyInt())).thenReturn(true);
         when(raceTrack.getComponentAt(anyInt(), anyInt())).thenReturn(TrackComponent.ROAD, TrackComponent.WALL);
-
         boolean result = validator.isValid(move, raceTrack, Collections.emptyList());
-
         assertFalse(result);
     }
 
@@ -64,13 +58,10 @@ class BasicMoveValidatorTest {
         Position startPosition = new Position(0, 0);
         Acceleration acceleration = new Acceleration(1, 1);
         Move move = new Move(acceleration, startPosition);
-
         when(raceTrack.isInBounds(anyInt(), anyInt())).thenReturn(true);
         when(raceTrack.getComponentAt(anyInt(), anyInt())).thenReturn(TrackComponent.ROAD);
         when(player.getPosition()).thenReturn(new Position(2, 2));
-
         boolean result = validator.isValid(move, raceTrack, Collections.singletonList(player));
-
         assertTrue(result);
     }
 
@@ -79,11 +70,8 @@ class BasicMoveValidatorTest {
         Position startPosition = new Position(0, 0);
         Acceleration acceleration = new Acceleration(2, 2);
         Move move = new Move(acceleration, startPosition);
-
         when(raceTrack.getComponentAt(anyInt(), anyInt())).thenReturn(TrackComponent.WALL);
-
         boolean result = validator.passesThroughComponent(raceTrack, move, TrackComponent.WALL);
-
         assertTrue(result);
     }
 
@@ -92,12 +80,9 @@ class BasicMoveValidatorTest {
         Position startPosition = new Position(0, 0);
         Acceleration acceleration = new Acceleration(1, 1);
         Move move = new Move(acceleration, startPosition);
-
         Player otherPlayer = mock(Player.class);
         when(otherPlayer.getPosition()).thenReturn(new Position(1, 1));
-
         boolean result = validator.passesThroughPlayers(move, Collections.singletonList(otherPlayer));
-
         assertTrue(result);
     }
 
@@ -106,9 +91,7 @@ class BasicMoveValidatorTest {
         Position startPosition = new Position(0, 0);
         Acceleration acceleration = new Acceleration(2, 2);
         Move move = new Move(acceleration, startPosition);
-
         List<Coordinates> positions = validator.getPositionsBetween(move);
-
         assertEquals(3, positions.size());
         assertEquals(new Position(0, 0), positions.get(0));
         assertEquals(new Position(1, 1), positions.get(1));

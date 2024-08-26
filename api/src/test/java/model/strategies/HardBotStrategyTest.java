@@ -37,10 +37,8 @@ class HardBotStrategyTest {
                 new Move(new Acceleration(2, 2), new Position(0, 0)),
                 new Move(new Acceleration(3, 3), new Position(0, 0))
         );
-
         Move expectedMove = possibleMoves.getFirst();
         Move actualMove = strategy.decideMove(player, possibleMoves);
-
         assertEquals(expectedMove, actualMove);
     }
 
@@ -49,10 +47,8 @@ class HardBotStrategyTest {
         List<Move> possibleMoves = List.of(
                 new Move(new Acceleration(1, 1), new Position(0, 0))
         );
-
         Move expectedMove = possibleMoves.getFirst();
         Move actualMove = strategy.decideMove(player, possibleMoves);
-
         assertEquals(expectedMove, actualMove);
     }
 
@@ -62,10 +58,8 @@ class HardBotStrategyTest {
                 new Move(new Acceleration(1, 1), new Position(0, 0)),
                 new Move(new Acceleration(1, -1), new Position(0, 0))
         );
-
         Move expectedMove = possibleMoves.getFirst();
         Move actualMove = strategy.decideMove(player, possibleMoves);
-
         assertEquals(expectedMove, actualMove);
     }
 }

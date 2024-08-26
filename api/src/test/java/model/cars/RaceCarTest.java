@@ -35,7 +35,6 @@ class RaceCarTest {
     void setAccelerationShouldUpdateAccelerationCorrectly() {
         Acceleration newAcceleration = new Acceleration(5, 10);
         raceCar.setAcceleration(newAcceleration);
-
         assertTrue(compareAccelerations(newAcceleration, raceCar.getAcceleration()));
     }
 

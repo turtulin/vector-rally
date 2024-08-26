@@ -31,10 +31,6 @@ import java.util.List;
 
 public class SettingsHandler implements SetupGameView {
 
-    private final TrackPathBuilder IOController;
-    private final GameEngine gameEngine;
-    private final GameSetup setup;
-
     @FXML
     private Spinner<Integer> numHumanPlayers;
 
@@ -49,6 +45,10 @@ public class SettingsHandler implements SetupGameView {
 
     @FXML
     private Button setupButton;
+
+    private final TrackPathBuilder IOController;
+    private final GameEngine gameEngine;
+    private final GameSetup setup;
 
     public SettingsHandler() {
         this.IOController = new TrackPathBuilder();
@@ -66,10 +66,9 @@ public class SettingsHandler implements SetupGameView {
         loadShiftRuleMenu();
     }
 
-
-    public void loadTrackNames() {
+    private void loadTrackNames() {
         List<String> trackNames = IOController.findTrack();
-        for(String track : trackNames) {
+        for (String track : trackNames) {
             MenuItem menuItem = new MenuItem(track);
             menuItem.setOnAction(event -> {
                 trackMenuButton.setText(track);
@@ -92,7 +91,7 @@ public class SettingsHandler implements SetupGameView {
     }
 
     private void loadDifficultyMenu() {
-        for(BotStrategy strategy : BotStrategy.values()) {
+        for (BotStrategy strategy : BotStrategy.values()) {
             MenuItem menuItem = new MenuItem(strategy.name());
             menuItem.setOnAction(event -> {
                 difficultyMenuButton.setText(strategy.name());
@@ -131,7 +130,7 @@ public class SettingsHandler implements SetupGameView {
         try {
             SetupResult setupResult = gameEngine.setupMatch();
             SceneManager.getInstance().switchToScene("/race.fxml", controller -> {
-                if(controller instanceof RaceHandler raceHandler) {
+                if (controller instanceof RaceHandler raceHandler) {
                     try {
                         raceHandler.initializeRace(setupResult);
                     } catch(Exception e) {
@@ -163,7 +162,7 @@ public class SettingsHandler implements SetupGameView {
     @Override
     public NeighborsGenerator getShiftAlgorithm() {
         String selectedShiftRule = shiftRuleMenuButton.getText();
-        if(selectedShiftRule.contains("Four")) return new FourNeighborsGenerator();
+        if (selectedShiftRule.contains("Four")) return new FourNeighborsGenerator();
         else return new EightNeighborsGenerator();
     }
 }

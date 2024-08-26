@@ -65,10 +65,8 @@ class NodeTest {
         Node otherNode = new Node(new Position(1, 1));
         otherNode.setGCost(10);
         otherNode.setHCost(5);
-
         node.setGCost(5);
         node.setHCost(5);
-
         assertTrue(node.compareTo(otherNode) < 0);
     }
 
@@ -77,10 +75,8 @@ class NodeTest {
         Node otherNode = new Node(new Position(1, 1));
         otherNode.setGCost(5);
         otherNode.setHCost(5);
-
         node.setGCost(10);
         node.setHCost(5);
-
         assertTrue(node.compareTo(otherNode) > 0);
     }
 
@@ -89,10 +85,8 @@ class NodeTest {
         Node otherNode = new Node(new Position(1, 1));
         otherNode.setGCost(10);
         otherNode.setHCost(5);
-
         node.setGCost(10);
         node.setHCost(5);
-
         assertEquals(0, node.compareTo(otherNode));
     }
 }

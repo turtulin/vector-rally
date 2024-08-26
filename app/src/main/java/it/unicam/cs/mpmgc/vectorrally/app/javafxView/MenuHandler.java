@@ -12,8 +12,6 @@ import javafx.fxml.FXML;
  * @author Marta Musso
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
 */
-
-
 public class MenuHandler implements FinishGameView {
 
     @FXML

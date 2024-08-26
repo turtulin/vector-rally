@@ -25,7 +25,6 @@ public class WinnerHandler {
      * Sets the winner's name to be displayed on the screen.
      * @param winner the name of the player who won the game
      */
-
     public void setWinner(Player winner) {
         playerNameLabel.setText(messageProvider.getWinMessage(winner));
     }

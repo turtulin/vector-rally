@@ -36,7 +36,6 @@ class EasyBotStrategyTest {
         );
 
         Move chosenMove = strategy.decideMove(player, possibleMoves);
-
         assertTrue(possibleMoves.contains(chosenMove));
     }
 
@@ -47,10 +46,8 @@ class EasyBotStrategyTest {
                 new Move(new Acceleration(0, 1), new Position(0, 1)),
                 new Move(new Acceleration(-1, 0), new Position(-1, 0))
         );
-
         Move firstChosenMove = strategy.decideMove(player, possibleMoves);
         boolean differentMoveChosen = false;
-
         for (int i = 0; i < 10; i++) {
             Move chosenMove = strategy.decideMove(player, possibleMoves);
             if (!chosenMove.equals(firstChosenMove)) {
@@ -58,7 +55,6 @@ class EasyBotStrategyTest {
                 break;
             }
         }
-
         assertTrue(differentMoveChosen, "The strategy did not choose a different move in 10 attempts");
     }
 }

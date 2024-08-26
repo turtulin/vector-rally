@@ -32,14 +32,10 @@ class EightNeighborsGeneratorTest {
                 new Acceleration(3, 4),  // Down-Right
                 new Acceleration(2, 3)   // No change
         );
-
         List<Vector> generatedShifts = generator.generateShifts(initialSpeed);
-
         assertEquals(expectedShifts.size(), generatedShifts.size());
-
-        for (int i = 0; i < expectedShifts.size(); i++) {
+        for (int i = 0; i < expectedShifts.size(); i++)
             assertTrue(compareAccelerations((Acceleration) expectedShifts.get(i), (Acceleration) generatedShifts.get(i)));
-        }
     }
 
     private boolean compareAccelerations(Acceleration a1, Acceleration a2) {

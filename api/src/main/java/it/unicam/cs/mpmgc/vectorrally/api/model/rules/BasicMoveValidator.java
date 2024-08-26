@@ -24,11 +24,11 @@ import java.util.List;
 public class BasicMoveValidator implements MoveValidator {
     @Override
     public boolean isValid(Move move, Track track, List<Player> allPlayers) {
-        if(!track.isInBounds(move.getDestination().getX(), move.getDestination().getY())) return false;
-        if(passesThroughComponent(track, move, TrackComponent.WALL)) return false;
-        if(passesThroughComponent(track, move, TrackComponent.END_LINE) && !isValidDirection(move.acceleration().getDirection(), track)) return false;
-        if(passesThroughPlayers(move, allPlayers)) return false;
-        if(endsInComponent(move, track, TrackComponent.WALL)) return false;
+        if (!track.isInBounds(move.getDestination().getX(), move.getDestination().getY())) return false;
+        if (passesThroughComponent(track, move, TrackComponent.WALL)) return false;
+        if (passesThroughComponent(track, move, TrackComponent.END_LINE) && !isValidDirection(move.acceleration().getDirection(), track)) return false;
+        if (passesThroughPlayers(move, allPlayers)) return false;
+        if (endsInComponent(move, track, TrackComponent.WALL)) return false;
         return !isPositionOccupied(move.getDestination(), allPlayers);
     }
 
@@ -40,8 +40,8 @@ public class BasicMoveValidator implements MoveValidator {
     @Override
     public boolean passesThroughComponent(Track track, Move move, TrackComponent component) {
         List<Coordinates> positions = getPositionsBetween(move);
-        for(Coordinates position : positions)
-            if(track.getComponentAt(position.getX(), position.getY()) == component) return true;
+        for (Coordinates position : positions)
+            if (track.getComponentAt(position.getX(), position.getY()) == component) return true;
         return false;
     }
 
@@ -85,15 +85,15 @@ public class BasicMoveValidator implements MoveValidator {
     }
 
     private Direction getIllegalDirection(Coordinates start, Coordinates end) {
-        if(end.getX() > start.getX()) return Direction.RIGHT;
-        if(end.getX() < start.getX()) return Direction.LEFT;
-        if(end.getY() > start.getY()) return Direction.DOWN;
+        if (end.getX() > start.getX()) return Direction.RIGHT;
+        if (end.getX() < start.getX()) return Direction.LEFT;
+        if (end.getY() > start.getY()) return Direction.DOWN;
         return Direction.UP;
     }
 
     private boolean isPositionOccupied(Coordinates end, List<Player> allPlayers) {
-        for(Player player : allPlayers)
-            if(player.getPosition().equals(end)) return true;
+        for (Player player : allPlayers)
+            if (player.getPosition().equals(end)) return true;
         return false;
     }
 }

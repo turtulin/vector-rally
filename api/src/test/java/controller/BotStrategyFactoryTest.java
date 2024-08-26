@@ -1,4 +1,4 @@
-package controller.setup;
+package controller;
 
 import it.unicam.cs.mpmgc.vectorrally.api.controller.builders.BotStrategyFactory;
 import it.unicam.cs.mpmgc.vectorrally.api.model.algorithms.NeighborsGenerator;

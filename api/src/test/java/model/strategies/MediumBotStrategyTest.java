@@ -37,7 +37,6 @@ class MediumBotStrategyTest {
 
         Move expectedMove = possibleMoves.get(2);
         Move actualMove = strategy.decideMove(player, possibleMoves);
-
         assertEquals(expectedMove, actualMove);
     }
 
@@ -46,10 +45,8 @@ class MediumBotStrategyTest {
         List<Move> possibleMoves = List.of(
                 new Move(new Acceleration(1, 1), new Position(0, 0))
         );
-
         Move expectedMove = possibleMoves.getFirst();
         Move actualMove = strategy.decideMove(player, possibleMoves);
-
         assertEquals(expectedMove, actualMove);
     }
 
@@ -59,10 +56,8 @@ class MediumBotStrategyTest {
                 new Move(new Acceleration(1, 1), new Position(0, 0)),
                 new Move(new Acceleration(1, -1), new Position(0, 0))
         );
-
         Move expectedMove = possibleMoves.getFirst();
         Move actualMove = strategy.decideMove(player, possibleMoves);
-
         assertEquals(expectedMove, actualMove);
     }
 }

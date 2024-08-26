@@ -139,9 +139,7 @@ public class TerminalIOController implements IOController {
                     if (destinations != null && destinations.contains(position)) {
                         int index = destinations.indexOf(position) + 1;
                         System.out.print(index);
-                    } else {
-                        System.out.print(raceTrack.getComponentAt(x, y).getSymbol());
-                    }
+                    } else System.out.print(raceTrack.getComponentAt(x, y).getSymbol());
                 }
             }
             System.out.println();

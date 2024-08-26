@@ -36,7 +36,6 @@ class MoveTest {
     void getDestinationShouldReturnCorrectPosition() {
         Position expectedDestination = new Position(13, 19);
         Coordinates actualDestination = move.getDestination();
-
         assertEquals(expectedDestination.getX(), actualDestination.getX());
         assertEquals(expectedDestination.getY(), actualDestination.getY());
     }
@@ -45,10 +44,8 @@ class MoveTest {
     void getDestinationShouldHandleNegativeAcceleration() {
         Acceleration negativeAcceleration = new Acceleration(-3, -4);
         Move negativeMove = new Move(negativeAcceleration, position);
-
         Position expectedDestination = new Position(7, 11);
         Coordinates actualDestination = negativeMove.getDestination();
-
         assertEquals(expectedDestination.getX(), actualDestination.getX());
         assertEquals(expectedDestination.getY(), actualDestination.getY());
     }
@@ -57,10 +54,8 @@ class MoveTest {
     void getDestinationShouldHandleZeroAcceleration() {
         Acceleration zeroAcceleration = new Acceleration(0, 0);
         Move zeroMove = new Move(zeroAcceleration, position);
-
         Position expectedDestination = new Position(10, 15);
         Coordinates actualDestination = zeroMove.getDestination();
-
         assertEquals(expectedDestination.getX(), actualDestination.getX());
         assertEquals(expectedDestination.getY(), actualDestination.getY());
     }

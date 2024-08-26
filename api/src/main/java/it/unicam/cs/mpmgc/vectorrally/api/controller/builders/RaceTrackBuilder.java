@@ -35,16 +35,16 @@ public class RaceTrackBuilder implements TrackBuilder {
         int rows = lines.size();
         int cols = lines.getFirst().length();
         TrackComponent[][] track = new TrackComponent[rows][cols];
-        for(int i = 0; i < rows; i++)
-            for(int j = 0; j < cols; j++) track[i][j] = TrackComponent.fromChar(lines.get(i).charAt(j));
+        for (int i = 0; i < rows; i++)
+            for (int j = 0; j < cols; j++) track[i][j] = TrackComponent.fromChar(lines.get(i).charAt(j));
         return track;
     }
 
     private List<String> readTrackFromFile(String filename) throws IOException {
         List<String> lines = new ArrayList<>();
-        try(BufferedReader br = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
-            while((line = br.readLine()) != null) lines.add(line);
+            while ((line = br.readLine()) != null) lines.add(line);
         }
         return lines;
     }
@@ -52,7 +52,7 @@ public class RaceTrackBuilder implements TrackBuilder {
     private void validateTrack(Track raceTrack) {
         List<Coordinates> startPositions = raceTrack.getPositionsOfComponent(TrackComponent.START_LINE);
         List<Coordinates> endPositions = raceTrack.getPositionsOfComponent(TrackComponent.END_LINE);
-        if(!areLinesStraightAndParallel(startPositions, endPositions))
+        if (!areLinesStraightAndParallel(startPositions, endPositions))
             throw new IllegalArgumentException("Start and end lines must be straight and parallel");
     }
 

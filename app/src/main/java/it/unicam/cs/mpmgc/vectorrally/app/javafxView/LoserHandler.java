@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
  * <a href="mailto:marta.musso@studenti.unicam.it">marta.musso@studenti.unicam.it</a>
  
 */
-
 public class LoserHandler {
 
     @FXML

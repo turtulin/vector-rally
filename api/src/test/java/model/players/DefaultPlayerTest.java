@@ -34,7 +34,6 @@ class DefaultPlayerTest {
     void getPlayerAccelerationShouldReturnCorrectAcceleration() {
         Acceleration acceleration = new Acceleration(1, 1);
         testCar.setAcceleration(acceleration);
-
         Vector playerAcceleration = player.getPlayerAcceleration();
         assertTrue(compareAccelerations(acceleration, (Acceleration) playerAcceleration));
     }
@@ -43,7 +42,6 @@ class DefaultPlayerTest {
     void setPlayerAccelerationShouldUpdateCarAcceleration() {
         Acceleration acceleration = new Acceleration(1, 1);
         player.setPlayerAcceleration(acceleration);
-
         Vector carAcceleration = testCar.getAcceleration();
         assertTrue(compareAccelerations(acceleration, (Acceleration) carAcceleration));
     }
@@ -68,7 +66,6 @@ class DefaultPlayerTest {
     void setPositionShouldUpdatePlayerPosition() {
         Position newPosition = new Position(5, 5);
         player.setPosition(newPosition);
-
         assertTrue(comparePositions(newPosition, (Position) player.getPosition()));
     }
 
@@ -80,7 +77,6 @@ class DefaultPlayerTest {
     @Test
     void isRacingShouldReturnCorrectStatus() {
         assertFalse(player.isRacing());
-
         player.setRacing(true);
         assertTrue(player.isRacing());
     }
@@ -89,7 +85,6 @@ class DefaultPlayerTest {
     void setRacingShouldUpdateRacingStatus() {
         player.setRacing(true);
         assertTrue(player.isRacing());
-
         player.setRacing(false);
         assertFalse(player.isRacing());
     }

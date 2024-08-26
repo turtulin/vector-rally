@@ -34,9 +34,8 @@ public interface NeighborsGenerator {
      */
     default List<Vector> getAccelerations(Vector speed, int[] dx, int[] dy) {
         List<Vector> shifts = new ArrayList<>();
-        for (int i = 0; i < dx.length; i++) {
+        for (int i = 0; i < dx.length; i++)
             shifts.add(new Acceleration(speed.getDx() + dx[i], speed.getDy() + dy[i]));
-        }
         return shifts;
     }
 }
